@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Guide from './views/Guide.vue'
 import Homepage from './views/Homepage.vue'
+import SignUpForRestaurant from './views/SignUpForRestaurant.vue'
+import MapTest from './views/MapTest.vue'
 
 Vue.use(Router)
 
@@ -16,6 +18,16 @@ export default new Router({
       path: '/homepage',
       name: 'homepage',
       component: Homepage
+    },
+    {
+      path: '/signUpForRestaurant',
+      name: 'signUpForRestaurant',
+      component: SignUpForRestaurant
+    },
+    {
+      path: '/maptest',
+      name: 'maptest',
+      component: MapTest
     }
     // {
     //   path: '/about',

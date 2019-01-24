@@ -2,10 +2,10 @@
     <el-container>
         <el-main>
             <el-row :gutter="20">
-                <el-col :span="14" id="left">
+                <el-col :span="16" id="left">
                     <h1 id="welcome">Yummy——您的在线订餐平台</h1>
                 </el-col>
-                <el-col :span="10" id="right">
+                <el-col :span="8" id="right">
                     <el-form ref="form" :model="form" label-width="80px" label-position="top">
                         <el-form-item label="Username" class="whiteItem">
                             <el-input v-model="form.name" placeholder="Pick a username"></el-input>
@@ -18,10 +18,32 @@
                         </el-form-item>
                         <el-form-item id="sgBtn">
                             <el-button type="success" @click="onSubmit">Sign up for yummy</el-button>
+                            <el-button type="success" @click="dialogVisible = true">Sign in</el-button>
+                            
                         </el-form-item>
                     </el-form>
                 </el-col>
              </el-row>
+
+             <el-dialog
+                    title="登陆"
+                    :visible.sync="dialogVisible"
+                    width="30%"
+                    :before-close="handleClose">
+                    <el-form :model="loginForm" label-position="left">
+                        <el-form-item label="username" :label-width="formLabelWidth">
+                            <el-input v-model="loginForm.name"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Password" :label-width="formLabelWidth">
+                            <el-input v-model="loginForm.password" type="password"></el-input>
+                        </el-form-item>
+                    </el-form>
+
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="login">确 定</el-button>
+                    </div>
+            </el-dialog>
         </el-main>
 
         <el-footer>
@@ -38,11 +60,17 @@
           return {
             activeIndex: '1',
             activeIndex2: '1',
+            dialogVisible: false,
             form: {
                 name: '',
                 email: '',
                 password: ''
-            }
+            },
+            loginForm: {
+                name: '',
+                password: ''
+            },
+            formLabelWidth: '120px'
           };
         },
         methods: {
@@ -51,16 +79,32 @@
             },
             onSubmit() {
                 this.axios.post('http://localhost:8080/signup', this.form).then(response => {
-                    console.log(response)
+                    //console.log(response)
                     //将用户名存到localstorage中
-                    //localStroage.setItem("username", this.form.name)
-                    console.log(this.form.name)
                     localStorage.setItem("username", this.form.name)
-                    //this.$store.dispatch("userLogin", true)
+                    // this.$store.dispatch("isLogin", true)
+                    // localStorage.setItem("Flag", "isLogin")
+
                     this.$router.push('/homepage')
                 }).catch((err)=> {
                     console.log("err")
                 })
+            },
+            login() {
+                this.axios.post('http://localhost:8080/login', this.loginForm).then(response => {
+                    console.log(response)
+                    localStorage.setItem("username", this.form.name)
+                    this.$router.push('/homepage')
+                }).catch((err) => {
+                    console.log("err")
+                })
+            },
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                  .then(_ => {
+                    done();
+                  })
+                  .catch(_ => {});
             }
         }
     }

@@ -7,10 +7,34 @@ import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store'
+import VueAMap from 'vue-amap'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/railscasts.css' 
 
 Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
+Vue.use(VueAMap)
+
+Vue.directive('hljs', el => {
+  let blocks = el.querySelectorAll('pre')
+  Array.prototype.forEach.call(blocks, hljs.highlightBlock)
+})
+
+VueAMap.initAMapApiLoader({
+  key: '01312d09971020b1e83205da9ed48e56',
+  plugin: [
+  'AMap.Autocomplete', 
+  'AMap.PlaceSearch', 
+  'AMap.Scale', 
+  'AMap.OverView', 
+  'AMap.ToolBar', 
+  'AMap.MapType', 
+  'AMap.PolyEditor', 
+  'AMap.CircleEditor'],
+  // 默认高德 sdk 版本为 1.4.4
+  v: '1.4.4'
+});
 
 Vue.config.productionTip = false
 
