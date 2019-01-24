@@ -18,6 +18,27 @@
                 <span>地址：{{ dragData.address }}</span>
             </div>
           </el-form-item>
+
+          <el-form-item label="招牌图片">
+            <div id="app">
+                <el-upload 
+                    class="upload-demo"
+                    drag
+                    :action="this.upload_qiniu_url"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :on-error="handleError"
+                    :before-upload="beforeAvatarUpload"
+                    :data="qiniuData">
+                    <img v-if="imgUrl" :src="imgUrl" class="avatar">
+                    <div v-else class="el-default">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload_text">将文件拖到此处，或<em>点击上传</em></div>
+                    </div>
+                    <div class="el-upload_tip" slot="tip">只能上传jpg/png文件，且不超过2MB</div>
+                </el-upload>
+            </div>
+          </el-form-item>
           
           <el-form-item label="餐厅类型">
             <el-checkbox-group v-model="form.type">
@@ -68,7 +89,15 @@ import mapDrag from '../components/mapDrag'
          nearestJunction: null,
          nearestRoad: null,
          nearestPOI: null
-        }
+        },
+        qiniuData: {
+            key: "",
+            token: ""
+        },
+        imgUrl: "",
+        upload_qiniu_url: 'http://upload.qiniu.com/', 
+        upload_qiniu_addr: 'http://plu6c3si4.bkt.clouddn.com',
+        accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
       }
     },
     methods: {
@@ -78,7 +107,8 @@ import mapDrag from '../components/mapDrag'
             lng_lat: this.dragData.lng + ',' + this.dragData.lat,
             address: this.dragData.address,
             type: this.form.type.toString(),
-            phoneNumber: this.form.phoneNumber
+            phoneNumber: this.form.phoneNumber,
+            imgUrl: this.imgUrl
         }).then(response =>  {
             console.log(response)
         }).catch((err)=> {
@@ -94,7 +124,51 @@ import mapDrag from '../components/mapDrag'
             nearestRoad: data.nearestRoad,
             nearestPOI: data.nearestPOI
         }
-      }
+      },
+
+      beforeAvatarUpload(file) {
+        this.qiniuData.key = file.name
+        const isJPG = file.type === "image/jpeg";
+        const isPNG = file.type === "image/png";
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG && !isPNG) {
+            this.$message.error("图片只能是 JPG/PNG 格式!");
+            return false;
+        }
+        if (!isLt2M) {
+            this.$message.error("图片大小不能超过 2MB!");
+            return false;
+        }
+      },
+
+      handleAvatarSuccess(res, file) {
+         this.imgUrl = this.upload_qiniu_addr + '/' +  res.key
+        // this.showImg = true;
+    
+        console.log(this.imgUrl);
+      },
+
+      handleError(res) {
+        this.$message({
+            message: '上传失败',
+            duration: 2000,
+            type: "warning"
+        });
+      },
+
+        placeToken() {
+            this.axios.post("http://localhost:8080/getToken").then(response => {
+                console.log(response.data)
+                this.token = response.data
+                this.qiniuData.token = response.data
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    },
+
+    mounted() {
+        this.placeToken();
     }
   }
 </script>
