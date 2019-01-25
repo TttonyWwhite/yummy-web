@@ -92,8 +92,8 @@
             },
             login() {
                 this.axios.post('http://localhost:8080/login', this.loginForm).then(response => {
-                    console.log(response)
-                    localStorage.setItem("username", this.form.name)
+                    console.log(this.form.name)
+                    localStorage.setItem("username", this.loginForm.name)
                     this.$router.push('/homepage')
                 }).catch((err) => {
                     console.log("err")

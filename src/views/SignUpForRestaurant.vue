@@ -108,7 +108,8 @@ import mapDrag from '../components/mapDrag'
             address: this.dragData.address,
             type: this.form.type.toString(),
             phoneNumber: this.form.phoneNumber,
-            imgUrl: this.imgUrl
+            imgUrl: this.imgUrl,
+            shopName: this.form.name
         }).then(response =>  {
             console.log(response)
         }).catch((err)=> {
