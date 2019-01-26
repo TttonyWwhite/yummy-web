@@ -4,7 +4,7 @@ import Guide from './views/Guide.vue'
 import Homepage from './views/Homepage.vue'
 import SignUpForRestaurant from './views/SignUpForRestaurant.vue'
 import MapTest from './views/MapTest.vue'
-
+import PersonalInfo from './views/PersonalInfo.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +28,11 @@ export default new Router({
       path: '/maptest',
       name: 'maptest',
       component: MapTest
+    },
+    {
+      path: '/personalInfo',
+      name: 'personalInfo',
+      component: PersonalInfo
     }
     // {
     //   path: '/about',
