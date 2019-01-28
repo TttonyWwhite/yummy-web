@@ -1,27 +1,32 @@
 <template>
 	<el-container>
 			<el-header>
-			<Header :name="餐厅名"></Header>
+			<Header :name="restaurantName"></Header>
 			</el-header>
 		<el-container>
 			<el-aside width="200px">
-				<el-menu class="el-menu-vertical-demo">
-					<el-menu-item index="1">
-						<i class="el-icon-menu"></i>
-						<span slot="title">餐厅信息</span>
-					</el-menu-item>
-					<el-menu-item index="2">
-						<i class="el-icon-menu"></i>
-						<span slot="title">发布菜品</span>
-					</el-menu-item>
-					<el-menu-item index="3">
-						<i class="el-icon-menu"></i>
-						<span slot="title">发布优惠</span>
-					</el-menu-item>
+				<el-menu :default-active="$route.path" class="el-menu-demo" mode="vertical" unique-opened router>
+					<template v-for="item in items">
+						<template v-if="item.subs">
+							<el-submenu :index="item.index">
+								<template slot="title">
+									<i :class="item.icon"></i> {{ item.title }}
+								</template>
+								<el-menu-item v-for="(subItem, i) in item.subs" :key="i" :index="subItem.index"> {{ subItem.title }} </el-menu-item>
+							</el-submenu>
+						</template>
+						<template v-else>
+							<el-menu-item :index="item.index">
+								<i :class="item.icon"></i> {{ item.title }}
+							</el-menu-item>
+						</template>
+					</template>
 				</el-menu>
 			</el-aside>
 			<el-main >
-
+				<keep-alive>
+                    <router-view/>
+                </keep-alive>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -39,14 +44,35 @@
 		data() {
 			return {
 				username: '',
+				restaurantid: '',
 				form: {
 					name: ''
-				}
+				},
+				restaurantName: '鸡排店',
+				items: [
+					{
+						icon: 'el-icon-menu',
+						index: '/restaurant',
+						title: '餐厅信息'
+					},
+					{
+						icon: 'el-icon-menu',
+						index: '/releaseFood' + '/' + this.$route.params.id,
+						title: '发布菜品'
+					},
+					{
+						icon: 'el-icon-menu',
+						index: '/releaseBargin',
+						title: '发布优惠'
+					}
+				]
 			}
 		},
 		mounted() {
 			// this.username = localStorage.getItem('username')
 			// this.form.name = localStorage.getItem('username')
+		},
+		computed: {
 		}
 	}
 </script>

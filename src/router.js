@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Guide from './views/Guide.vue'
-import Homepage from './views/Homepage.vue'
-import SignUpForRestaurant from './views/SignUpForRestaurant.vue'
-import MapTest from './views/MapTest.vue'
-import PersonalInfo from './views/PersonalInfo.vue'
-import RestaurantInfo from './views/RestaurantInfo.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -13,33 +8,37 @@ export default new Router({
     {
       path: '/',
       name: 'guide',
-      component: Guide
+      component: resolve => require(['./views/Guide.vue'], resolve)
     },
-    {
-      path: '/homepage',
-      name: 'homepage',
-      component: Homepage
-    },
-    {
-      path: '/signUpForRestaurant',
-      name: 'signUpForRestaurant',
-      component: SignUpForRestaurant
-    },
-    {
-      path: '/maptest',
-      name: 'maptest',
-      component: MapTest
-    },
-    {
-      path: '/personalInfo',
-      name: 'personalInfo',
-      component: PersonalInfo
-    },
-    {
-      path: '/restaurantInfo',
-      name: 'restaurantInfo',
-      component: RestaurantInfo
-    }
+      {
+        path: '/homepage',
+        name: 'homepage',
+        component: resolve => require(['./views/Homepage.vue'], resolve)
+      },
+      {
+        path: '/signUpForRestaurant',
+        name: 'signUpForRestaurant',
+        component: resolve => require(['./views/SignUpForRestaurant.vue'], resolve)
+      },
+      {
+        path: '/member',
+        name: 'personalInfo',
+        component: resolve => require(['./views/PersonalInfo.vue'], resolve),
+        children: [
+
+        ]
+      },
+      {
+        path: '/restaurant/:id',
+        name: 'restaurant',
+        component: resolve => require(['./views/RestaurantInfo.vue'], resolve),
+        children: [
+            {
+              path: '/releaseFood/:id',
+              component: resolve => require(['./views/ReleaseFood.vue'], resolve)
+            }
+        ]
+      }   
     // {
     //   path: '/about',
     //   name: 'about',

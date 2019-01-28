@@ -4,6 +4,11 @@
             <el-row :gutter="20">
                 <el-col :span="16" id="left">
                     <h1 id="welcome">Yummy——您的在线订餐平台</h1>
+                    <br><br><br><br>
+                    <p>是商家?</p>
+                    <el-button type="success" @click="rdialogVisible = true">登陆后台</el-button>
+                    <el-button type="success" @click="gotoSignUpForRestaurant">即刻注册加盟</el-button>
+
                 </el-col>
                 <el-col :span="8" id="right">
                     <el-form ref="form" :model="form" label-width="80px" label-position="top">
@@ -18,7 +23,7 @@
                         </el-form-item>
                         <el-form-item id="sgBtn">
                             <el-button type="success" @click="onSubmit">Sign up for yummy</el-button>
-                            <el-button type="success" @click="dialogVisible = true">Sign in</el-button>
+                            <el-button type="success" @click="udialogVisible = true">Sign in</el-button>
                             
                         </el-form-item>
                     </el-form>
@@ -26,8 +31,8 @@
              </el-row>
 
              <el-dialog
-                    title="登陆"
-                    :visible.sync="dialogVisible"
+                    title="用户登陆"
+                    :visible.sync="udialogVisible"
                     width="30%"
                     :before-close="handleClose">
                     <el-form :model="loginForm" label-position="left">
@@ -43,6 +48,26 @@
                         <el-button @click="dialogFormVisible = false">取 消</el-button>
                         <el-button type="primary" @click="login">确 定</el-button>
                     </div>
+            </el-dialog>
+
+            <el-dialog
+                title="商户登陆"
+                :visible.sync="rdialogVisible"
+                width="30%"
+                :before-close="handleClose">
+                <el-form :model="rLoginForm" label-position="left">
+                    <el-form-item label="restaurantId" :label-width="formLabelWidth">
+                        <el-input v-model="rLoginForm.restaurantId"></el-input>
+                    </el-form-item>
+                    <el-form-item label="password" :label-width="formLabelWidth">
+                        <el-input v-model="rLoginForm.password"></el-input>
+                    </el-form-item>
+                </el-form>
+
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取消</el-button>
+                    <el-button type="primary" @click="restaurantLogin">登陆</el-button>
+                </div>
             </el-dialog>
         </el-main>
 
@@ -60,7 +85,8 @@
           return {
             activeIndex: '1',
             activeIndex2: '1',
-            dialogVisible: false,
+            udialogVisible: false,
+            rdialogVisible: false,
             form: {
                 name: '',
                 email: '',
@@ -68,6 +94,10 @@
             },
             loginForm: {
                 name: '',
+                password: ''
+            },
+            rLoginForm: {
+                restaurantId: '',
                 password: ''
             },
             formLabelWidth: '120px'
@@ -105,6 +135,16 @@
                     done();
                   })
                   .catch(_ => {});
+            },
+            gotoSignUpForRestaurant() {
+                this.$router.push('/signUpForRestaurant')
+            },
+            restaurantLogin() {
+                this.axios.post('http://localhost:8080/loginForRestaurant', this.rLoginForm).then(response => {
+                    console.log(response)
+                }).catch(err => {
+                    console.log(err)
+                })
             }
         }
     }

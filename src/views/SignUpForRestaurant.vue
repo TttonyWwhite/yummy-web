@@ -54,6 +54,11 @@
           <el-form-item label="负责人电话">
             <el-input v-model="form.phoneNumber"></el-input>
           </el-form-item>
+
+          <el-form-item label="登陆密码">
+            <el-input type="password" v-model="form.password"></el-input>
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
             <el-button>取消</el-button>
@@ -80,7 +85,8 @@ import mapDrag from '../components/mapDrag'
         form: {
           name: '',
           type: [],
-          phoneNumber: ''
+          phoneNumber: '',
+          password: ''
         },
         dragData: {
          lng: null,
@@ -109,7 +115,8 @@ import mapDrag from '../components/mapDrag'
             type: this.form.type.toString(),
             phoneNumber: this.form.phoneNumber,
             imgUrl: this.imgUrl,
-            shopName: this.form.name
+            shopName: this.form.name,
+            password: this.form.password
         }).then(response =>  {
             console.log(response)
         }).catch((err)=> {
