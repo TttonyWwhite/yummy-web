@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-main>
+        <el-main class="guide_main">
             <el-row :gutter="20">
                 <el-col :span="16" id="left">
                     <h1 id="welcome">Yummy——您的在线订餐平台</h1>
@@ -36,7 +36,7 @@
                     width="30%"
                     :before-close="handleClose">
                     <el-form :model="loginForm" label-position="left">
-                        <el-form-item label="username" :label-width="formLabelWidth">
+                        <el-form-item label="Username" :label-width="formLabelWidth">
                             <el-input v-model="loginForm.name"></el-input>
                         </el-form-item>
                         <el-form-item label="Password" :label-width="formLabelWidth">
@@ -56,11 +56,11 @@
                 width="30%"
                 :before-close="handleClose">
                 <el-form :model="rLoginForm" label-position="left">
-                    <el-form-item label="restaurantId" :label-width="formLabelWidth">
+                    <el-form-item label="RestaurantId" :label-width="formLabelWidth">
                         <el-input v-model="rLoginForm.restaurantId"></el-input>
                     </el-form-item>
-                    <el-form-item label="password" :label-width="formLabelWidth">
-                        <el-input v-model="rLoginForm.password"></el-input>
+                    <el-form-item label="Password" :label-width="formLabelWidth">
+                        <el-input v-model="rLoginForm.password" type="password"></el-input>
                     </el-form-item>
                 </el-form>
 
@@ -124,6 +124,7 @@
                 this.axios.post('http://localhost:8080/login', this.loginForm).then(response => {
                     console.log(this.form.name)
                     localStorage.setItem("username", this.loginForm.name)
+                    //todo 这个地方需要将用户id放到url中，传到下一个页面
                     this.$router.push('/homepage')
                 }).catch((err) => {
                     console.log("err")
@@ -142,6 +143,9 @@
             restaurantLogin() {
                 this.axios.post('http://localhost:8080/loginForRestaurant', this.rLoginForm).then(response => {
                     console.log(response)
+                    console.log(this.rLoginForm.restaurantId)
+                    //this.$router.push('/restaurant/' + this.rLoginForm.resaurantId)
+                    this.$router.push({name: 'restaurant', params: {id: this.rLoginForm.restaurantId}})
                 }).catch(err => {
                     console.log(err)
                 })
@@ -151,7 +155,7 @@
 </script>
 
 <style>
-    .el-main {
+    .guide_main {
         background-color: #0d78da;
         line-height:40px;
     }
