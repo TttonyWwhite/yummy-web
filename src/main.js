@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -11,10 +12,12 @@ import VueAMap from 'vue-amap'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/railscasts.css' 
 
+
 Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
 Vue.use(VueAMap)
+
 
 Vue.directive('hljs', el => {
   let blocks = el.querySelectorAll('pre')
@@ -39,8 +42,12 @@ VueAMap.initAMapApiLoader({
 Vue.config.productionTip = false
 
 
+
+
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+Vue.config.devtools = true

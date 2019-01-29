@@ -11,7 +11,7 @@ export default new Router({
       component: resolve => require(['./views/Guide.vue'], resolve)
     },
       {
-        path: '/homepage',
+        path: '/homepage/:id',
         name: 'homepage',
         component: resolve => require(['./views/Homepage.vue'], resolve)
       },

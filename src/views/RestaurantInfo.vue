@@ -23,7 +23,7 @@
 					</template>
 				</el-menu>
 			</el-aside>
-			<el-main >
+			<el-main class="info_main">
 				<keep-alive>
                     <router-view/>
                 </keep-alive>
@@ -86,7 +86,7 @@
 	    line-height: 200px;
 	  }
 
-	 .el-main {
+	 .info_main {
 	 	background-color: #ffffff;
 	 }
 </style>

@@ -8,6 +8,7 @@
                     <p>是商家?</p>
                     <el-button type="success" @click="rdialogVisible = true">登陆后台</el-button>
                     <el-button type="success" @click="gotoSignUpForRestaurant">即刻注册加盟</el-button>
+                    <el-button type="success" @click="tokenTest">Test</el-button>
 
                 </el-col>
                 <el-col :span="8" id="right">
@@ -122,11 +123,15 @@
             },
             login() {
                 this.axios.post('http://localhost:8080/login', this.loginForm).then(response => {
-                    console.log(this.form.name)
+                    console.log(response.data)
                     localStorage.setItem("username", this.loginForm.name)
                     //todo 这个地方需要将用户id放到url中，传到下一个页面
+                    //会得到一个token
+                    localStorage.setItem("JWT_TOKEN", response.data.token)
+                    this.axios.defaults.headers.common['token'] = response.data.token
                     this.$router.push('/homepage')
                 }).catch((err) => {
+                    
                     console.log("err")
                 })
             },
@@ -143,11 +148,22 @@
             restaurantLogin() {
                 this.axios.post('http://localhost:8080/loginForRestaurant', this.rLoginForm).then(response => {
                     console.log(response)
-                    console.log(this.rLoginForm.restaurantId)
-                    //this.$router.push('/restaurant/' + this.rLoginForm.resaurantId)
-                    this.$router.push({name: 'restaurant', params: {id: this.rLoginForm.restaurantId}})
+                    if(response.data.code == 3) {
+                        //不存在的id
+                        this.$message('id不存在,请重新输入')
+                    } else if (response.data.code == 0) {
+                        //登陆成功
+                        this.$router.push({name: 'restaurant', params: {id: this.rLoginForm.restaurantId}})
+                    }
+                    
                 }).catch(err => {
                     console.log(err)
+                })
+            },
+
+            tokenTest() {
+                this.axios.get('http://localhost:8080/test').then(response => {
+                    console.log(response)
                 })
             }
         }
