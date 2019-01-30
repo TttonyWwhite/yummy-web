@@ -128,6 +128,7 @@
                     //todo 这个地方需要将用户id放到url中，传到下一个页面
                     //会得到一个token
                     localStorage.setItem("JWT_TOKEN", response.data.token)
+                    localStorage.setItem("ID", response.data.member.memberId)
                     this.axios.defaults.headers.common['token'] = response.data.token
                     this.$router.push('/homepage')
                 }).catch((err) => {
@@ -153,6 +154,7 @@
                         this.$message('id不存在,请重新输入')
                     } else if (response.data.code == 0) {
                         //登陆成功
+                        localStorage.setItem("ID", this.rLoginForm.restaurantId)
                         this.$router.push({name: 'restaurant', params: {id: this.rLoginForm.restaurantId}})
                     }
                     

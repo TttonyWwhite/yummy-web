@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -13,6 +13,9 @@ export default new Router({
       {
         path: '/homepage/:id',
         name: 'homepage',
+        meta: {
+          requireAuth: true
+        },
         component: resolve => require(['./views/Homepage.vue'], resolve)
       },
       {
@@ -23,6 +26,9 @@ export default new Router({
       {
         path: '/member',
         name: 'personalInfo',
+        meta: {
+          requireAuth: true
+        },
         component: resolve => require(['./views/PersonalInfo.vue'], resolve),
         children: [
 
@@ -31,6 +37,9 @@ export default new Router({
       {
         path: '/restaurant/:id',
         name: 'restaurant',
+        meta: {
+          requireAuth: true
+        },
         component: resolve => require(['./views/RestaurantInfo.vue'], resolve),
         children: [
             {
@@ -49,3 +58,21 @@ export default new Router({
     // }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(res => res.meta.requireAuth)) { //判断是否需要登陆权限
+    if (localStorage.getItem('ID')) { //判断是否登陆
+      next()
+    } else { //如果没有登陆
+      next({
+        path: '/',
+        query: {redirect: to.fullPath}
+      })
+    }
+  } else {
+    next()
+  }
+})
+
+export default router
+
