@@ -8,9 +8,9 @@
 		
 		<span style="display:block;"> 配送费: {{ deliveryCost }} ¥ </span>
 	</div> -->
-		<div style="margin-top:10px;">
+		<div >
 			<img :src="imgUrl" width="70" height="70" style="float: left">
-			<span> {{ shopName }} <br> 配送费: {{ deliveryCost }} ¥ </span>
+			<span>{{shopName}}<br> 配送费: {{ deliveryCost }} ¥ </span>
 		</div>
 	</div>
 </template>
@@ -47,6 +47,7 @@
 
 	#card_content {
 		overflow: hidden;
+		height: 300px;
 	}
 
 	.over {

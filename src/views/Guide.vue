@@ -8,7 +8,6 @@
                     <p>是商家?</p>
                     <el-button type="success" @click="rdialogVisible = true">登陆后台</el-button>
                     <el-button type="success" @click="gotoSignUpForRestaurant">即刻注册加盟</el-button>
-                    <el-button type="success" @click="tokenTest">Test</el-button>
 
                 </el-col>
                 <el-col :span="8" id="right">
@@ -130,10 +129,9 @@
                     localStorage.setItem("JWT_TOKEN", response.data.token)
                     localStorage.setItem("ID", response.data.member.memberId)
                     this.axios.defaults.headers.common['token'] = response.data.token
-                    this.$router.push('/homepage')
+                    this.$router.push({name: 'homepage', params: {id: response.data.member.memberId}})
                 }).catch((err) => {
                     
-                    console.log("err")
                 })
             },
             handleClose(done) {
@@ -148,7 +146,6 @@
             },
             restaurantLogin() {
                 this.axios.post('http://localhost:8080/loginForRestaurant', this.rLoginForm).then(response => {
-                    console.log(response)
                     if(response.data.code == 3) {
                         //不存在的id
                         this.$message('id不存在,请重新输入')
@@ -159,15 +156,9 @@
                     }
                     
                 }).catch(err => {
-                    console.log(err)
+                    
                 })
             },
-
-            tokenTest() {
-                this.axios.get('http://localhost:8080/test').then(response => {
-                    console.log(response)
-                })
-            }
         }
     }
 </script>

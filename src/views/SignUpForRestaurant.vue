@@ -73,6 +73,10 @@
 </template>
 
 <script>
+function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 import mapDrag from '../components/mapDrag'
     export default {
     
@@ -119,6 +123,10 @@ import mapDrag from '../components/mapDrag'
             password: this.form.password
         }).then(response =>  {
             console.log(response)
+            this.$message('注册成功，请前往主页登陆')
+            sleep(2000).then(() => {
+              this.$router.push('/')
+            })
         }).catch((err)=> {
             console.log("err")
         })
