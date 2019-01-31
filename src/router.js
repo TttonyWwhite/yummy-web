@@ -47,6 +47,11 @@ const router = new Router({
               component: resolve => require(['./views/ReleaseFood.vue'], resolve)
             }
         ]
+      },
+      {
+        path: '/shop',
+        name: 'shop',
+        component: resolve => require(['./views/Shop.vue'], resolve)
       }   
     // {
     //   path: '/about',
