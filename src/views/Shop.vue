@@ -2,7 +2,8 @@
 	<div>
 		<div class="page-top">
 			<Header></Header>
-			<Banner></Banner>
+
+			<Banner :shop="this.shop"></Banner>
 		</div>
 	<div class="container">
 		
@@ -27,15 +28,23 @@
 	export default {
 		name: 'shop',
 		created() {
-			//从服务器拿到这个店铺的所有商品信息
-			
-		 //要从url中得到当前的餐厅id
+			//要从url中得到当前的餐厅id
+			//要从服务器拿到店铺的信息
+
 			let param = new URLSearchParams()
 			param.append("restaurantId", "3560465")
+
+			this.axios.post('http://localhost:8080/getRestaurant', param).then(response => {
+				console.log(response.data.data)
+				this.shop = response.data.data
+			})
+			//从服务器拿到这个店铺的所有商品信息	
+			
 		 	this.axios.post('http://localhost:8080/getFoods', param).then(response => {
 		 		console.log(response.data.data)
 		 		this.products = response.data.data
 		 	})
+
 		},
 		components: {
 			ShoppingCart,
@@ -45,7 +54,10 @@
 		},
 		data() {
 			return {
-				products: []
+				products: [],
+				shop: {
+					
+				}
 			}
 		}
 
@@ -85,9 +97,5 @@
   .shopping-cart {
     width: 25%;
     float: left;
-  }
-
-  .page-top {
-  	margin-top: 20px;
   }
 </style>

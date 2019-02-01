@@ -4,18 +4,18 @@
 	<el-row>
 		<el-col :span="2">
 			<div id="banner_img">
-				<img src="http://plu6c3si4.bkt.clouddn.com/%E7%8E%8B%E5%A9%86%E6%B2%B9%E7%82%B8.png" class="round_icon" alt="">
+				<img :src="shop.imgUrl" class="round_icon" alt="">
 			</div>
 			
 		</el-col>
 		<el-col :span="4">
 			<div class="banner_text">
-				<span >{{shopName}} <br> rate: {{rate}}</span>
+				<span >{{shop.shopName}} <br> rate: {{shop.rate}}</span>
 			</div>
 		</el-col>
 		<el-col :span="2">
 			<div class="banner_text">
-				<span> 配送费 <br> ¥{{deliveryCost}}</span>
+				<span> 配送费 <br> ¥{{shop.deliveryCost}}</span>
 			</div>
 		</el-col>
 		<el-col :span="18">
@@ -29,11 +29,12 @@
 <script>
 	export default {
 		name: 'banner',
+		props: ['shop'],
 		data() {
 			return {
-				shopName: '王婆油炸',
-				rate: 4,
-				deliveryCost: 3
+				// shopName: '王婆油炸',
+				// rate: 4,
+				// deliveryCost: 3
 			}
 		}
 	}

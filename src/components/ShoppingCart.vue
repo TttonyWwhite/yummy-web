@@ -1,7 +1,7 @@
 <template>
 	<div class="cart">
-		<p class="cart-title">Shopping Cart</p>
-		<p class="cart-empty" v-if="total == 0">Your Shopping Cart is Empty!</p>
+		<p class="cart-title">购物车</p>
+		<p class="cart-empty" v-if="total == 0">购物车空空如也</p>
 		<div class="items" v-else>
 			<div class="item clearfix" v-for="item in items">
 				<img :src="item.image" class="item-image">
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="cart-total">
-			<span>Total</span>
+			<span>总价</span>
 			<span class="right">¥ {{total}}</span>
 		</div>
 	</div>
