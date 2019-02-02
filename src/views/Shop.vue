@@ -30,9 +30,11 @@
 		created() {
 			//要从url中得到当前的餐厅id
 			//要从服务器拿到店铺的信息
+			let id = this.$route.params.id
+			console.log(id)
 
 			let param = new URLSearchParams()
-			param.append("restaurantId", "3560465")
+			param.append("restaurantId", id)
 
 			this.axios.post('http://localhost:8080/getRestaurant', param).then(response => {
 				console.log(response.data.data)

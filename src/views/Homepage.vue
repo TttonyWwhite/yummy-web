@@ -8,7 +8,7 @@
             </el-col> -->
             <el-col :sm="12" :md="6" v-for="(card, index) in showShopList" :key="card.id" >
                 <Card :shopName="card.shopName" :rate="card.rate" :deliveryCost="card.deliveryCost"
-                        :imgUrl="card.imgUrl"></Card>
+                        :imgUrl="card.imgUrl" :restaurantId="card.restaurantId"></Card>
             </el-col>
         </el-row>
         </div>
@@ -48,6 +48,8 @@
             showShopList() {
                 return this.shopList.slice((this.currentPage - 1) * this.perpage, this.currentPage * this.perpage);
             }
+        },
+        methods: {
         }
     }
 </script>

@@ -8,7 +8,7 @@
 		
 		<span style="display:block;"> 配送费: {{ deliveryCost }} ¥ </span>
 	</div> -->
-		<div >
+		<div @click="onClick">
 			<img :src="imgUrl" width="70" height="70" style="float: left">
 			<span>{{shopName}}<br> 配送费: {{ deliveryCost }} ¥ </span>
 		</div>
@@ -34,10 +34,29 @@
 			imgUrl: {
 				type: String,
 				default: ''
+			},
+			restaurantId: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
 			return {
+				restaurant_id: ''
+			}
+		},
+		methods: {
+			onClick() {
+				console.log(this.restaurant_id)
+				this.$router.push({name: 'shop', params: {id: this.restaurant_id}})
+			}
+		},
+		watch: {
+			restaurantId: {
+				immediate: true,
+				handler(val) {
+					this.restaurant_id = val;
+				}
 			}
 		}
 	}
