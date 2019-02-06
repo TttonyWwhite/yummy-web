@@ -25,6 +25,7 @@
 	import Banner from '../components/banner'
 	import ShoppingCart from '../components/ShoppingCart'
 	import Product from '../components/Product'
+	import State from '../shoppingCartState'
 	export default {
 		name: 'shop',
 		created() {
@@ -61,6 +62,12 @@
 					
 				}
 			}
+		},
+		methods: {
+			// onClickBtn() {
+			
+			// 	console.log(State.data.cart[0].id)
+			// }
 		}
 
 	}

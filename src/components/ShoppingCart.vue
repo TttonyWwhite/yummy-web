@@ -15,9 +15,11 @@
 			</div>
 		</div>
 		<div class="cart-total">
-			<span>总价</span>
-			<span class="right">¥ {{total}}</span>
+			<span>总价 &nbsp;&nbsp;</span>
+			<span>¥ {{total}}</span>
+			<span class="right"><el-button type="success" @click="order">立即下单</el-button></span>
 		</div>
+		
 	</div>
 </template>
 
@@ -35,6 +37,34 @@
 			total() {
 				return _.sumBy(this.items, function(item) {
 					return (item.price * item.qty)
+				})
+			}
+		},
+		methods: {
+			order() {
+				var total = _.sumBy(this.items, function(item) {
+					return (item.price * item.qty)
+				})
+
+				let foodsArr = []
+				for (var i = 0;i < this.items.length;i++) {
+					foodsArr.push(this.items[i].id)
+				}
+
+				let data = {
+					member_id: localStorage.getItem('ID'),
+					restaurant_id: this.$route.params.id,
+					order_time: new Date(),
+					expect_time: new Date(),
+					price: total,
+					freight: 3,
+					state: 'active',
+					foods: foodsArr
+				}
+
+				console.log(data)
+				this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
+					console.log(response.data)
 				})
 			}
 		}
@@ -65,7 +95,7 @@
 	.cart-total {
 		background: #F1F1F1;
 	    margin: 0;
-	    padding: 0.75em;
+	    padding: 1em;
 	}
 
 	.items {
@@ -78,7 +108,7 @@
 	}
 
 	.right {
-		float: right;
+		margin-left: 50px;
 	}
 
 	.item-image {
