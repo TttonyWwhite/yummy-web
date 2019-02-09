@@ -17,8 +17,57 @@
 		<div class="cart-total">
 			<span>总价 &nbsp;&nbsp;</span>
 			<span>¥ {{total}}</span>
-			<span class="right"><el-button type="success" @click="order">立即下单</el-button></span>
+			<span class="right"><el-button type="success" @click="paymentVisible = true">立即下单</el-button></span>
 		</div>
+
+		<el-dialog 
+			title="付款"
+			:visible.sync="paymentVisible"
+			width="50%"
+            :before-close="handleClose">
+            <el-form>
+            	<el-form-item>
+		            <el-table
+		            	:data="items">
+		            	<el-table-column
+		            		prop="title"
+		            		label="名称"
+		            		width="155">
+		            	</el-table-column>
+		            	<el-table-column
+		            		prop="price"
+		            		label="单价"
+		            		width="155">
+		            	</el-table-column>
+		            	<el-table-column
+		            		prop="qty"
+		            		label="数量"
+		            		width="155">
+		            	</el-table-column>
+		            </el-table>
+		        </el-form-item>
+		        <el-form-item>
+		        	<el-row>
+		        		<el-col :span="8">
+		        			<span class="payItem">总价 ¥{{total}}  </span>
+		        		</el-col>
+
+		        		<el-col :span="6">
+		        			<el-button class="payItem" type="primary" @click="paymentVisible = false">取消</el-button>
+		        		</el-col>
+
+		        		<el-col :span="10">
+		        			<el-button class="payItem" type="success" @click="order">确认支付</el-button>
+		        		</el-col>
+
+
+		        	</el-row>
+		        	
+		        	
+		        </el-form-item>
+
+		    </el-form>
+        </el-dialog>
 		
 	</div>
 </template>
@@ -30,7 +79,8 @@
 	export default {
 		data() {
 			return {
-				items: State.data.cart
+				items: State.data.cart,
+				paymentVisible: false
 			}
 		},
 		computed: {
@@ -52,21 +102,45 @@
 				}
 
 				let data = {
-					member_id: localStorage.getItem('ID'),
-					restaurant_id: this.$route.params.id,
-					order_time: new Date(),
-					expect_time: new Date(),
-					price: total,
-					freight: 3,
-					state: 'active',
-					foods: foodsArr
+					items: this.items,
+					restaurantId: this.$route.params.id,
+					memberId: localStorage.getItem("ID"),
+					orderTime: new Date(),
+					expectTime: new Date(),
+					freight: 3
 				}
 
 				console.log(data)
 				this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
 					console.log(response.data)
 				})
-			}
+			},
+
+			getNowFormatDate() {
+				var date = new Date()
+				var seperator1 = "-"
+    			var seperator2 = ":"
+    			var month = date.getMonth() + 1
+    			var strDate = date.getDate()
+    			 if (month >= 1 && month <= 9) {
+				        month = "0" + month;
+				    }
+				 if (strDate >= 0 && strDate <= 9) {
+				        strDate = "0" + strDate;
+				    }
+				var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+				            + " " + date.getHours() + seperator2 + date.getMinutes()
+				            + seperator2 + date.getSeconds();
+				return currentdate;
+			},
+
+			handleClose(done) {
+                this.$confirm('确认关闭？')
+                  .then(_ => {
+                    done();
+                  })
+                  .catch(_ => {});
+            },
 		}
 	}
 </script>
@@ -130,5 +204,10 @@
 	.item-price {
 		margin: 0;
 		font-size: 0.9em;
+	}
+
+	.payItem {
+		margin-left: 12px;
+		float: left;
 	}
 </style>

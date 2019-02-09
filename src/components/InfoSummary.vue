@@ -2,11 +2,14 @@
 	<div id="view"> 
 		<el-row :gutter="20"> 
 			<el-col :span="2">
-				&nbsp;
+				<div class="user_img">
+					<img src="http://plu6c3si4.bkt.clouddn.com/%E5%A6%99%E5%A6%99%E5%A4%B4%E5%83%8F.jpg" class="round_icon" alt="">
+				</div>	
 			</el-col>
-			<el-col :span="6">
-				<img src="http://plu6c3si4.bkt.clouddn.com/%E5%A6%99%E5%A6%99%E5%A4%B4%E5%83%8F.jpg" class="round_icon" alt="">
-				<span> 中午好, illiant </span>
+			<el-col :span="4">
+				<div class="welcome">
+					<span> 中午好, illiant </span>
+				</div>
 			</el-col>
 			<el-col :span="5">
 				<span> 我的红包 </span>
@@ -50,5 +53,13 @@
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
+	}
+
+	.user_img {
+		margin-left: 10px;
+	}
+
+	.welcome {
+		margin-top: 10px;
 	}
 </style>
