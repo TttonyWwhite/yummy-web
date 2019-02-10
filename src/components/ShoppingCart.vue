@@ -23,7 +23,7 @@
 		<el-dialog 
 			title="付款"
 			:visible.sync="paymentVisible"
-			width="50%"
+			width="36%"
             :before-close="handleClose">
             <el-form>
             	<el-form-item>
@@ -114,8 +114,8 @@
 				this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
 					console.log(response.data)
 				})
-
-				this.$router.push('/member')
+				//应该跳到订单详情页面
+				this.$router.push({name: 'member', params: {id: localStorage.getItem("ID")}})
 			},
 
 			getNowFormatDate() {

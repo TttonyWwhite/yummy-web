@@ -9,11 +9,11 @@
         </el-col>
 
         <el-col :span="4">
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#0d78da" text-color="#ffffff">
+            <el-menu :default-active="this.$router.path" router class="el-menu-demo" mode="horizontal" background-color="#0d78da" text-color="#ffffff">
                 <el-submenu index="1">
                     <template slot="title"> {{ name }} </template>
-                    <el-menu-item index="1-1">个人中心</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
+                    <el-menu-item  :index="targetIndex">个人中心</el-menu-item>
+                    
                 </el-submenu>
             </el-menu>
             
@@ -28,6 +28,11 @@
         data() {
             return {
                 activeIndex: '1'
+            }
+        },
+        computed: {
+            targetIndex: function() {
+                return '/member/' + localStorage.getItem("ID")
             }
         }
     }

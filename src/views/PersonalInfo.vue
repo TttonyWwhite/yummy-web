@@ -23,7 +23,7 @@
 			<el-main >
 				<!--todo 显示最近订单和简单的个人信息，比如账户余额 -->
 				<InfoSummary></InfoSummary>
-				<RecentOrder></RecentOrder>
+				<RecentOrder :order="this.order"></RecentOrder>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -46,13 +46,34 @@
 				username: '',
 				form: {
 					name: ''
+				},
+				order: {
+					image: '',
+					orderId: '',
+					price: 0,
+					state: '',
+					time: '',
+					title: ''
 				}
 			}
 		},
 		mounted() {
 			this.username = localStorage.getItem('username')
 			this.form.name = localStorage.getItem('username')
+			//从后台拿数据
+			let param = new URLSearchParams()
+			param.append("memberId", localStorage.getItem('ID'))
+			this.axios.post('http://localhost:8080/getOrders', param).then(response => {
+				console.log(response.data.data)
+				this.order = response.data.data
+			})	
 
+			if (localStorage.getItem('reloaded')) {
+				localStorage.removeItem('reloaded')
+			} else {
+				localStorage.setItem('reloaded', '1')
+				location.reload()
+			}
 			
 		}
 	}

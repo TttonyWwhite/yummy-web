@@ -25,8 +25,8 @@ const router = new Router({
       },
       //需要加上id
       {
-        path: '/member',
-        name: 'personalInfo',
+        path: '/member/:id',
+        name: 'member',
         meta: {
           requireAuth: true
         },
