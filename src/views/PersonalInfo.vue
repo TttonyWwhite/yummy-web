@@ -5,7 +5,7 @@
 			</el-header>
 		<el-container>
 			<el-aside width="200px">
-				<el-menu class="el-menu-vertical-demo">
+				<!-- <el-menu class="el-menu-vertical-demo">
 					<el-menu-item index="1">
 						<i class="el-icon-menu"></i>
 						<span slot="title">个人中心</span>
@@ -18,12 +18,32 @@
 						<i class="el-icon-menu"></i>
 						<span slot="title">我的资产</span>
 					</el-menu-item>
+				</el-menu> -->
+				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" unique-opened router>
+					<template v-for="item in items">
+						<template v-if="item.subs">
+							<el-submenu :index="item.index">
+								<template slot="title">
+									<i :class="item.icon"></i> {{ item.title }}
+								</template>
+								<el-menu-item v-for="(subItem, i) in item.subs" :key="i" :index="subItem.index"> {{ subItem.title }} </el-menu-item>
+							</el-submenu>
+						</template>
+						<template v-else>
+							<el-menu-item :index="item.index">
+								<i :class="item.icon"></i> {{ item.title }}
+							</el-menu-item>
+						</template>
+					</template>
 				</el-menu>
 			</el-aside>
 			<el-main >
 				<!--todo 显示最近订单和简单的个人信息，比如账户余额 -->
-				<InfoSummary></InfoSummary>
-				<RecentOrder :order="this.order"></RecentOrder>
+				<!-- <InfoSummary></InfoSummary>
+				<RecentOrder :order="this.order"></RecentOrder> -->
+				<keep-alive>
+					<router-view/>
+				</keep-alive>
 			</el-main>
 		</el-container>
 	</el-container>
@@ -54,26 +74,26 @@
 					state: '',
 					time: '',
 					title: ''
-				}
+				},
+				items: [
+					{
+						icon: 'el-icon-menu',
+						index: '/personCenter' + '/' + this.$route.params.id,
+						title: '餐厅信息'
+					},
+					{
+						icon: 'el-icon-menu',
+						index: '/settings',
+						title: '账户设定'
+					}
+				]
 			}
 		},
 		mounted() {
 			this.username = localStorage.getItem('username')
 			this.form.name = localStorage.getItem('username')
 			//从后台拿数据
-			let param = new URLSearchParams()
-			param.append("memberId", localStorage.getItem('ID'))
-			this.axios.post('http://localhost:8080/getOrders', param).then(response => {
-				console.log(response.data.data)
-				this.order = response.data.data
-			})	
-
-			if (localStorage.getItem('reloaded')) {
-				localStorage.removeItem('reloaded')
-			} else {
-				localStorage.setItem('reloaded', '1')
-				location.reload()
-			}
+			
 			
 		}
 	}

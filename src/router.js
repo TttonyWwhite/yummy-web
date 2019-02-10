@@ -32,7 +32,10 @@ const router = new Router({
         },
         component: resolve => require(['./views/PersonalInfo.vue'], resolve),
         children: [
-
+            {
+              path: '/personCenter/:id',
+              component: resolve => require(['./views/PersonalCenter.vue'], resolve)
+            }
         ]
       },
       {
