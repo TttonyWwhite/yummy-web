@@ -23,6 +23,7 @@ const router = new Router({
         name: 'signUpForRestaurant',
         component: resolve => require(['./views/SignUpForRestaurant.vue'], resolve)
       },
+      //需要加上id
       {
         path: '/member',
         name: 'personalInfo',

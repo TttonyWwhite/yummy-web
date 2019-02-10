@@ -114,6 +114,8 @@
 				this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
 					console.log(response.data)
 				})
+
+				this.$router.push('/member')
 			},
 
 			getNowFormatDate() {

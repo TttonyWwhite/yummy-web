@@ -52,6 +52,8 @@
 		mounted() {
 			this.username = localStorage.getItem('username')
 			this.form.name = localStorage.getItem('username')
+
+			
 		}
 	}
 </script>

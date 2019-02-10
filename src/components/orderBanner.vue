@@ -22,7 +22,9 @@
 			</el-col>
 
 			<el-col :span="4">
-				<span>订单已完成</span>
+				<span>{{order.state}}</span>
+				<br>
+				<span><a class="order_detail" href="">订单详情</a></span>
 			</el-col>
 		</el-row>
 	</div>
@@ -40,5 +42,9 @@
 	.restaurant_intro {
 		float: left;
 		margin-left: 60px;
+	}
+
+	.order_detail {
+		font-size: 8px;
 	}
 </style>

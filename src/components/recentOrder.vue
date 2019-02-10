@@ -6,7 +6,9 @@
 		</el-tabs>
 		
 		<!--需要一个表格,用于展示最近订单中的前几条 -->
-		<OrderBanner :order="this.order"></OrderBanner>
+		<el-row v-for="(item, index) in order" :key="item.orderId">
+			<OrderBanner :order="item"></OrderBanner>
+		</el-row>
 	</div>
 </template>
 
@@ -22,14 +24,19 @@
 			return {
 				activeName: 'first',
 				order: {
-					image: 'http://plu6c3si4.bkt.clouddn.com/%E6%8B%9B%E7%89%8C1.jpg',
-					title: '王婆油炸',
-					time: '2019-02-05 15:40',
-					price: '18.5',
-
 				}
 			}
 		},
+
+		mounted() {
+			//从后台拿数据
+			let param = new URLSearchParams()
+			param.append("memberId", localStorage.getItem('ID'))
+			this.axios.post('http://localhost:8080/getOrders', param).then(response => {
+				console.log(response.data.data)
+				this.order = response.data.data
+			})
+		}
 		
 	}
 </script>
