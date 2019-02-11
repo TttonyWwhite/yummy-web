@@ -26,16 +26,15 @@
 		</el-tabs>
 
 		<div class="address_container">
-			<el-row :gutter="12">
-				<!-- <el-col :span="8">
-					<AddressCard :addressInfo="addressInfo"></AddressCard>
-				</el-col> -->
-				<!-- <AddressCard v-for="item in address" :addressInfo="item"></AddressCard> -->
+			<el-row :gutter="20">
 				<el-col :span="8" v-for="(item, index) in address" :key="item.addressId">
-					<AddressCard :addressInfo="item" @addressInfoChange="onInfoChange"></AddressCard>
+					<AddressCard :addressInfo="item" @addressInfoChange="onInfoChange" @addressAdded="onAdd"></AddressCard>
 				</el-col>
 			</el-row>
+
 		</div>
+
+		
 	</div>
 </template>
 
@@ -56,7 +55,14 @@
 				},
 				nameChange: true,
 				phoneNumberChange: true,
-				address: []
+				address: [],
+				emptyAddress: {
+					memberId: this.$route.params.id,
+					address: '',
+					contactName: '',
+					phoneNumber: ''
+				}
+				
 			}
 		},
 		methods: {
@@ -67,6 +73,10 @@
 					}
 				}
 			},
+			onAdd(val) {
+				Vue.set(this.address, this.address.length-1, val) 
+				Vue.set(this.address, this.address.length, this.emptyAddress) //需要把空的地址重新加上去
+			},
 			changeInfo() {
 				this.nameChange = false;
 				this.phoneNumberChange = false;
@@ -74,11 +84,12 @@
 			submitChange() {
 				console.log(this.memberInfo)
 				this.axios.post('http://localhost:8080/modifyInfo', this.memberInfo).then(response => {
-					console.log(response)
 					this.nameChange = true
 					this.phoneNumberChange = true
 				})
-			}
+			},
+			
+			
 		},
 
 		mounted() {
@@ -88,6 +99,9 @@
 				
 				this.memberInfo = response.data.data
 				this.address = response.data.data.addresses
+				//加一个空的地址，为了最后显示一个add卡片
+				
+				this.address.push(this.emptyAddress)
 			})
 		}
 	}
@@ -98,4 +112,6 @@
 		float: left;
 		margin-left: 80px;
 	}
+
+	
 </style>
