@@ -5,20 +5,6 @@
 			</el-header>
 		<el-container>
 			<el-aside width="200px">
-				<!-- <el-menu class="el-menu-vertical-demo">
-					<el-menu-item index="1">
-						<i class="el-icon-menu"></i>
-						<span slot="title">个人中心</span>
-					</el-menu-item>
-					<el-menu-item index="2">
-						<i class="el-icon-menu"></i>
-						<span slot="title">我的订单</span>
-					</el-menu-item>
-					<el-menu-item index="3">
-						<i class="el-icon-menu"></i>
-						<span slot="title">我的资产</span>
-					</el-menu-item>
-				</el-menu> -->
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" unique-opened router>
 					<template v-for="item in items">
 						<template v-if="item.subs">
@@ -38,9 +24,6 @@
 				</el-menu>
 			</el-aside>
 			<el-main >
-				<!--todo 显示最近订单和简单的个人信息，比如账户余额 -->
-				<!-- <InfoSummary></InfoSummary>
-				<RecentOrder :order="this.order"></RecentOrder> -->
 				<keep-alive>
 					<router-view/>
 				</keep-alive>
@@ -78,12 +61,12 @@
 				items: [
 					{
 						icon: 'el-icon-menu',
-						index: '/personCenter' + '/' + this.$route.params.id,
+						index: '/personalCenter' + '/' + this.$route.params.id,
 						title: '餐厅信息'
 					},
 					{
 						icon: 'el-icon-menu',
-						index: '/settings',
+						index: '/settings' + '/' + this.$route.params.id,
 						title: '账户设定'
 					}
 				]
@@ -92,9 +75,6 @@
 		mounted() {
 			this.username = localStorage.getItem('username')
 			this.form.name = localStorage.getItem('username')
-			//从后台拿数据
-			
-			
 		}
 	}
 </script>

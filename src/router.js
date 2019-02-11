@@ -33,8 +33,12 @@ const router = new Router({
         component: resolve => require(['./views/PersonalInfo.vue'], resolve),
         children: [
             {
-              path: '/personCenter/:id',
+              path: '/personalCenter/:id',
               component: resolve => require(['./views/PersonalCenter.vue'], resolve)
+            },
+            {
+              path: '/settings/:id',
+              component: resolve => require(['./views/MemberSettings.vue'], resolve)
             }
         ]
       },
