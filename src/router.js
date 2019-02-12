@@ -34,6 +34,7 @@ const router = new Router({
         children: [
             {
               path: '/personalCenter/:id',
+              name: 'personalCenter',
               component: resolve => require(['./views/PersonalCenter.vue'], resolve)
             },
             {

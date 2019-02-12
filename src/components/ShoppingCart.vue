@@ -46,6 +46,16 @@
 		            	</el-table-column>
 		            </el-table>
 		        </el-form-item>
+		        <el-form-item label="收货地址">
+		        	<el-select v-model="address_value" placeholder="请选择收货地址">
+		        		<el-option
+		        			v-for="item in options"
+		        			:key="item.value"
+		        			:label="item.label"
+		        			:value="item.value">
+		        		</el-option>
+		        	</el-select>
+		        </el-form-item>
 		        <el-form-item>
 		        	<el-row>
 		        		<el-col :span="8">
@@ -80,7 +90,11 @@
 		data() {
 			return {
 				items: State.data.cart,
-				paymentVisible: false
+				paymentVisible: false,
+				options: [
+					
+				],
+				address_value: ''
 			}
 		},
 		computed: {
@@ -101,13 +115,18 @@
 					foodsArr.push(this.items[i].id)
 				}
 
+				let address_number = new Number(this.address_value)
+				console.log('this is the selected address')
+				console.log(this.options[address_number].label)
+
 				let data = {
 					items: this.items,
 					restaurantId: this.$route.params.id,
 					memberId: localStorage.getItem("ID"),
 					orderTime: new Date(),
 					expectTime: new Date(),
-					freight: 3
+					freight: 3,
+					address: this.options[address_number].label
 				}
 
 				console.log(data)
@@ -115,7 +134,7 @@
 					console.log(response.data)
 				})
 				//应该跳到订单详情页面
-				this.$router.push({name: 'member', params: {id: localStorage.getItem("ID")}})
+				this.$router.push({name: 'personalCenter', params: {id: localStorage.getItem("ID")}})
 			},
 
 			getNowFormatDate() {
@@ -143,6 +162,20 @@
                   })
                   .catch(_ => {});
             },
+		},
+
+		mounted() {
+			//从后台拉取收货地址
+			let param = new URLSearchParams()
+			param.append("memberId", localStorage.getItem("ID"))
+			this.axios.post('http://localhost:8080/getAddress', param).then(response => {
+				
+				//this.options = response.data.data
+				for (var i = 0;i < response.data.data.length;i++) {
+					let temp = {value: i, label: response.data.data[i]}
+					this.options.push(temp)
+				}
+			})
 		}
 	}
 </script>
