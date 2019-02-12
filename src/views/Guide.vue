@@ -123,15 +123,24 @@
             login() {
                 this.axios.post('http://localhost:8080/login', this.loginForm).then(response => {
                     console.log(response.data)
-                    localStorage.setItem("username", this.loginForm.name)
-                    //todo 这个地方需要将用户id放到url中，传到下一个页面
-                    //会得到一个token
-                    localStorage.setItem("JWT_TOKEN", response.data.token)
-                    localStorage.setItem("ID", response.data.member.memberId)
-                    this.axios.defaults.headers.common['token'] = response.data.token
-                    this.$router.push({name: 'homepage', params: {id: response.data.member.memberId}})
-                }).catch((err) => {
+                    if (response.data.code == 11115) {
+                        this.$message("用户不存在")
+                    } else if (response.data.code == 11116) {
+                        this.$message("密码错误")
+                    } else if (response.data.code == 11117) {
+                        this.$message("用户已注销")
+                    } else {
+                        localStorage.setItem("username", this.loginForm.name)
+                        //todo 这个地方需要将用户id放到url中，传到下一个页面
+                        //会得到一个token
+                        localStorage.setItem("JWT_TOKEN", response.data.data.token)
+                        localStorage.setItem("ID", response.data.data.member.memberId)
+                        this.axios.defaults.headers.common['token'] = response.data.data.token
+                        this.$router.push({name: 'homepage', params: {id: response.data.data.member.memberId}})
+                    }
                     
+                }).catch((err) => {
+                    console.log(err)
                 })
             },
             handleClose(done) {

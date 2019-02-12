@@ -15,10 +15,17 @@
 		</el-form>
 
 		<el-row>
-			<div class="btns">
-				<el-button type="primary" @click="changeInfo">修改</el-button>
-				<el-button type="primary" @click="submitChange">提交</el-button>
-			</div>
+			<el-col :span="12">
+				<div class="btns">
+					<el-button type="primary" @click="changeInfo">修改</el-button>
+					<el-button type="primary" @click="submitChange">提交</el-button>
+				</div>
+			</el-col>
+			<el-col :span="12">
+				<div class="writeoff_btn">
+					<el-button type="danger" @click="alertVisible = true">注销</el-button>
+				</div>
+			</el-col>
 		</el-row>
 
 		<el-tabs v-model="activeName1">
@@ -34,11 +41,25 @@
 
 		</div>
 
+		<el-dialog
+			title="提示"
+			:visible.sync="alertVisible"
+			width="30%">
+			<div class="writeoff_alert">
+				<h2>您确定要注销账号吗？</h2>
+				<el-button type="danger" @click="writeOff">确定</el-button>
+			</div>
+		</el-dialog>
+
 		
 	</div>
 </template>
 
 <script>
+	function sleep(time) {
+	  return new Promise((resolve) => setTimeout(resolve, time));
+	}
+
 	import AddressCard from '../components/addressCard'
 	import Vue from 'vue'
 	export default {
@@ -61,7 +82,8 @@
 					address: '',
 					contactName: '',
 					phoneNumber: ''
-				}
+				},
+				alertVisible: false
 				
 			}
 		},
@@ -88,6 +110,17 @@
 					this.phoneNumberChange = true
 				})
 			},
+			writeOff() {
+				let param = new URLSearchParams()
+				param.append("memberId", this.$route.params.id)
+				this.axios.post('http://localhost:8080/writeOff', param).then(response => {
+					//console.log(response)
+					this.$message('注销成功，即将前往首页')
+					sleep(2000).then(() => {
+						this.$router.push('/')
+					})
+				})
+			}
 			
 			
 		},
@@ -113,5 +146,13 @@
 		margin-left: 80px;
 	}
 
+	.writeoff_btn {
+		float: right;
+		margin-right: 130px;
+	}
+
+	.writeoff_alert {
+		margin-bottom:  30px;
+	}
 	
 </style>
