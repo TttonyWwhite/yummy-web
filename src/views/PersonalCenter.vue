@@ -34,6 +34,7 @@
 			this.axios.post('http://localhost:8080/getOrders', param).then(response => {
 				console.log(response.data.data)
 				this.order = response.data.data
+				this.order.reverse()
 			})	
 
 			if (localStorage.getItem('reloaded')) {

@@ -59,7 +59,8 @@
 		        <el-form-item>
 		        	<el-row>
 		        		<el-col :span="8">
-		        			<span class="payItem">总价 ¥{{total}}  </span>
+		        			<span class="payItem">总价 ¥{{totalAfterDiscount}}</span>
+		        			<span class="discount_str">{{discount_str}}</span>
 		        		</el-col>
 
 		        		<el-col :span="6">
@@ -94,14 +95,27 @@
 				options: [
 					
 				],
-				address_value: ''
+				address_value: '',
+				discount: 1,
+				discount_str: ''
 			}
 		},
 		computed: {
 			total() {
 				return _.sumBy(this.items, function(item) {
-					return (item.price * item.qty)
+					return (item.price * item.qty) 
 				})
+				
+			},
+			totalAfterDiscount() {
+				var sum = 0
+				for (var i = 0;i < this.items.length;i++) {
+					sum += this.items[i].price * this.items[i].qty
+				}
+
+				sum *= this.discount
+
+				return sum.toFixed(2)
 			}
 		},
 		methods: {
@@ -176,6 +190,27 @@
 					this.options.push(temp)
 				}
 			})
+
+			//从后台获取用户等级以计算折扣
+
+			this.axios.post('http://localhost:8080/getMemberLevel', param).then(response => {
+				var memberLevel = response.data.data
+
+				//这是非常不好的写法！
+				if (memberLevel == 1) {
+					this.discount = 1
+				} else if (memberLevel == 2) {
+					this.discount = 0.95
+					this.discount_str = '5% off'
+				} else if (memberLevel == 3) {
+					this.discount = 0.92
+					this.discount_str = '8% off'
+				} else if (memberLevel == 4) {
+					this.discount = 0.85
+					this.discount_str = '15% off'
+				}
+
+			}) 
 		}
 	}
 </script>
@@ -242,7 +277,11 @@
 	}
 
 	.payItem {
-		margin-left: 12px;
+		margin-left: 5px;
 		float: left;
+	}
+
+	.discount_str {
+		color: red;
 	}
 </style>
