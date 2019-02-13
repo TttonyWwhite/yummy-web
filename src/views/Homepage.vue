@@ -36,6 +36,7 @@
         },
         mounted() {
          this.name = localStorage.getItem('username')
+         localStorage.setItem("ID", this.$route.params.id)
          //从后台拉取店铺数据
          this.axios.get('http://localhost:8080/getAllShops').then(response => {
             console.log(response)

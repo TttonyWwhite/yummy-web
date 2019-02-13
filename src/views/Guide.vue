@@ -109,13 +109,8 @@
             },
             onSubmit() {
                 this.axios.post('http://localhost:8080/signup', this.form).then(response => {
-                    //console.log(response)
-                    //将用户名存到localstorage中
                     localStorage.setItem("username", this.form.name)
-                    // this.$store.dispatch("isLogin", true)
-                    // localStorage.setItem("Flag", "isLogin")
-
-                    this.$router.push('/homepage')
+                    this.$message('已发送验证邮件，请查看您的邮箱')
                 }).catch((err)=> {
                     console.log("err")
                 })
@@ -123,11 +118,11 @@
             login() {
                 this.axios.post('http://localhost:8080/login', this.loginForm).then(response => {
                     console.log(response.data)
-                    if (response.data.code == 11115) {
+                    if (response.data.code == 11111) {
                         this.$message("用户不存在")
-                    } else if (response.data.code == 11116) {
+                    } else if (response.data.code == 11112) {
                         this.$message("密码错误")
-                    } else if (response.data.code == 11117) {
+                    } else if (response.data.code == 11113) {
                         this.$message("用户已注销")
                     } else {
                         localStorage.setItem("username", this.loginForm.name)
