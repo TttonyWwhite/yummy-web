@@ -156,7 +156,7 @@
                     } else if (response.data.code == 0) {
                         //登陆成功
                         localStorage.setItem("ID", this.rLoginForm.restaurantId)
-                        this.$router.push({name: 'restaurant', params: {id: this.rLoginForm.restaurantId}})
+                        this.$router.push({name: 'restaurantCenter', params: {id: this.rLoginForm.restaurantId}})
                     }
                     
                 }).catch(err => {

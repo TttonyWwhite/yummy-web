@@ -33,12 +33,12 @@ const router = new Router({
         component: resolve => require(['./views/PersonalInfo.vue'], resolve),
         children: [
             {
-              path: '/personalCenter/:id',
+              path: 'personalCenter',
               name: 'personalCenter',
               component: resolve => require(['./views/PersonalCenter.vue'], resolve)
             },
             {
-              path: '/settings/:id',
+              path: 'settings',
               component: resolve => require(['./views/MemberSettings.vue'], resolve)
             }
         ]
@@ -52,7 +52,14 @@ const router = new Router({
         component: resolve => require(['./views/RestaurantInfo.vue'], resolve),
         children: [
             {
-              path: '/releaseFood/:id',
+                path: 'restaurantCenter',
+                name: 'restaurantCenter',
+                component: resolve => require(['./views/RestaurantCenter.vue'], resolve)
+            },
+
+            {
+              path: 'releaseFood',
+              name: 'releaseFood',
               component: resolve => require(['./views/ReleaseFood.vue'], resolve)
             }
         ]

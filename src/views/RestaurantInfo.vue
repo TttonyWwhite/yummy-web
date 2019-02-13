@@ -52,17 +52,17 @@
 				items: [
 					{
 						icon: 'el-icon-menu',
-						index: '/restaurant',
+						index: 'restaurantCenter',
 						title: '餐厅信息'
 					},
 					{
 						icon: 'el-icon-menu',
-						index: '/releaseFood' + '/' + this.$route.params.id,
+						index: 'releaseFood',
 						title: '发布菜品'
 					},
 					{
 						icon: 'el-icon-menu',
-						index: '/releaseBargin',
+						index: 'releaseBargin',
 						title: '发布优惠'
 					}
 				]

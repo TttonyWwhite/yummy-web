@@ -32,7 +32,7 @@
         },
         computed: {
             targetIndex: function() {
-                return '/personalCenter/' + localStorage.getItem("ID")
+                return '/member/' + localStorage.getItem("ID") + '/personalCenter'
             }
         }
     }

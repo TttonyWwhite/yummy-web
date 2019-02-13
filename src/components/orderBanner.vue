@@ -24,7 +24,7 @@
 			<el-col :span="4">
 				<span>{{order.state}}</span>
 				<br>
-				<span><a class="order_detail" href="">订单详情</a></span>
+				<span><a class="order_detail" :href="this.detail_url">订单详情</a></span>
 			</el-col>
 		</el-row>
 	</div>
@@ -34,6 +34,13 @@
 	export default {
 		name: 'orderBanner',
 		props: ['order'],
+		computed: {
+			detail_url() {
+				var currentUrl = self.location.href + '/order/'
+				currentUrl += this.order.orderId
+				return currentUrl
+			}
+		}
 
 	}
 </script>

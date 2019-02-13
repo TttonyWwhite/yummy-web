@@ -61,12 +61,12 @@
 				items: [
 					{
 						icon: 'el-icon-menu',
-						index: '/personalCenter' + '/' + this.$route.params.id,
-						title: '餐厅信息'
+						index: 'personalCenter',
+						title: '用户信息'
 					},
 					{
 						icon: 'el-icon-menu',
-						index: '/settings' + '/' + this.$route.params.id,
+						index: 'settings',
 						title: '账户设定'
 					}
 				]
