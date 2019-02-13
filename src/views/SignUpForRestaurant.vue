@@ -55,6 +55,10 @@
             <el-input v-model="form.phoneNumber"></el-input>
           </el-form-item>
 
+          <el-form-item label="邮箱">
+            <el-input v-model="form.email"></el-input>
+          </el-form-item>
+
           <el-form-item label="登陆密码">
             <el-input type="password" v-model="form.password"></el-input>
           </el-form-item>
@@ -90,7 +94,8 @@ import mapDrag from '../components/mapDrag'
           name: '',
           type: [],
           phoneNumber: '',
-          password: ''
+          password: '',
+          email: ''
         },
         dragData: {
          lng: null,
@@ -120,7 +125,8 @@ import mapDrag from '../components/mapDrag'
             phoneNumber: this.form.phoneNumber,
             imgUrl: this.imgUrl,
             shopName: this.form.name,
-            password: this.form.password
+            password: this.form.password,
+            email: this.form.email
         }).then(response =>  {
             console.log(response)
             this.$message('注册成功，请前往主页登陆')
