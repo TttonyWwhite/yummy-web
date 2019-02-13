@@ -48,7 +48,7 @@
 				form: {
 					name: ''
 				},
-				restaurantName: '鸡排店',
+				restaurantName: '',
 				items: [
 					{
 						icon: 'el-icon-menu',
@@ -71,6 +71,12 @@
 		mounted() {
 			// this.username = localStorage.getItem('username')
 			// this.form.name = localStorage.getItem('username')
+			let param = new URLSearchParams()
+			param.append("restaurantId", this.$route.params.id)
+			this.axios.post('http://localhost:8080/getRestaurant', param).then(response => {
+				console.log(response)
+				this.restaurantName = response.data.data.shopName
+			})
 		},
 		computed: {
 		}
