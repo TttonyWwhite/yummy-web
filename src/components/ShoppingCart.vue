@@ -129,9 +129,7 @@
 					foodsArr.push(this.items[i].id)
 				}
 
-				let address_number = new Number(this.address_value)
-				console.log('this is the selected address')
-				console.log(this.options[address_number].label)
+				// let address_number = new Number(this.address_value)
 
 				let data = {
 					items: this.items,
@@ -140,7 +138,7 @@
 					orderTime: new Date(),
 					expectTime: new Date(),
 					freight: 3,
-					address: this.options[address_number].label
+					addressId: this.address_value
 				}
 
 				console.log(data)
@@ -183,12 +181,17 @@
 			let param = new URLSearchParams()
 			param.append("memberId", localStorage.getItem("ID"))
 			this.axios.post('http://localhost:8080/getAddress', param).then(response => {
-				
+				console.log(response)
 				//this.options = response.data.data
+				// for (var i = 0;i < response.data.data.length;i++) {
+				// 	let temp = {value: i, label: response.data.data[i]}
+				// 	this.options.push(temp)
+				// }
 				for (var i = 0;i < response.data.data.length;i++) {
-					let temp = {value: i, label: response.data.data[i]}
+					let temp = {value: response.data.data[i].addressId, label: response.data.data[i].address}
 					this.options.push(temp)
 				}
+
 			})
 
 			//从后台获取用户等级以计算折扣

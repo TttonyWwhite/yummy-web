@@ -24,7 +24,10 @@
 			<el-col :span="4">
 				<span>{{order.state}}</span>
 				<br>
-				<span><a class="order_detail" :href="this.detail_url">订单详情</a></span>
+				<span>
+					<!-- <a class="order_detail" :href="this.detail_url">订单详情</a> -->
+					<el-button size="mini" @click="gotoDetail">订单详情</el-button>
+				</span>
 			</el-col>
 		</el-row>
 	</div>
@@ -39,6 +42,12 @@
 				var currentUrl = self.location.href + '/order/'
 				currentUrl += this.order.orderId
 				return currentUrl
+			}
+		},
+		methods: {
+			gotoDetail() {
+				console.log(this.order.orderId)
+				this.$router.push({name: 'order', params: {orderId: this.order.orderId}})
 			}
 		}
 
