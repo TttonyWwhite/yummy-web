@@ -83,6 +83,11 @@
 
 				</el-col>
 			</el-row>
+			<el-row v-if="this.active != 3">
+				<div class="confirm_btn">
+					<el-button type="primary" @click="confirm">确认收货</el-button>
+				</div>
+			</el-row>
 		</div>
 	</div>
 </template>
@@ -111,6 +116,13 @@
 		methods: {
 			next() {
 				if (this.active++ > 2) this.active = 0;
+			},
+			confirm() {
+				let param = new URLSearchParams()
+				param.append('orderId', this.$route.params.orderId)
+				this.axios.post('http://localhost:8080/confirm', param).then(response => {
+					this.active = 3
+				})
 			}
 		},
 
@@ -197,5 +209,11 @@
 		font-size:30px; 
 		top:-14px;  
 		color: red;
+	}
+
+	.confirm_btn {
+		float: right;
+		margin-right: 60px;
+		margin-top: 20px;
 	}
 </style>
