@@ -27,7 +27,7 @@
 			</div>
 			<!-- <RestaurantOrder></RestaurantOrder> -->
 			<el-row v-for="(item, index) in orders" :key="item.orderId">
-				<RestaurantOrder :order="item"></RestaurantOrder>
+				<RestaurantOrder :order="item" @orderAccepted="onAccept"></RestaurantOrder>
 			</el-row>
 
 		</div>
@@ -43,7 +43,17 @@
 		data() {
 			return {
 				activeName: 'first',
-				orders: {}
+				orders: []
+			}
+		},
+
+		methods: {
+			onAccept(val) {
+				for (var i = 0;i < this.orders.length;i++) {
+					if(this.orders[i].orderId == val) {
+						this.orders[i].state = "商家已接单"
+					}
+				}
 			}
 		},
 
