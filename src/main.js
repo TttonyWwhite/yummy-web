@@ -11,12 +11,14 @@ import store from './store'
 import VueAMap from 'vue-amap'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/railscasts.css' 
+import VCharts from 'v-charts'
 
 
 Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
 Vue.use(VueAMap)
+Vue.use(VCharts)
 
 
 Vue.directive('hljs', el => {

@@ -48,6 +48,22 @@ const router = new Router({
             }
         ]
       },
+
+      {
+        path: '/managerPage',
+        name: 'manager',
+        meta: {
+          requireAuth: true
+        },
+        component: resolve => require(['./views/ManagerPage.vue'], resolve),
+        children: [
+            {
+              path: 'restaurantSummary',
+              name: 'restaurantSummary',
+              component: resolve => require(['./views/RestaurantSummary.vue'], resolve)
+            }
+        ]
+      },
       {
         path: '/restaurant/:id',
         name: 'restaurant',
@@ -73,7 +89,9 @@ const router = new Router({
         path: '/shop/:id',
         name: 'shop',
         component: resolve => require(['./views/Shop.vue'], resolve)
-      },
+      }
+
+      
       
     // {
     //   path: '/about',
