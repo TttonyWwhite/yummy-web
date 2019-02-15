@@ -15,7 +15,7 @@
 			</el-col>
 			<el-col class="operation" :span="8">
 				<div class="opertaion_btn">
-					<el-button size="mini">订单详情</el-button>
+					<el-button size="mini" @click="gotoDetail">订单详情</el-button>
 				</div>
 			</el-col>
 		</el-row>
@@ -29,6 +29,12 @@
 		data() {
 			return {
 				
+			}
+		},
+		methods: {
+			gotoDetail() {
+				console.log(this.order.orderId)
+				this.$router.push({name: 'order', params: {orderId: this.order.orderId}})
 			}
 		}
 	}

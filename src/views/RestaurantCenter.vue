@@ -51,7 +51,7 @@
 			let param = new URLSearchParams()
 			param.append("restaurantId", this.$route.params.id)
 			this.axios.post('http://localhost:8080/restaurant/getOrders', param).then(response => {
-				//console.log(response.data.data)
+				console.log(response.data.data)
 				this.orders = response.data.data
 			})
 		}

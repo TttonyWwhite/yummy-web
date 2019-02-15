@@ -139,13 +139,16 @@
 					this.content.push(item)
 					total_price += products[i].qty * products[i].price
 				}
+
+				total_price *= data.discount
+
 				this.shopName = data.shopName
 				this.contactName = data.contactName
 				this.phoneNumber = data.phoneNumber
 				this.address = data.address
 				this.freight = data.freight
 				total_price += data.freight
-				this.total = total_price
+				this.total = total_price.toFixed(2)
 
 				if (data.state == "NotPaid") {
 					this.active = 0
