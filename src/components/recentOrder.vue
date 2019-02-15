@@ -6,8 +6,8 @@
 		</el-tabs>
 		
 		<!--需要一个表格,用于展示最近订单中的前几条 -->
-		<el-row v-for="(item, index) in orderInfo" :key="item.orderId">
-			<OrderBanner :order="item"></OrderBanner>
+		<el-row v-for="(item, index) in order" :key="item.orderId">
+			<OrderBanner :order="item" @orderPayed="onPayed"></OrderBanner>
 		</el-row>
 	</div>
 </template>
@@ -19,18 +19,40 @@
 		components: {
 			OrderBanner
 		},
-		props: ['order'],
 
 		data() {
 			return {
 				activeName: 'first',
-				orderInfo: null
+				order: []
 			}
 		},
 
+
 		mounted() {
-			this.orderInfo = this.order
-			
+			let param = new URLSearchParams()
+			param.append("memberId", this.$route.params.id)
+			this.axios.post('http://localhost:8080/getOrders', param).then(response => {
+				console.log(response.data.data)
+				this.order = response.data.data
+				this.order.reverse()
+			})	
+
+			if (localStorage.getItem('reloaded')) {
+				localStorage.removeItem('reloaded')
+			} else {
+				localStorage.setItem('reloaded', '1')
+				location.reload()
+			}
+		},
+
+		methods: {
+			onPayed(val) {
+				for (var i = 0;i < this.order.length;i++) {
+					if (this.order[i].orderId == val) {
+						this.order[i].state = "订单已提交"
+					}
+				}
+			}
 		},
 
 		watch: {

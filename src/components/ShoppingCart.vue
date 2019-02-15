@@ -68,7 +68,7 @@
 		        		</el-col>
 
 		        		<el-col :span="10">
-		        			<el-button class="payItem" type="success" @click="order">确认支付</el-button>
+		        			<el-button class="payItem" type="success" @click="order">确认下单</el-button>
 		        		</el-col>
 
 
@@ -86,6 +86,10 @@
 <script>
 	import State from '../shoppingCartState'
 	import _ from 'lodash'
+
+	function sleep(time) {
+	  return new Promise((resolve) => setTimeout(resolve, time));
+	}
 
 	export default {
 		data() {
@@ -143,10 +147,13 @@
 
 				console.log(data)
 				this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
-					console.log(response.data)
+					//console.log(response.data)
+					this.$message('订单下达完成，请在15分钟内完成支付')
+					sleep(2000).then(() => {
+		              this.$router.push({name: 'personalCenter', params: {id: localStorage.getItem("ID")}})
+		            })
 				})
 				//应该跳到订单详情页面
-				this.$router.push({name: 'personalCenter', params: {id: localStorage.getItem("ID")}})
 			},
 
 			getNowFormatDate() {

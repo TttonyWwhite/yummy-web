@@ -63,6 +63,7 @@
 			this.axios.post('http://localhost:8080/restaurant/getOrders', param).then(response => {
 				console.log(response.data.data)
 				this.orders = response.data.data
+				this.orders.reverse()
 			})
 		}
 	}
