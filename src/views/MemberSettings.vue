@@ -35,7 +35,7 @@
 		<div class="address_container">
 			<el-row :gutter="20">
 				<el-col :span="8" v-for="(item, index) in address" :key="item.addressId">
-					<AddressCard :addressInfo="item" @addressInfoChange="onInfoChange" @addressAdded="onAdd"></AddressCard>
+					<AddressCard :addressInfo="item" @addressInfoChange="onInfoChange" @addressAdded="onAdd" @addressInfoDelete="onDelete"></AddressCard>
 				</el-col>
 			</el-row>
 
@@ -98,6 +98,20 @@
 			onAdd(val) {
 				Vue.set(this.address, this.address.length-1, val) 
 				Vue.set(this.address, this.address.length, this.emptyAddress) //需要把空的地址重新加上去
+			},
+			onDelete(val) {
+
+				for (var i = 0;i < this.address.length;i++) {
+					if (this.address[i].addressId == val) {
+						this.address.splice(i, 1)
+					}
+				}
+
+				let param = new URLSearchParams()
+				param.append("addressId", val);
+				this.axios.post('http://localhost:8080/deleteAddress', param).then(response => {
+					this.$message("删除成功")
+				})
 			},
 			changeInfo() {
 				this.nameChange = false;

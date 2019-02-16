@@ -10,7 +10,7 @@
 					<span class="change" @click="modify">修改</span>
 				</el-col>
 				<el-col :span="6">
-					<span class="change">删除</span>
+					<span class="change" @click="deleteAddress">删除</span>
 				</el-col>
 			</el-row>
 
@@ -55,19 +55,21 @@
 		<el-dialog
 			title="添加新地址"
 			:visible.sync="addVisible"
-			width="30%">
+			width="50%">
 			<el-form :model="newAddress">
 				<el-form-item label="姓名" label-width="60px">
 					<el-input v-model="newAddress.contactName"></el-input>
 				</el-form-item>
 				<el-form-item label="位置" label-width="60px">
-					<el-input v-model="newAddress.address"></el-input>
+					<el-input v-model="dragData.address"></el-input>
 				</el-form-item>
 				<el-form-item label="手机号" label-width="60px">
 					<el-input v-model="newAddress.phoneNumber"></el-input>
 				</el-form-item>
 			</el-form>
-
+			<div class="m-part">
+                <mapDrag @drag="dragMap" class="mapbox"></mapDrag>
+            </div>
 			<el-button type="primary" @click="saveAddress">保存</el-button>
 			<el-button @click="addVisible=false">取消</el-button>
 		</el-dialog>
@@ -75,9 +77,13 @@
 </template>
 
 <script>
+	import mapDrag from '../components/mapDrag'
 	export default {
 		name: 'addressCard',
 		props: ['addressInfo'],
+		components: {
+	        mapDrag
+	    },
 		data() {
 			return {
 				modifyVisible: false,
@@ -87,13 +93,27 @@
 					memberId: this.$route.params.id,
 					address: '',
 					contactName: '',
-					phoneNumber: ''
-				}
+					phoneNumber: '',
+					lng: 0,
+					lat: 0
+				},
+
+				dragData: {
+		         lng: null,
+		         lat: null,
+		         address: null,
+		         nearestJunction: null,
+		         nearestRoad: null,
+		         nearestPOI: null
+		        },
 			}
 		},
 		methods: {
 			modify() {
 				this.modifyVisible = true
+			},
+			deleteAddress() {
+				this.$emit("addressInfoDelete", this.addressInfo.addressId)
 			},
 			cancel() {
 				this.modifyVisible = false
@@ -111,11 +131,26 @@
 			},
 
 			saveAddress() {
+				this.newAddress.lng = this.dragData.lng
+				this.newAddress.lat = this.dragData.lat
+				this.newAddress.address = this.dragData.address
+
 				this.axios.post('http://localhost:8080/addAddress', this.newAddress).then(response => {
 					this.$emit("addressAdded", this.newAddress)
 					this.addVisible = false
 				})
-			}
+			},
+
+			dragMap(data) {
+		        this.dragData = {
+		            lng: data.position.lng,
+		            lat: data.position.lat,
+		            address: data.address,
+		            nearestJunction: data.nearestJunction,
+		            nearestRoad: data.nearestRoad,
+		            nearestPOI: data.nearestPOI
+		        }
+		      },
 		},
 		mounted() {
 			//深拷贝addressInfo,防止未保存的修改引起的错误
@@ -148,4 +183,15 @@
 	.card_container {
 		margin-top: 5px;
 	}
+
+	.m-part{ margin-bottom: 30px; }
+	.m-part::after{ content: ''; display: block; clear: both; }
+	.m-part .title{ font-size: 30px; line-height: 60px; margin-bottom: 10px; color: #333; }
+	.m-part .mapbox{ width: 250px; height: 200px; margin-bottom: 20px; margin-left: 70px; }
+	.m-part .info{ margin: 0; padding: 0; list-style: none; line-height: 30px; margin-left: 620px; }
+	.m-part .info span{ display: block; color: #999; }
+	.m-part ol{ line-height: 40px; margin-left: 0; padding-left: 0; }
+	.m-part pre{ padding: 10px 20px; line-height: 30px; border-radius: 3px; box-shadow: 0 0 15px rgba(0,0,0,.5); }
+	.m-footer{ background: #eee; line-height: 60px; text-align: center; color: #999; font-size: 12px; }
+	.m-footer a{ margin:  0 5px; color: #999; text-decoration: none; }
 </style>
