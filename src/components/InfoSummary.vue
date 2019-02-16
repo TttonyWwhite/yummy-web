@@ -8,7 +8,7 @@
 			</el-col>
 			<el-col :span="4">
 				<div class="welcome">
-					<span> 中午好, illiant </span>
+					<span> 欢迎, {{memberName}} </span>
 				</div>
 			</el-col>
 			<el-col :span="5">
@@ -24,7 +24,7 @@
 			<el-col :span="6">
 				<span> 账户余额 </span>
 				<br>
-				<span> 0.00元 </span>
+				<span> {{balance}}元 </span>
 			</el-col>
 		</el-row>
 	</div>
@@ -34,7 +34,20 @@
 <script>
 	export default {
 		name: 'infoSummary',
+		data() {
+			return {
+				memberName: localStorage.getItem("username"),
+				balance: null
+			}
+		},
 
+		created() {
+			let param = new URLSearchParams()
+			param.append('memberId', this.$route.params.id)
+			this.axios.post('http://localhost:8080/getBalance', param).then(response => {
+				this.balance = response.data.data
+			})
+		}
 	}
 </script>
 
