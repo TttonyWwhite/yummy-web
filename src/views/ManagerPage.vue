@@ -51,7 +51,7 @@
 					},
 					{
 						icon: 'el-icon-menu',
-						index: 'settings',
+						index: 'memberSummary',
 						title: '会员统计'
 					}
 				]

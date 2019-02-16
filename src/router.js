@@ -61,6 +61,11 @@ const router = new Router({
               path: 'restaurantSummary',
               name: 'restaurantSummary',
               component: resolve => require(['./views/RestaurantSummary.vue'], resolve)
+            },
+            {
+              path: 'memberSummary',
+              name: 'memberSummary',
+              component: resolve => require(['./views/MemberSummary.vue'], resolve)
             }
         ]
       },

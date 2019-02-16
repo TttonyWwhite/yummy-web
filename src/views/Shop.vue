@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="page-top">
-			<Header></Header>
+			<Header :name="name"></Header>
 
 			<Banner :shop="this.shop"></Banner>
 		</div>
@@ -60,7 +60,8 @@
 				products: [],
 				shop: {
 					
-				}
+				},
+				name: localStorage.getItem('username')
 			}
 		},
 		methods: {

@@ -141,17 +141,22 @@
 					memberId: localStorage.getItem("ID"),
 					orderTime: new Date(),
 					expectTime: new Date(),
-					freight: 3,
+					freight: 0,
 					addressId: this.address_value
 				}
 
 				console.log(data)
 				this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
-					//console.log(response.data)
-					this.$message('订单下达完成，请在15分钟内完成支付')
-					sleep(2000).then(() => {
-		              this.$router.push({name: 'personalCenter', params: {id: localStorage.getItem("ID")}})
-		            })
+					console.log(response)
+					if (response.data.code == 11124) {
+						this.$message('抱歉,超出配送距离')
+					} else {
+						this.$message('订单下达完成，请在15分钟内完成支付')
+						sleep(2000).then(() => {
+			              this.$router.push({name: 'personalCenter', params: {id: localStorage.getItem("ID")}})
+			            })
+					}
+					
 				})
 				//应该跳到订单详情页面
 			},
