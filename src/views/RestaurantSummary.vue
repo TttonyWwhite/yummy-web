@@ -8,6 +8,14 @@
 					<ve-map :data="chartData" :settings="chartSettings"></ve-map>
 				</div>
 			</el-col>
+
+			<el-col :span="12">
+				<div class="histogramChart">
+					<h2>餐厅种类图</h2>
+					<ve-histogram :data="histogramData" width="550px"></ve-histogram>
+				</div>
+			</el-col>
+
 		</el-row>
 	</div>
 </template>
@@ -23,10 +31,15 @@
 		    	chartData: {
 		          columns: ['位置', '餐厅数'],
 		          rows: [
-		          	{'位置': '常州市', '餐厅数': 123},
-		          	{'位置': '宿迁市', '餐厅数': 123},
-		          	{'位置': '淮安市', '餐厅数': 123}
+		          	
 		          ]
+		        },
+
+		        histogramData: {
+		        	columns: ['餐厅类型', '餐厅数'],
+		        	rows: [
+		        		
+		        	]
 		        }
 		    }
 		},
@@ -34,17 +47,29 @@
 
 		mounted() {
 			this.axios.post('http://localhost:8080/getRestaurantSummary').then(response => {
-				console.log(response)
+				//console.log(response)
 				let data = response.data.data
-				this.rows = new Array()
 				for (var i = 0;i < data.length;i++) {
-					let temp = {'位置': data[i].cityName, '餐厅数': data[i].restaurantNumber}
+					let temp = {'位置': data[i].summaryItem, '餐厅数': data[i].restaurantNumber}
 					this.chartData.rows.push(temp)
 
 				}
+			})
 
-				
+			this.axios.post('http://localhost:8080/getRestaurantClassSummary').then(response => {
+				let data = response.data.data
+				for (var i = 0;i < data.length;i++) {
+					let temp = {'餐厅类型': data[i].summaryItem, '餐厅数': data[i].restaurantNumber}
+					this.histogramData.rows.push(temp)
+				}
+
+
 			})
 		}
 	}
 </script>
+
+<style>
+	.histogramChart {
+	}
+</style>
