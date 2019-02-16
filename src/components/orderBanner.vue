@@ -26,9 +26,10 @@
 					<span>{{order.state}}</span>
 					<br>
 					<span>
-						<el-button size="mini" @click="gotoDetail">订单详情</el-button>
+						<el-button size="mini" @click="gotoDetail">详情</el-button>
 						<el-button v-if="order.state == '待付款'" size="mini" type="primary" @click="payDialogVisible = true">付款</el-button>
 						<el-button v-if="order.state == '商家已接单'" size="mini" type="primary">确认收货</el-button>
+						<el-button v-if="order.state != '待付款' && order.state !='支付超时' && order.state != '已送达' && order.state != '已退款'" type="danger" size="mini" @click="refundDialogVisible = true">退款</el-button>
 					</span>
 				</div>
 			</el-col>
@@ -43,6 +44,16 @@
             <el-button @click="payDialogVisible = false">取消</el-button>
             <el-button type="success" @click="pay">确认支付</el-button>
         </el-dialog>
+
+        <el-dialog
+        	title="退款"
+        	:visible.sync="refundDialogVisible"
+        	width="36%"
+        	:before-close="handleClose">
+        	<h2>确定要退款吗?</h2>
+        	<el-button @click="refundDialogVisible = false">取消</el-button>
+            <el-button type="success" @click="refund">确认</el-button>
+        </el-dialog>
 	</div>
 </template>
 
@@ -53,7 +64,7 @@
 		data() {
 			return {
 				payDialogVisible: false,
-
+				refundDialogVisible: false
 			}
 		},
 		computed: {
@@ -73,10 +84,25 @@
 				param.append('orderId', this.order.orderId)
 				this.axios.post('http://localhost:8080/payForOrder', param).then(response => {
 					//console.log(response);
-					this.$emit('orderPayed', this.order.orderId)
-					this.payDialogVisible = false
-					this.$message('付款成功')
+					if (response.data.code == 11125) {
+						this.$message('余额不足，请先充值')
+					} else {
+						this.$emit('orderPayed', this.order.orderId)
+						this.payDialogVisible = false
+						this.$message('付款成功')
+					}
+					
 
+				})
+			},
+
+			refund() {
+				let param = new URLSearchParams()
+				param.append('orderId', this.order.orderId)
+				this.axios.post('http://localhost:8080/refund', param).then(response => {
+					this.$emit('orderRefund', this.order.orderId)
+					this.refundDialogVisible = false
+					this.$message('退款成功')
 				})
 			},
 

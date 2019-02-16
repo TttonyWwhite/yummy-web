@@ -7,7 +7,7 @@
 		
 		<!--需要一个表格,用于展示最近订单中的前几条 -->
 		<el-row v-for="(item, index) in order" :key="item.orderId">
-			<OrderBanner :order="item" @orderPayed="onPayed"></OrderBanner>
+			<OrderBanner :order="item" @orderPayed="onPayed" @orderRefund="onRefund"></OrderBanner>
 		</el-row>
 	</div>
 </template>
@@ -50,6 +50,13 @@
 				for (var i = 0;i < this.order.length;i++) {
 					if (this.order[i].orderId == val) {
 						this.order[i].state = "订单已提交"
+					}
+				}
+			},
+			onRefund(val) {
+				for (var i = 0;i < this.order.length;i++) {
+					if (this.order[i].orderId == val) {
+						this.order[i].state = "已退款"
 					}
 				}
 			}
