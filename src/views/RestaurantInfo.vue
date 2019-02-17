@@ -64,6 +64,11 @@
 						icon: 'el-icon-menu',
 						index: 'releaseBargin',
 						title: '发布优惠'
+					},
+					{
+						icon: 'el-icon-menu',
+						index: 'statistic',
+						title: '统计信息'
 					}
 				]
 			}

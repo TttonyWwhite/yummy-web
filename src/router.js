@@ -87,6 +87,11 @@ const router = new Router({
               path: 'releaseFood',
               name: 'releaseFood',
               component: resolve => require(['./views/ReleaseFood.vue'], resolve)
+            },
+            {
+              path: 'statistic',
+              name: 'statistic',
+              component: resolve => require(['./views/RestaurantStatistic.vue'], resolve)
             }
         ]
       },
