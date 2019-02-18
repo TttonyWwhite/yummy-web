@@ -89,6 +89,11 @@ const router = new Router({
               component: resolve => require(['./views/ReleaseFood.vue'], resolve)
             },
             {
+              path: 'releaseBargin',
+              name: 'releaseBargin',
+              component: resolve => require(['./views/ReleaseBargin.vue'], resolve)
+            },
+            {
               path: 'statistic',
               name: 'statistic',
               component: resolve => require(['./views/RestaurantStatistic.vue'], resolve)

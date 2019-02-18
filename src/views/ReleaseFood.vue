@@ -85,7 +85,8 @@
 			},
 
 			handleUploadSuccess(res, file) {
-				this.form.imgUrl = this.upload_qiniu_addr + '/' +  res.key
+				this.imgUrl = this.upload_qiniu_addr + '/' +  res.key
+				
 			},
 
 			onSubmit() {

@@ -10,6 +10,9 @@
 		    <el-tab-pane label="一周订单统计" name="third">
 		    	<ve-line v-if="activeName == 'third'" :data="orderData"></ve-line>
 		    </el-tab-pane>
+		    <el-tab-pane label="订单退货统计" name="fourth">
+		    	<ve-line v-if="activeName == 'fourth'" :data="refundData"></ve-line>
+		    </el-tab-pane>
 		</el-tabs>
 	</div>
 </template>
@@ -29,6 +32,10 @@
 				},
 				orderData: {
 					columns: ['日期', '订单数'],
+					rows: []
+				},
+				refundData: {
+					columns: ['日期', '退订数'],
 					rows: []
 				}
 			}
@@ -67,6 +74,16 @@
 					this.orderData.rows.push(temp)
 				}
 			})
+
+			this.axios.post('http://localhost:8080/getRefundSummary', param).then(response => {
+				let data = response.data.data
+				data.reverse()
+				for (var i = 0;i < data.length;i++) {
+					let temp = {'日期': data[i].str, '退订数': data[i].count}
+					this.refundData.rows.push(temp)
+				}
+			})
+
 		}	
 	}
 </script>
