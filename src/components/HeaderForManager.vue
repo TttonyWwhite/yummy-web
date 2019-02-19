@@ -2,14 +2,14 @@
     <el-row>
         <el-col :span="20">
             <el-menu :default-active="$route.name" :router="true" class="el-menu-demo" mode="horizontal" background-color="#0d78da" text-color="#ffffff">
-              <el-menu-item :route="{name: 'homepage', params: {id: this.$route.params.id}}" index="homepage">
+              <el-menu-item :route="{name: 'guide'}" index="guide">
                     <template slot="title">
                         <span>首页</span>
                     </template>
               </el-menu-item>
-              <el-menu-item :route="{name: 'personalCenter', params: {id: this.$route.params.id}}" index="personalCenter">
+              <el-menu-item :route="{name: 'restaurantSummary'}" index="managerPage">
                     <template slot="title">
-                        <span>我的订单</span>
+                        <span>管理中心</span>
                     </template>
               </el-menu-item>
               <el-menu-item index="3">消息中心</el-menu-item>
@@ -20,7 +20,7 @@
             <el-menu :default-active="this.$router.path" router class="el-menu-demo" mode="horizontal" background-color="#0d78da" text-color="#ffffff">
                 <el-submenu index="1">
                     <template slot="title"> {{ name }} </template>
-                    <el-menu-item  :index="targetIndex">个人中心</el-menu-item>
+                    <el-menu-item  :index="targetIndex">管理中心</el-menu-item>
                     
                 </el-submenu>
             </el-menu>
@@ -40,7 +40,7 @@
         },
         computed: {
             targetIndex: function() {
-                return '/member/' + localStorage.getItem("ID") + '/personalCenter'
+                return '/managerPage/RestaurantSummary'
             }
         }
     }

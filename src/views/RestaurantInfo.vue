@@ -34,7 +34,7 @@
 </template>
 
 <script>
-	import Header from '../components/Header'
+	import Header from '../components/HeaderForRestaurant'
 	
 	export default {
 		name: 'personalInfo',
