@@ -180,7 +180,7 @@ import mapDrag from '../components/mapDrag'
 
         placeToken() {
             this.axios.post("http://localhost:8080/getToken").then(response => {
-                console.log(response.data)
+                //console.log(response.data)
                 this.token = response.data
                 this.qiniuData.token = response.data
             }).catch(err => {

@@ -66,7 +66,18 @@ const router = new Router({
               path: 'memberSummary',
               name: 'memberSummary',
               component: resolve => require(['./views/MemberSummary.vue'], resolve)
+            },
+            {
+              path: 'checkRequest',
+              name: 'checkRequest',
+              component: resolve => require(['./views/CheckRequest.vue'], resolve)
+            }, 
+            {
+              path: 'request/:requestId',
+              name: 'request',
+              component: resolve => require(['./views/RequestDetail.vue'], resolve)
             }
+
         ]
       },
       {
@@ -97,6 +108,11 @@ const router = new Router({
               path: 'statistic',
               name: 'statistic',
               component: resolve => require(['./views/RestaurantStatistic.vue'], resolve)
+            },
+            {
+              path: 'restaurantUpdate',
+              name: 'restaurantUpdate',
+              component: resolve => require(['./views/RestaurantUpdate.vue'], resolve)
             }
         ]
       },
@@ -105,6 +121,7 @@ const router = new Router({
         name: 'shop',
         component: resolve => require(['./views/Shop.vue'], resolve)
       }
+
 
       
       

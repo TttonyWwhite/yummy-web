@@ -69,6 +69,11 @@
 						icon: 'el-icon-menu',
 						index: 'statistic',
 						title: '统计信息'
+					},
+					{
+						icon: 'el-icon-menu',
+						index: 'restaurantUpdate',
+						title: '修改信息'
 					}
 				]
 			}

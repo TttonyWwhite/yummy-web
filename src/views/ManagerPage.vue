@@ -53,6 +53,11 @@
 						icon: 'el-icon-menu',
 						index: 'memberSummary',
 						title: '会员统计'
+					},
+					{
+						icon: 'el-icon-menu',
+						index: 'checkRequest',
+						title: '申请批准'
 					}
 				]
 			}
