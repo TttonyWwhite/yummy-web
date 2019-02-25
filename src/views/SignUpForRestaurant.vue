@@ -8,7 +8,7 @@
             
         <el-form ref="form" :model="form" label-width="90px">
           <el-form-item label="餐厅名称">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" style="width: 400px;"></el-input>
           </el-form-item>
           <el-form-item label="餐厅地址">
             <div id="g-wrapper" v-hljs>
@@ -52,15 +52,15 @@
           </el-form-item>
          
           <el-form-item label="负责人电话">
-            <el-input v-model="form.phoneNumber"></el-input>
+            <el-input v-model="form.phoneNumber" style="width: 400px;"></el-input>
           </el-form-item>
 
           <el-form-item label="邮箱">
-            <el-input v-model="form.email"></el-input>
+            <el-input v-model="form.email" style="width: 400px;"></el-input>
           </el-form-item>
 
           <el-form-item label="登陆密码">
-            <el-input type="password" v-model="form.password"></el-input>
+            <el-input type="password" v-model="form.password" style="width: 400px;"></el-input>
           </el-form-item>
 
           <el-form-item>
@@ -210,7 +210,7 @@ import mapDrag from '../components/mapDrag'
 .page-header p{ color: #ccc; margin: 0; margin-bottom: 30px; }
 .page-header a{ display: inline-block; border: 1px solid #fff; margin-right: 10px; line-height: 40px; padding: 0 20px; border-radius: 4px; color: #fff; text-decoration: none; transition: all .3s; }
 .page-header a:hover{ background: #fff; color: #333; }
-.g-wraper{ width: 1000px; margin: 0 auto; color: #666; font-size: 16px; line-height: 30px; }
+.g-wraper{ width: 800px; margin: 0 auto; color: #666; font-size: 16px; line-height: 30px; }
 .m-part{ margin-bottom: 30px; }
 .m-part::after{ content: ''; display: block; clear: both; }
 .m-part .title{ font-size: 30px; line-height: 60px; margin-bottom: 10px; color: #333; }

@@ -5,11 +5,24 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    {
-      path: '/',
-      name: 'guide',
-      component: resolve => require(['./views/Guide.vue'], resolve)
-    },
+      {
+          path: '/',
+          name: 'login',
+          component: resolve => require(['./views/Login.vue'], resolve)
+      },
+
+      {
+        path: '/loginForRestaurant',
+        name: 'loginForRestaurant',
+        component: resolve => require(['./views/LoginForRestaurant.vue'], resolve)
+      },
+
+      {
+        path: '/signUpForMember',
+        name: 'signUpForMember',
+        component: resolve => require(['./views/SignUpForMember.vue'], resolve)
+      },
+
       {
         path: '/homepage/:id',
         name: 'homepage',

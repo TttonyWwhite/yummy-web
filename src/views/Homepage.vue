@@ -22,7 +22,7 @@
         name: 'homepage',
         data() {
             return {
-                name: 'illiant',
+                name: '',
                 shopList: [
 
                 ],
@@ -39,10 +39,8 @@
          localStorage.setItem("ID", this.$route.params.id)
          //从后台拉取店铺数据
          this.axios.get('http://localhost:8080/getAllShops').then(response => {
-            console.log(response)
+            
             this.shopList = response.data.data
-         }).catch(err => {
-            console.log(err)
          })
         },
         computed: {
