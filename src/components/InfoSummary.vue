@@ -3,7 +3,7 @@
 		<el-row :gutter="20"> 
 			<el-col :span="2">
 				<div class="user_img">
-					<img src="http://plu6c3si4.bkt.clouddn.com/%E5%A6%99%E5%A6%99%E5%A4%B4%E5%83%8F.jpg" class="round_icon" alt="">
+					<img src="http://pnfspjeff.bkt.clouddn.com/%E5%A6%99%E5%A6%99%E5%A4%B4%E5%83%8F.jpg" class="round_icon" alt="">
 				</div>	
 			</el-col>
 			<el-col :span="4">

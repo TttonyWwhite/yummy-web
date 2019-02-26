@@ -8,7 +8,7 @@
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" unique-opened router>
 					<template v-for="item in items">
 						<template v-if="item.subs">
-							<el-submenu :index="item.index">
+							<el-submenu :index="item.index" :key="item.orderId">
 								<template slot="title">
 									<i :class="item.icon"></i> {{ item.title }}
 								</template>
@@ -16,7 +16,7 @@
 							</el-submenu>
 						</template>
 						<template v-else>
-							<el-menu-item :index="item.index">
+							<el-menu-item :index="item.index" :key="item.orderId">
 								<i :class="item.icon"></i> {{ item.title }}
 							</el-menu-item>
 						</template>
@@ -35,14 +35,10 @@
 
 <script>
 	import Header from '../components/Header'
-	import InfoSummary from '../components/InfoSummary'
-	import RecentOrder from '../components/recentOrder'
 	export default {
 		name: 'personalInfo',
 		components: {
 			Header,
-			InfoSummary,
-			RecentOrder
 		},
 		data() {
 			return {
@@ -80,15 +76,5 @@
 </script>
 
 <style>
-	
-	 .el-aside {
-	    background-color: #D3DCE6;
-	    color: #333;
-	    text-align: center;
-	    line-height: 200px;
-	  }
 
-	 .el-main {
-	 	background-color: #ffffff;
-	 }
 </style>

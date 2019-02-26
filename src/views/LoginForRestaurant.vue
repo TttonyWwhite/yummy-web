@@ -36,7 +36,6 @@
         },
         methods: {
             login() {
-                console.log(this.loginForm)
                 this.axios.post('http://localhost:8080/loginForRestaurant', this.loginForm).then(response => {
                     if(response.data.code === 11120) {
                         //不存在的id
