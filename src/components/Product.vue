@@ -1,6 +1,6 @@
 <template>
 	<div class="product">
-		<img :src="product.image" class="image" height="150px" width="350px">
+		<img :src="product.image" class="image" height="220px" width="350px">
 		<p class="title">{{product.title}}</p>
 		<p class="price">
 			<span>¥ {{product.price}} </span>

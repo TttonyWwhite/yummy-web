@@ -84,7 +84,12 @@ const router = new Router({
               path: 'checkRequest',
               name: 'checkRequest',
               component: resolve => require(['./views/CheckRequest.vue'], resolve)
-            }, 
+            },
+            {
+              path: 'financialSummary',
+              name: 'financialSummary',
+              component: resolve => require(['./views/FinancialSummary.vue'], resolve)
+            },
             {
               path: 'request/:requestId',
               name: 'request',

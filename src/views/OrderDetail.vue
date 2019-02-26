@@ -8,7 +8,7 @@
                 <el-step title="待付款" icon="el-icon-upload"></el-step>
                 <el-step title="已提交" icon="el-icon-edit"></el-step>
                 <el-step title="商家已接单" icon="el-icon-success"></el-step>
-                <el-step v-if="this.active === 3" :title="finalState" icon="el-icon-success"></el-step>
+                <el-step v-if="this.active === 3 || this.active === 4" :title="finalState" icon="el-icon-success"></el-step>
             </el-steps>
         </div>
 
@@ -74,7 +74,7 @@
 
                 </el-col>
             </el-row>
-            <el-row v-if="this.active === 2">
+            <el-row v-if="this.active === 2 ">
                 <div class="confirm_btn">
                     <el-button type="primary" @click="confirm">确认收货</el-button>
                 </div>
@@ -111,17 +111,18 @@
             confirm() {
                 let param = new URLSearchParams()
                 param.append('orderId', this.$route.params.orderId)
-                this.axios.post('http://localhost:8080/confirm', param).then(response => {
+                this.axios.post('http://localhost:8080/confirm', param).then(_ => {
                     this.active = 3
+                    this.finalState = '确认收货'
                 })
             }
         },
 
-        mounted() {
+        activated() {
             let param = new URLSearchParams()
             param.append('orderId', this.$route.params.orderId)
             this.axios.post('http://localhost:8080/getOrderDetail', param).then(response => {
-                //console.log(response)
+                console.log(response)
                 let products = response.data.data.products
                 let data = response.data.data
                 var total_price = 0
@@ -150,11 +151,12 @@
                     this.active = 1
                 } else if (data.state === "Accepted") {
                     this.active = 2
-                } else {
+                } else if (data.state === "Arrived") {
                     this.active = 3
-                    if (data.state === "Arrived")
-                        this.finalState = "已送达"
-                    else if (data.state === "Canceled")
+                    this.finalState = "已送达"
+                } else {
+                    this.active = 4
+                    if (data.state === "Canceled")
                         this.finalState = "已超时"
                     else if (data.state === "Refund")
                         this.finalState = "已退款"
@@ -204,6 +206,5 @@
     .confirm_btn {
         float: right;
         margin-right: 60px;
-        margin-top: 20px;
     }
 </style>

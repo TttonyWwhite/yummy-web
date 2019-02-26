@@ -58,6 +58,11 @@
 						icon: 'el-icon-menu',
 						index: 'checkRequest',
 						title: '申请批准'
+					},
+					{
+						icon: 'el-icon-menu',
+						index: 'financialSummary',
+						title: '财务统计'
 					}
 				]
 			}

@@ -28,7 +28,7 @@
 					<span>
 						<el-button size="mini" @click="gotoDetail">详情</el-button>
 						<el-button v-if="order.state == '待付款'" size="mini" type="primary" @click="payDialogVisible = true">付款</el-button>
-						<el-button v-if="order.state == '商家已接单'" size="mini" type="primary">确认收货</el-button>
+						<el-button v-if="order.state == '商家已接单'" size="mini" type="primary" @click="confirm">确认收货</el-button>
 						<el-button v-if="order.state != '待付款' && order.state !='支付超时' && order.state != '已送达' && order.state != '已退款'" type="danger" size="mini" @click="refundDialogVisible = true">退款</el-button>
 					</span>
 				</div>
@@ -76,7 +76,7 @@
 		},
 		methods: {
 			gotoDetail() {
-				console.log(this.order.orderId)
+				//console.log(this.order.orderId)
 				this.$router.push({name: 'order', params: {orderId: this.order.orderId}})
 			},
 			pay() {
@@ -93,6 +93,15 @@
 					}
 					
 
+				})
+			},
+
+			confirm() {
+				let param = new URLSearchParams()
+				param.append('orderId', this.order.orderId)
+				this.axios.post('http://localhost:8080/confirm', param).then(_ => {
+					this.$emit('orderConfirmed', this.order.orderId)
+					this.$message('已确认收货')
 				})
 			},
 
