@@ -100,7 +100,7 @@
 
                 ],
                 total: 0,
-                finalState: null
+                finalState: null,
             }
         },
 
@@ -119,20 +119,23 @@
         },
 
         activated() {
+            this.orderId = this.$route.params.orderId
             let param = new URLSearchParams()
             param.append('orderId', this.$route.params.orderId)
             this.axios.post('http://localhost:8080/getOrderDetail', param).then(response => {
-                console.log(response)
                 let products = response.data.data.products
                 let data = response.data.data
                 var total_price = 0
+
+                this.content = []
                 for (var i = 0;i < products.length;i++) {
                     let item = {title: products[i].title, qty: products[i].qty, count: products[i].qty * products[i].price, foodId: products[i].id}
-                    let delivery = {title: '配送费', qty: null, count: data.freight, foodId: 0}
                     this.content.push(item)
-                    this.content.push(delivery)
                     total_price += products[i].qty * products[i].price
                 }
+                let delivery = {title: '配送费', qty: null, count: data.freight, foodId: 0}
+                this.content.push(delivery)
+
 
                 total_price *= data.discount
 
@@ -162,7 +165,11 @@
                         this.finalState = "已退款"
                 }
             })
-        }
+
+        },
+        // deactivated() {
+        //     this.content = []
+        // }
     }
 </script>
 

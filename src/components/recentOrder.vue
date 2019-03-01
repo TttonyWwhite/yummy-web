@@ -32,7 +32,6 @@
 			let param = new URLSearchParams()
 			param.append("memberId", this.$route.params.id)
 			this.axios.post('http://localhost:8080/getOrders', param).then(response => {
-				console.log(response.data.data)
 				this.order = response.data.data
 				this.order.reverse()
 			})	
@@ -44,6 +43,10 @@
 				location.reload()
 			}
 		},
+		deactivated() {
+			this.order = []
+		},
+
 
 		methods: {
 			onPayed(val) {

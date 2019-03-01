@@ -41,14 +41,15 @@ const router = new Router({
         path: '/member/:id',
         name: 'member',
         meta: {
-          requireAuth: true
+          requireAuth: true,
         },
         component: resolve => require(['./views/PersonalInfo.vue'], resolve),
         children: [
             {
               path: 'personalCenter',
               name: 'personalCenter',
-              component: resolve => require(['./views/PersonalCenter.vue'], resolve)
+              component: resolve => require(['./views/PersonalCenter.vue'], resolve),
+
             },
             {
               path: 'settings',

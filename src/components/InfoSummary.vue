@@ -17,9 +17,9 @@
 				<span> 0 个 </span>
 			</el-col>
 			<el-col :span="5">
-				<span> 我的金币 </span>
+				<span> 我的等级 </span>
 				<br>
-				<span> 0 个 </span>
+				<span> Level {{ level }} </span>
 			</el-col>
 			<el-col :span="6">
 				<span> 账户余额 </span>
@@ -37,7 +37,8 @@
 		data() {
 			return {
 				memberName: localStorage.getItem("username"),
-				balance: null
+				balance: null,
+				level: null
 			}
 		},
 
@@ -46,6 +47,10 @@
 			param.append('memberId', this.$route.params.id)
 			this.axios.post('http://localhost:8080/getBalance', param).then(response => {
 				this.balance = response.data.data
+			})
+
+			this.axios.post('http://localhost:8080/getLevel', param).then(response => {
+				this.level = response.data.data
 			})
 		}
 	}

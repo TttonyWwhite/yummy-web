@@ -3,12 +3,10 @@
         <Header :name="name"></Header>
         <div class="shops">
         <el-row class="shops_view" :gutter="50">
-            <!-- <el-col :span="4" v-for="(o, index) in 4" :key="o" :offset="1" style="margin-left:105px;">
-                <Card></Card>
-            </el-col> -->
             <el-col :sm="12" :md="6" v-for="(card, index) in showShopList" :key="card.id" >
                 <Card :shopName="card.shopName" :rate="card.rate" :deliveryCost="card.deliveryCost"
                         :imgUrl="card.imgUrl" :restaurantId="card.restaurantId"></Card>
+                <br>
             </el-col>
         </el-row>
         </div>
