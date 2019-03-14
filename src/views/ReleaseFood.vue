@@ -7,13 +7,14 @@
         <el-row>
             <el-col :span="1">&nbsp;</el-col>
             <el-col :span="12">
+                <div class="release_section">
                 <el-form ref="form" :model="form" label-width="90px">
 
                     <el-form-item label="菜品名称">
-                        <el-input v-model="form.foodName"></el-input>
+                        <el-input v-model="form.foodName" style="width: 360px;"></el-input>
                     </el-form-item>
                     <el-form-item label="菜品照片">
-                        <div id="app">
+                        <div id="upload">
                             <el-upload
                                     class="upload-demo"
                                     drag
@@ -23,7 +24,7 @@
                                     :on-error="handleError"
                                     :before-upload="beforeUpload"
                                     :data="qiniuData">
-                                <img v-if="form.imgUrl" :src="form.imgUrl" class="foodImg" width="200" height="200">
+                                <img v-if="form.imgUrl != null" :src="form.imgUrl" class="foodImg" width="200" height="200">
                                 <div v-else class="el-default">
                                     <i class="el-icon-upload"></i>
                                     <div class="el-upload_text">将菜品图片拖到此处，或<em>点击上传</em></div>
@@ -34,13 +35,15 @@
                     </el-form-item>
 
                     <el-form-item label="单价">
-                        <el-input v-model="form.price"> </el-input>
+                        <el-input v-model="form.price" style="width: 360px;"> </el-input>
                     </el-form-item>
 
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">确认发布</el-button>
                     </el-form-item>
                 </el-form>
+
+                </div>
             </el-col>
             <el-col :span="11">&nbsp;</el-col>
         </el-row>
@@ -55,7 +58,7 @@
                 form: {
                     foodName: '',
                     price: '',
-                    imgUrl: '',
+                    imgUrl: null,
                     restaurantId: ''
                 },
                 qiniuData: {
@@ -64,7 +67,7 @@
                 },
                 token: '',
                 upload_qiniu_url: 'http://upload.qiniu.com/',
-                upload_qiniu_addr: 'http://plu6c3si4.bkt.clouddn.com',
+                upload_qiniu_addr: 'http://pnfspjeff.bkt.clouddn.com',
                 accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
             }
         },
@@ -85,16 +88,24 @@
             },
 
             handleUploadSuccess(res, file) {
-                this.imgUrl = this.upload_qiniu_addr + '/' +  res.key
-
+                this.form.imgUrl = this.upload_qiniu_addr + '/' +  res.key
             },
 
             onSubmit() {
                 this.form.restaurantId = this.$route.params.id
                 this.axios.post("http://localhost:8080/releaseFood", this.form).then(response => {
                     console.log(response)
+                    if (response.data.code == 0) {
+                        this.$message('发布成功')
+                        this.form = {
+                            foodName: '',
+                            price: '',
+                            imgUrl: null,
+                            restaurantId: ''
+                        }
+                    }
+
                 }).catch(err => {
-                    console.log(err)
                 })
 
             },
@@ -122,3 +133,13 @@
         }
     }
 </script>
+
+<style>
+    .release_section {
+        text-align: left;
+    }
+
+    #upload {
+        margin-left: -10px;
+    }
+</style>

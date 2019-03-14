@@ -7,7 +7,7 @@
                 </div>
             </el-col>
 
-            <el-col :span="6">
+            <el-col :span="4">
                 <div class="restaurant_intro">
                     <span>{{order.title}}</span>
                 </div>
@@ -21,17 +21,19 @@
                 <span>¥{{order.price}}</span>
             </el-col>
 
-            <el-col :span="4">
+            <el-col :span="3">
                 <div class="state">
                     <span>{{order.state}}</span>
-                    <br>
-                    <span>
+                </div>
+            </el-col>
+
+            <el-col :span="4">
+                 <span>
 						<el-button size="mini" @click="gotoDetail">详情</el-button>
 						<el-button v-if="order.state == '待付款'" size="mini" type="primary" @click="payDialogVisible = true">付款</el-button>
 						<el-button v-if="order.state == '商家已接单'" size="mini" type="primary" @click="confirm">确认收货</el-button>
 						<el-button v-if="order.state != '待付款' && order.state !='支付超时' && order.state != '已送达' && order.state != '已退款'" type="danger" size="mini" @click="refundDialogVisible = true">退款</el-button>
 					</span>
-                </div>
             </el-col>
         </el-row>
 
@@ -137,9 +139,9 @@
         font-size: 8px;
     }
 
-    .state {
-        position: absolute;
-        top: -8px;
-        text-align: left;
-    }
+    /*.state {*/
+        /*position: absolute;*/
+        /*top: -8px;*/
+        /*text-align: left;*/
+    /*}*/
 </style>

@@ -127,7 +127,7 @@
                 let data = response.data.data
                 var total_price = 0
 
-                this.content = []
+
                 for (var i = 0;i < products.length;i++) {
                     let item = {title: products[i].title, qty: products[i].qty, count: products[i].qty * products[i].price, foodId: products[i].id}
                     this.content.push(item)
@@ -167,9 +167,9 @@
             })
 
         },
-        // deactivated() {
-        //     this.content = []
-        // }
+        deactivated() {
+            this.content = []
+        }
     }
 </script>
 

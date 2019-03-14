@@ -29,7 +29,7 @@
                                     :on-error="handleError"
                                     :before-upload="beforeAvatarUpload"
                                     :data="qiniuData">
-                                <img v-if="imgUrl" :src="imgUrl" class="avatar">
+                                <img v-if="imgUrl" :src="imgUrl" class="avatar" width="70" height="70">
                                 <div v-else class="el-default">
                                     <i class="el-icon-upload"></i>
                                     <div class="el-upload_text">将文件拖到此处，或<em>点击上传</em></div>
@@ -99,7 +99,7 @@
                 },
                 imgUrl: "",
                 upload_qiniu_url: 'http://upload.qiniu.com/',
-                upload_qiniu_addr: 'http://plu6c3si4.bkt.clouddn.com',
+                upload_qiniu_addr: 'http://pnfspjeff.bkt.clouddn.com',
                 accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
             }
         },

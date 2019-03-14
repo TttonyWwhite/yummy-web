@@ -54,6 +54,7 @@
                         //会得到一个token
                         localStorage.setItem("JWT_TOKEN", response.data.data.token)
                         localStorage.setItem("ID", response.data.data.member.memberId)
+                        localStorage.setItem("MEMBER_ID", response.data.data.member.memberId)
                         this.axios.defaults.headers.common['token'] = response.data.data.token
                         this.$router.push({name: 'homepage', params: {id: response.data.data.member.memberId}})
                     }

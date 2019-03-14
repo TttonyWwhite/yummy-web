@@ -16,7 +16,6 @@
                         <el-button type="primary" class="submit_btn" @click="login">登陆</el-button>
                     </el-form-item>
                 </el-form>
-                <p class="sign_text" @click="login">没有账号，立即注册</p>
                 <p class="restaurant_signup" @click="rsignup">即刻加盟</p>
             </section>
         </transition>

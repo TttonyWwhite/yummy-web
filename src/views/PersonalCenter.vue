@@ -1,7 +1,6 @@
 <template>
 	<div>
-		<InfoSummary></InfoSummary>
-		<!--<RecentOrder></RecentOrder>-->
+		<InfoSummary ref="child1"></InfoSummary>
 
 		<el-tabs v-model="activeName">
 			<el-tab-pane label="最近订单" name="first"></el-tab-pane>
@@ -40,12 +39,6 @@
 				this.order.reverse()
 			})
 
-			// if (localStorage.getItem('reloaded')) {
-			// 	localStorage.removeItem('reloaded')
-			// } else {
-			// 	localStorage.setItem('reloaded', '1')
-			// 	location.reload()
-			// }
 		},
 
 
@@ -54,6 +47,7 @@
 				for (let i = 0;i < this.order.length;i++) {
 					if (this.order[i].orderId === val) {
 						this.order[i].state = "订单已提交"
+						this.$refs.child1.handlePay(this.order[i].price)
 					}
 				}
 			},
@@ -61,6 +55,7 @@
 				for (let i = 0;i < this.order.length;i++) {
 					if (this.order[i].orderId === val) {
 						this.order[i].state = "已退款"
+						this.$refs.child1.handleRefund(this.order[i].price)
 					}
 				}
 			},

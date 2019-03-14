@@ -111,7 +111,7 @@ import mapDrag from '../components/mapDrag'
         },
         imgUrl: "",
         upload_qiniu_url: 'http://upload.qiniu.com/', 
-        upload_qiniu_addr: 'http://plu6c3si4.bkt.clouddn.com',
+        upload_qiniu_addr: 'http://pnfspjeff.bkt.clouddn.com',
         accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
       }
     },
