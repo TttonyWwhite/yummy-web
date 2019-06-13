@@ -10,6 +10,8 @@
             </el-col>
         </el-row>
         </div>
+
+        <el-button @click="handleMore">more</el-button>
     </div>
 </template>
 
@@ -25,7 +27,7 @@
 
                 ],
                 currentPage: 1,
-                perpage: 16,
+                perpage: 32,
             }
         },
         components: {
@@ -47,6 +49,9 @@
             }
         },
         methods: {
+            handleMore() {
+                this.perpage = this.perpage * 2
+            }
         }
     }
 </script>

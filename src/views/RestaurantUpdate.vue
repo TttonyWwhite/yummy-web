@@ -99,7 +99,7 @@
                 },
                 imgUrl: "",
                 upload_qiniu_url: 'http://upload.qiniu.com/',
-                upload_qiniu_addr: 'http://pnfspjeff.bkt.clouddn.com',
+                upload_qiniu_addr: 'http://ps7ukx8ef.bkt.clouddn.com',
                 accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
             }
         },

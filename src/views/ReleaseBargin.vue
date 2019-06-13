@@ -2,7 +2,7 @@
     <div>
         <el-row>
             <el-col :span="1">&nbsp;</el-col>
-            <el-col :span="11">
+            <el-col :span="12">
                 <div class="transefer">
                     <el-transfer
                             v-model="value1"
@@ -72,7 +72,7 @@
                 imageUrl: '',
                 token: '',
                 upload_qiniu_url: 'http://upload.qiniu.com/',
-                upload_qiniu_addr: 'http://pnfspjeff.bkt.clouddn.com',
+                upload_qiniu_addr: 'http://ps7ukx8ef.bkt.clouddn.com',
                 accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
                 qiniuData: {
                     key: "",

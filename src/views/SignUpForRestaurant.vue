@@ -20,7 +20,7 @@
           </el-form-item>
 
           <el-form-item label="招牌图片">
-            <div id="app">
+            <div id="title_pic">
                 <el-upload 
                     class="upload-demo"
                     drag
@@ -93,9 +93,9 @@ import mapDrag from '../components/mapDrag'
         form: {
           name: '',
           type: [],
-          phoneNumber: '',
-          password: '',
-          email: ''
+          phoneNumber: '17625497765',
+          password: '123',
+          email: '1334540617@qq.com'
         },
         dragData: {
          lng: null,
@@ -110,8 +110,8 @@ import mapDrag from '../components/mapDrag'
             token: ""
         },
         imgUrl: "",
-        upload_qiniu_url: 'http://upload.qiniu.com/', 
-        upload_qiniu_addr: 'http://pnfspjeff.bkt.clouddn.com',
+        upload_qiniu_url: 'http://up.qiniup.com/',
+        upload_qiniu_addr: 'http://ps7ukx8ef.bkt.clouddn.com',
         accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
       }
     },
@@ -200,12 +200,16 @@ import mapDrag from '../components/mapDrag'
         text-align: left;
     }
     body{ margin: 0; }
-.page-header{
-  color: #fff; text-align: center; background: #159957;
-  background-image: -webkit-linear-gradient(330deg,#155799,#159957);
-  background-image: linear-gradient(120deg,#155799,#159957);
-  padding: 3rem 4rem; margin-bottom: 30px;
-}
+    .page-header{
+      color: #fff; text-align: center; background: #159957;
+      background-image: -webkit-linear-gradient(330deg,#155799,#159957);
+      background-image: linear-gradient(120deg,#155799,#159957);
+      padding: 3rem 4rem; margin-bottom: 30px;
+    }
+
+    #title_pic {
+        margin-right: 200px;
+    }
 .page-header h1{ margin: 0; font-size: 40px; }
 .page-header p{ color: #ccc; margin: 0; margin-bottom: 30px; }
 .page-header a{ display: inline-block; border: 1px solid #fff; margin-right: 10px; line-height: 40px; padding: 0 20px; border-radius: 4px; color: #fff; text-decoration: none; transition: all .3s; }

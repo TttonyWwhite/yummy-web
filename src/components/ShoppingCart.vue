@@ -23,7 +23,7 @@
         <el-dialog
                 title="付款"
                 :visible.sync="paymentVisible"
-                width="36%"
+                width="40%"
                 :before-close="handleClose">
             <el-form>
                 <el-form-item>
@@ -62,7 +62,7 @@
                     <el-row>
                         <el-col :span="6">
                             <span class="payItem">总价 ¥{{totalAfterDiscount}}</span>
-                            <span class="discount_str">{{discount_str}}</span>
+                            <span class="discount_str">&nbsp;{{discount_str}}</span>
                         </el-col>
 
                         <el-col :span="4">
