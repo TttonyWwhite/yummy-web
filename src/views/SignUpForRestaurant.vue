@@ -64,7 +64,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit" v-loading.fullscreen.lock="fullscreenLoading">立即创建</el-button>
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
@@ -113,11 +113,22 @@ import mapDrag from '../components/mapDrag'
         upload_qiniu_url: 'http://up.qiniup.com/',
         upload_qiniu_addr: 'http://ps7ukx8ef.bkt.clouddn.com',
         accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
+        fullScreenLoading: false
       }
     },
     methods: {
       onSubmit() {
         //console.log('submit!');
+          const loading = this.$loading({
+              lock: true,
+              text: 'Loading',
+              spinner: 'el-icon-loading',
+              background: 'rgba(0, 0, 0, 0.7)'
+          });
+          setTimeout(() => {
+              loading.close();
+          }, 2000);
+          
         this.axios.post("http://localhost:8080/signupForRestaurant", {
             lng_lat: this.dragData.lng + ',' + this.dragData.lat,
             address: this.dragData.address,
@@ -128,13 +139,12 @@ import mapDrag from '../components/mapDrag'
             password: this.form.password,
             email: this.form.email
         }).then(response =>  {
-            console.log(response)
             this.$message('注册成功，请前往主页登陆')
             sleep(2000).then(() => {
               this.$router.push('/')
             })
-        }).catch((err)=> {
-            console.log("err")
+        }).catch((_)=> {
+
         })
       },
       dragMap(data) {
