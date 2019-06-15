@@ -9,8 +9,9 @@
                 <img :src="imgUrl" width="70" height="70" style="float: left">
                 <div style="float: left; text-align: left; margin-left: 20px">{{shopName}}
                     <br><span><Rate :value="rate" :readonly="true" size='15px'/></span>
-                    <span style="color: #a3a3a3; font-size: 14px; margin-top: -10px">配送费: {{ deliveryCost }}</span> </div>
-
+                    <span style="color: #a3a3a3; font-size: 14px; margin-top: -10px" v-if="deliveryCost === 0">免配送费</span>
+                    <span style="color: #a3a3a3; font-size: 14px; margin-top: -10px" v-else>配送费: {{deliveryCost}}¥</span>
+                </div>
             </el-col>
         </el-row>
 
