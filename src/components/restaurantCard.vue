@@ -1,9 +1,5 @@
 <template>
-    <div id="cart_content" style="overflow:hidden;" onmouseover="this.className='over'" onmouseout="this.className='out'">
-        <!--<div @click="onClick">-->
-            <!--<img :src="imgUrl" width="70" height="70" style="float: left">-->
-            <!--<span>{{shopName}}<br> 配送费: {{ deliveryCost }} ¥ </span>-->
-        <!--</div>-->
+    <div id="cart_content" style="overflow:hidden;" onmouseover="this.className='over'" onmouseout="this.className='out'" @click="onClick">
         <el-row>
             <el-col>
                 <img :src="imgUrl" width="70" height="70" style="float: left">
