@@ -41,7 +41,6 @@
          this.axios.get('http://localhost:8080/getAllShops').then(response => {
             
             this.shopList = response.data.data
-             console.log(this.shopList.length)
          })
         },
         computed: {
@@ -52,7 +51,6 @@
         methods: {
             handleMore() {
                 this.perpage = this.perpage + 32
-                console.log(this.perpage)
             }
         }
     }

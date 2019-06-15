@@ -121,14 +121,14 @@ import mapDrag from '../components/mapDrag'
         //console.log('submit!');
           const loading = this.$loading({
               lock: true,
-              text: 'Loading',
+              text: '注册中',
               spinner: 'el-icon-loading',
               background: 'rgba(0, 0, 0, 0.7)'
           });
           setTimeout(() => {
               loading.close();
           }, 2000);
-          
+
         this.axios.post("http://localhost:8080/signupForRestaurant", {
             lng_lat: this.dragData.lng + ',' + this.dragData.lat,
             address: this.dragData.address,
