@@ -4,29 +4,33 @@
             <Header :name="name"></Header>
         </el-header>
         <el-main style="background-color:#f7f7f7;height: 100%">
-            <div>
-                <div class="shops">
-                    <div style="width: 100%">
+            <div class="shops">
+                <div style="display: flex">
+                    <div style="width: 75%">
                         <span>当前位置：</span>
                         <span>{{position}}</span>
                         <router-link to="/profile/address" style="color: cornflowerblue;font-size: 13px;margin-left: 5px">切换地址</router-link>
                     </div>
-                    <div style="width: 100%;margin-top: 20px;background: white;height: 60px;display: flex">
-                        <div style="height: 100%;width: 10%;display: flex;align-items: center">
-                            <span style="margin-left: 0px;margin-top: -4px">商家分类：</span>
-                        </div>
-                        <div style="height: 100%;width: 90%;display: flex;align-items: center">
-                            <el-button style="border: 0" @click="changeShop(type)" v-for="(type, index) in types" :key="index">{{type}}</el-button>
-                        </div>
+                    <div style="width: 25%">
+                        <el-input placeholder="搜索商家..." v-model="searchKey" size="mini">
+                            <el-button slot="append" icon="el-icon-search" @click="searchShop"></el-button>
+                        </el-input>
                     </div>
-                    <el-row class="shops_view" :gutter="50">
-                        <el-col :sm="12" :md="6" v-for="(card, index) in showShopList" :key="card.id" >
-                            <Card :shopName="card.shopName" :rate="card.rate" :deliveryCost="card.deliveryCost"
-                                  :imgUrl="card.imgUrl" :restaurantId="card.restaurantId"></Card>
-                            <br>
-                        </el-col>
-                    </el-row>
                 </div>
+                <div style="width: 100%;margin-top: 20px;background: white;height: 60px;display: flex">
+                    <div style="height: 100%;width: 10%;display: flex;align-items: center">
+                        <span style="margin-left: 15px;margin-top: -3px">商家分类：</span>
+                    </div>
+                    <div style="height: 100%;width: 90%;display: flex;align-items: center;flex-wrap: wrap">
+                        <el-button style="border: 0" @click="changeShop(type)" v-for="(type, index) in types" :key="index">{{type}}</el-button>
+                    </div>
+                </div>
+                <el-row class="shops_view" :gutter="0">
+                    <el-col :sm="12" :md="6" v-for="(card, index) in showShopList" :key="card.id" >
+                        <Card :shopName="card.shopName" :rate="card.rate" :deliveryCost="card.deliveryCost"
+                              :imgUrl="card.imgUrl" :restaurantId="card.restaurantId"></Card>
+                    </el-col>
+                </el-row>
             </div>
         </el-main>
     </el-container>
@@ -39,6 +43,7 @@
         name: 'homepage',
         data() {
             return {
+                searchKey:'',
                 name: '',
                 shopList: [],
                 currentPage: 1,
@@ -76,6 +81,9 @@
             changeShop(type){
                 //todo
             },
+            searchShop(){
+              //todo  this.searchKey
+            },
             defaultPosition () {
                 let citysearch = new AMap.CitySearch()
                 citysearch.getLocalCity((status, result) => {
@@ -97,10 +105,10 @@
     .shops_view {
         margin-top: 20px;
         vertical-align: text-top;
+        background-color: white;
     }
     .shops {
         width: 75%;
         margin: 0 auto;
     }
-
 </style>
