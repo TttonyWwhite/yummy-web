@@ -83,8 +83,6 @@
         },
         methods: {
             changeShop(type){
-                //todo
-
                 let param = new URLSearchParams()
                 param.append("type", type);
                 this.axios.post('http://localhost:8080/getShopsByType', param).then(response => {
@@ -93,7 +91,11 @@
             },
             searchShop(){
               //todo  this.searchKey
-
+                let param = new URLSearchParams()
+                param.append("keyword", this.searchKey)
+                this.axios.post("http://localhost:8080/searchShop", param).then(response => {
+                    this.shopList = response.data.data
+                })
             },
             defaultPosition () {
                 let citysearch = new AMap.CitySearch()
