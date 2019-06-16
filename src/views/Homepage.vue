@@ -31,6 +31,10 @@
                               :imgUrl="card.imgUrl" :restaurantId="card.restaurantId"></Card>
                     </el-col>
                 </el-row>
+
+                <div style="text-align: center">
+                    <el-button @click="moreShops" style="margin-top: 10px;">more</el-button>
+                </div>
             </div>
         </el-main>
     </el-container>
@@ -80,9 +84,16 @@
         methods: {
             changeShop(type){
                 //todo
+
+                let param = new URLSearchParams()
+                param.append("type", type);
+                this.axios.post('http://localhost:8080/getShopsByType', param).then(response => {
+                    this.shopList = response.data.data
+                })
             },
             searchShop(){
               //todo  this.searchKey
+
             },
             defaultPosition () {
                 let citysearch = new AMap.CitySearch()
@@ -96,6 +107,10 @@
                         }
                     }
                 })
+            },
+
+            moreShops() {
+                this.perpage += 16
             }
         }
     }
