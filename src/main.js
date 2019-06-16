@@ -46,8 +46,6 @@ VueAMap.initAMapApiLoader({
 Vue.config.productionTip = false
 
 
-
-
 new Vue({
   router,
   store,

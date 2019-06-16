@@ -43,6 +43,7 @@
 <script>
     import Header from '../components/Header'
     import Card from '../components/restaurantCard'
+
     export default {
         name: 'homepage',
         data() {
@@ -57,7 +58,7 @@
                 ],
                 position:'',
                 city:'',
-                center:{
+                center: {
                     lng: '',
                     lat: ''
                 }
@@ -70,11 +71,9 @@
         mounted() {
             this.name = localStorage.getItem('username')
             localStorage.setItem("ID", this.$route.params.id)
-            //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
             this.defaultPosition()
-            this.axios.post('http://localhost:8080/getShopsByPosition', param).then(response => {
-                this.shopList = response.data.data
-            })
+
+            //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
         },
         computed: {
             showShopList() {
@@ -96,17 +95,32 @@
                     this.shopList = response.data.data
                 })
             },
+
+            initShops() {
+                let param = new URLSearchParams()
+                param.append("lng", this.center.lng)
+                param.append("lat", this.center.lat)
+
+                this.axios.post('http://localhost:8080/getShopsByPosition', param).then(response => {
+                    this.shopList = response.data.data
+                })
+            },
+
             defaultPosition () {
-                let citysearch = new AMap.CitySearch();
-                citysearch.getLocalCity((status, result) => {
-                    if (status === 'complete' && result.info === 'OK') {
-                        if (result && result.city && result.bounds) {
-                            this.position = result.city
-                            this.city = result.city
-                            this.center.lng = (result.bounds.northeast.lng + result.bounds.southwest.lng) / 2
-                            this.center.lat = (result.bounds.northeast.lat + result.bounds.southwest.lat) / 2
+                let self = this
+                AMap.plugin(['AMap.CitySearch',],function () {
+                    let citysearch = new AMap.CitySearch()
+                    citysearch.getLocalCity((status, result) => {
+                        if (status === 'complete' && result.info === 'OK') {
+                            if (result && result.city && result.bounds) {
+                                self.position = result.city
+                                self.city = result.city
+                                self.center.lng = (result.bounds.northeast.lng + result.bounds.southwest.lng) / 2
+                                self.center.lat = (result.bounds.northeast.lat + result.bounds.southwest.lat) / 2
+                                self.initShops()
+                            }
                         }
-                    }
+                    })
                 })
             },
 
