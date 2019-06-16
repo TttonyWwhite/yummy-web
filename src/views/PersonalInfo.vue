@@ -1,9 +1,12 @@
 <template>
-	<el-container>
-			<el-header>
+	<el-container style="height: 100%">
+		<el-header style="background-color: #1d7eb8">
 			<Header :name="username"></Header>
-			</el-header>
-		<el-container>
+		</el-header>
+		<el-container style="height: 100%">
+			<el-row>
+				<el-col :span="3">&nbsp;</el-col>
+			</el-row>
 			<el-aside width="200px">
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" unique-opened router>
 					<template v-for="item in items">

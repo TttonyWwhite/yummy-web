@@ -96,7 +96,6 @@
 <style>
 	#view {
 		height: 100px;
-		background-color: gery;
 	}
 
 	.round_icon {

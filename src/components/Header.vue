@@ -2,19 +2,22 @@
     <el-row>
         <el-col :span="3">&nbsp;</el-col>
         <el-col :span="14">
-            <el-menu :default-active="$route.name" :router="true" class="el-menu-demo" mode="horizontal" background-color="#1d7eb8" text-color="#ffffff">
-                <el-menu-item :route="{name: 'homepage', params: {id: this.$route.params.id}}" index="homepage">
-                    <template slot="title">
-                        <span>首页</span>
-                    </template>
-                </el-menu-item>
-                <el-menu-item :route="{name: 'personalCenter', params: {id: this.$route.params.id}}" index="personalCenter">
-                    <template slot="title">
-                        <span>我的订单</span>
-                    </template>
-                </el-menu-item>
-                <el-menu-item index="3">消息中心</el-menu-item>
-            </el-menu>
+            <div style="display: flex; align-items: center;height: 60px">
+                <label style="color: white;font-size: xx-large">YUMMY!</label>
+                <el-menu :default-active="$route.name" :router="true" class="el-menu-demo" mode="horizontal" background-color="#1d7eb8" text-color="#ffffff">
+                    <el-menu-item :route="{name: 'homepage', params: {id: this.$route.params.id}}" index="homepage">
+                        <template slot="title">
+                            <span>首页</span>
+                        </template>
+                    </el-menu-item>
+                    <el-menu-item :route="{name: 'personalCenter', params: {id: this.$route.params.id}}" index="personalCenter">
+                        <template slot="title">
+                            <span>我的订单</span>
+                        </template>
+                    </el-menu-item>
+                    <el-menu-item index="3">消息中心</el-menu-item>
+                </el-menu>
+            </div>
         </el-col>
         <el-col :span="4">
             <!--<el-menu :default-active="this.$router.path" router class="el-menu-demo" mode="horizontal" background-color="#0d78da" text-color="#ffffff">-->

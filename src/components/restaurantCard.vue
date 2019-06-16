@@ -53,7 +53,7 @@
         },
         methods: {
             onClick() {
-                console.log(this.restaurant_id)
+                // console.log(this.restaurant_id)
                 this.$router.push({name: 'shop', params: {id: this.restaurant_id}})
             }
         },

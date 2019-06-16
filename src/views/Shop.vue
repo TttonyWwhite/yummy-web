@@ -1,23 +1,24 @@
 <template>
-    <div>
-        <div class="page-top">
+    <el-container style="height: 100%">
+        <el-header style="background-color: #1d7eb8">
             <Header :name="name"></Header>
-
+        </el-header>
+        <el-main>
             <Banner :shop="this.shop"></Banner>
-        </div>
-        <div class="container">
+            <div class="container">
 
-            <div class="products">
-                <div class="clearfix">
-                    <product v-for="product in products" :product="product" :key="product.id"></product>
+                <div class="products">
+                    <div class="clearfix">
+                        <product v-for="product in products" :product="product" :key="product.id"></product>
+                    </div>
+                </div>
+
+                <div class="shopping-cart">
+                    <shopping-cart></shopping-cart>
                 </div>
             </div>
-
-            <div class="shopping-cart">
-                <shopping-cart></shopping-cart>
-            </div>
-        </div>
-    </div>
+        </el-main>
+    </el-container>
 </template>
 
 <script>
@@ -73,15 +74,6 @@
 </script>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: Helvetica, sans-serif;
-        margin: 0;
-    }
-
     .clearfix:after {
         content: " ";
         visibility: hidden;

@@ -85,16 +85,20 @@
               //todo  this.searchKey
             },
             defaultPosition () {
-                let citysearch = new AMap.CitySearch()
-                citysearch.getLocalCity((status, result) => {
-                    if (status === 'complete' && result.info === 'OK') {
-                        if (result && result.city && result.bounds) {
-                            this.position = result.city
-                            this.city = result.city
-                            this.center.lng = (result.bounds.northeast.lng + result.bounds.southwest.lng) / 2
-                            this.center.lat = (result.bounds.northeast.lat + result.bounds.southwest.lat) / 2
+                let self = this
+                AMap.plugin(['AMap.CitySearch',],function () {
+                    let citysearch = new AMap.CitySearch()
+                    citysearch.getLocalCity((status, result) => {
+                        if (status === 'complete' && result.info === 'OK') {
+                            if (result && result.city && result.bounds) {
+                                self.position = result.city
+                                self.city = result.city
+                                self.center.lng = (result.bounds.northeast.lng + result.bounds.southwest.lng) / 2
+                                self.center.lat = (result.bounds.northeast.lat + result.bounds.southwest.lat) / 2
+                                self.searchShop()
+                            }
                         }
-                    }
+                    })
                 })
             }
         }
