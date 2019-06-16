@@ -72,7 +72,7 @@
                 imageUrl: '',
                 token: '',
                 upload_qiniu_url: 'http://upload.qiniu.com/',
-                upload_qiniu_addr: 'http://ps7ukx8ef.bkt.clouddn.com',
+                upload_qiniu_addr: 'http://pt6lqob3j.bkt.clouddn.com',
                 accept: 'image/png, image/jpeg, image/gif, image/jpg, image/bmp',
                 qiniuData: {
                     key: "",

@@ -72,7 +72,7 @@
             localStorage.setItem("ID", this.$route.params.id)
             //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
             this.defaultPosition()
-            this.axios.get('http://localhost:8080/getAllShops').then(response => {
+            this.axios.post('http://localhost:8080/getShopsByPosition', param).then(response => {
                 this.shopList = response.data.data
             })
         },
@@ -90,7 +90,6 @@
                 })
             },
             searchShop(){
-              //todo  this.searchKey
                 let param = new URLSearchParams()
                 param.append("keyword", this.searchKey)
                 this.axios.post("http://localhost:8080/searchShop", param).then(response => {
@@ -98,7 +97,7 @@
                 })
             },
             defaultPosition () {
-                let citysearch = new AMap.CitySearch()
+                let citysearch = new AMap.CitySearch();
                 citysearch.getLocalCity((status, result) => {
                     if (status === 'complete' && result.info === 'OK') {
                         if (result && result.city && result.bounds) {
