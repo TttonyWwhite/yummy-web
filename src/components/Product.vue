@@ -1,19 +1,38 @@
 <template>
-    <div class="product">
-        <img :src="product.image" class="image">
-        <p class="title">{{product.title}}</p>
-        <p class="price">
-            <span>¥ {{product.price}} </span>
-            <span class="qty" v-if="qtyInCart > 0">x{{qtyInCart}}</span>
-        </p>
-        <div class="controls">
-            <button class="add-btn" @click="addToCart" v-if="qtyInCart == 0">加入购物车</button>
-            <div class="clearfix" v-else>
-                <button class="inc" @click="inc">+</button>
-                <button class="dec" @click="dec">-</button>
+    <el-card style="width: 400px;height: 100px">
+        <div style="display: flex;flex-direction: row">
+            <div style="width: 100px;margin-left: -20px;margin-top: -20px">
+                <img style="width: 100px;height: 100px" :src="product.image"/>
+            </div>
+            <div style="height:100px;width: 280px;margin-left: 10px;margin-right: -20px;margin-top: -20px">
+                <div style="height: 50%">
+                    <p style="font-size: 20px">{{product.title}}</p>
+                    <!--<p style="font-size: 13px">{{goods.description}}</p>-->
+                </div>
+                <div style="height: 50%;display: flex;justify-content: space-between;align-items: center">
+                    <span v-show="goods.discountPrice === 0" style="color: dodgerblue">￥{{product.price}}</span>
+                    <!--<span v-show="goods.discountPrice !== 0" style="color: dodgerblue"><span style="text-decoration: line-through">￥{{goods.price}}</span>￥{{goods.discountPrice}}</span>-->
+                    <el-button size="mini" @click="addProduct(goods)" style="">加入购物车</el-button>
+                    <!--<el-button v-else disabled style="width: 92px" size="mini">已售完</el-button>-->
+                </div>
             </div>
         </div>
-    </div>
+    </el-card>
+    <!--<div class="product">-->
+        <!--<img :src="product.image" class="image">-->
+        <!--<p class="title">{{product.title}}</p>-->
+        <!--<p class="price">-->
+            <!--<span>¥ {{product.price}} </span>-->
+            <!--<span class="qty" v-if="qtyInCart > 0">x{{qtyInCart}}</span>-->
+        <!--</p>-->
+        <!--<div class="controls">-->
+            <!--<button class="add-btn" @click="addToCart" v-if="qtyInCart == 0">加入购物车</button>-->
+            <!--<div class="clearfix" v-else>-->
+                <!--<button class="inc" @click="inc">+</button>-->
+                <!--<button class="dec" @click="dec">-</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 </template>
 
 <script>
@@ -36,6 +55,9 @@
             },
             dec () {
                 State.dec(this.product)
+            },
+            addProduct(goods){
+
             }
         },
         computed: {

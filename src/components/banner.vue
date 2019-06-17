@@ -1,35 +1,34 @@
 <template>
 	<!--想想办法搞个背景图片 -->
-	<div class="banner">
-	<el-row>
-		<el-col :span="2">
-			<div id="banner_img">
-				<img :src="shop.imgUrl" class="round_icon" alt="">
-			</div>
-			
-		</el-col>
-		<el-col :span="4">
-			<div class="banner_text">
-				<span >{{shop.shopName}} <br> rate: {{shop.rate}}</span>
-			</div>
-		</el-col>
-		<el-col :span="2">
-			<div class="banner_text">
-				<span> 配送费 <br> ¥{{shop.deliveryCost}}</span>
-			</div>
-		</el-col>
-		<el-col :span="18">
-			&nbsp;
-		</el-col>
-	</el-row>
+	<div>
+		<el-row style="height:25%;background-color: gainsboro;margin-right: -20px;margin-left: -20px;margin-top: -20px">
+			<el-col :span="3">&nbsp;</el-col>
+			<el-col :span="18">
+				<div class="brief">
+					<div style="width: 1000px;display: flex;justify-content: flex-start;align-items: center">
+						<img :src="shop.imgUrl" class="round_icon"/>
+						<div>
+							<h2 style="margin-left: 20px;margin-top: -10px">{{shop.shopName}}</h2>
+							<Rate style="margin-left: 20px;margin-top: 10px" :value="shop.rate" :readonly="true"></Rate>
+							<h3 style="margin-left: 20px;margin-top: 20px">地址：{{shop.position}}{{shop.detail}}</h3>
+
+						</div>
+					</div>
+				</div>
+			</el-col>
+			<el-col :span="3">&nbsp;</el-col>
+		</el-row>
+				<!--<span> 配送费 <br> ¥{{shop.deliveryCost}}</span>-->
 	</div>
 </template>
 
 
 <script>
-	export default {
+	import Rate from "vue-tiny-rate";
+    export default {
 		name: 'banner',
-		props: ['shop'],
+        components: {Rate},
+        props: ['shop'],
 		data() {
 			return {
 				// shopName: '王婆油炸',
@@ -43,8 +42,8 @@
 
 <style>
 	.round_icon {
-		width: 80px;
-		height: 80px;
+		width: 100px;
+		height: 100px;
 		float: left;
 		border-radius: 50%;
 		align-items: center;
@@ -52,16 +51,11 @@
 		
 	}
 
-	.banner_text {
-		margin-top: 16px;
+	.brief{
+		display: flex;
+		flex-direction: row;
+		height: 150px;
+		justify-content: space-between;
+		align-items: center;
 	}
-
-	#banner_img {
-		margin-left: 50px;
-	}
-
-	.banner {
-		margin-top: 10px;
-	}
-
 </style>

@@ -73,8 +73,6 @@
             localStorage.setItem("ID", this.$route.params.id)
             //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
             this.defaultPosition()
-
-            //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
         },
         computed: {
             showShopList() {

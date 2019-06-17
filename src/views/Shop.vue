@@ -5,18 +5,32 @@
         </el-header>
         <el-main>
             <Banner :shop="this.shop"></Banner>
-            <div class="container">
-
-                <div class="products">
-                    <div class="clearfix">
-                        <product v-for="product in products" :product="product" :key="product.id"></product>
+            <el-row style="height: 75%;margin-left: -20px;margin-right: -20px">
+                <el-col :span="3">&nbsp;</el-col>
+                <el-col :span="16">
+                    <div style="display: flex;flex-direction: row;flex-wrap: wrap">
+                         <el-card style="width: 400px;height: 100px;margin-top: 10px;margin-left: 10px" v-for="product in products" :key="product.id">
+                            <div style="display: flex;flex-direction: row">
+                                <div style="width: 100px;margin-left: -20px;margin-top: -20px">
+                                    <img style="width: 100px;height: 100px" :src="product.image"/>
+                                </div>
+                                <div style="height:100px;width: 280px;margin-left: 10px;margin-right: -20px;margin-top: -20px">
+                                    <div style="height: 50%">
+                                        <p style="font-size: 20px">{{product.title}}</p>
+                                    </div>
+                                    <div style="height: 50%;display: flex;justify-content: space-between;align-items: center">
+                                        <span style="color: dodgerblue">￥{{product.price}}</span>
+                                        <el-button size="mini" @click="addProduct(product)" style="">加入购物车</el-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </el-card>
                     </div>
-                </div>
-
-                <div class="shopping-cart">
-                    <shopping-cart></shopping-cart>
-                </div>
-            </div>
+                </el-col>
+                <el-col :span="5">
+                    <shopping-cart style="position: fixed;bottom: 0"></shopping-cart>
+                </el-col>
+            </el-row>
         </el-main>
     </el-container>
 </template>
@@ -24,8 +38,10 @@
 <script>
     import Header from '../components/Header'
     import Banner from '../components/banner'
-    import ShoppingCart from '../components/ShoppingCart'
-    import Product from '../components/Product'
+    import ShoppingCart from '../components/BuyCar'
+    import State from '../shoppingCartState'
+    import _ from 'lodash'
+
     export default {
         name: 'shop',
         created() {
@@ -50,7 +66,6 @@
         },
         components: {
             ShoppingCart,
-            Product,
             Header,
             Banner
         },
@@ -64,36 +79,15 @@
             }
         },
         methods: {
-            // onClickBtn() {
-
-            // 	console.log(State.data.cart[0].id)
-            // }
+            addProduct(product){
+                State.add(product)
+            }
         }
 
     }
 </script>
 
 <style>
-    .clearfix:after {
-        content: " ";
-        visibility: hidden;
-        display: block;
-        height: 0;
-        clear: both;
-    }
-
-    .container {
-        width: 100%;
-        color: #4C5263;
-        width: 100%;
-        padding: 2em;
-    }
-
-    .products {
-        width: 75%;
-        float: left;
-    }
-
     .shopping-cart {
         width: 25%;
         float: left;
