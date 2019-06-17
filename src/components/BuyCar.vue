@@ -1,22 +1,29 @@
 <template>
   <div style="width: 320px;">
-    <div style="width: 100%;height: 40px;display: flex;justify-content: space-between;align-items: center;background: #FAFAFA;border-top: 2px royalblue solid">
+    <div style="width: 100%;height: 40px;display: flex;justify-content: space-between;align-items: center;background-color: #fafafa;border-top: 2px royalblue solid">
       <span style="margin-left: 10px">购物车</span>
       <a href="javascript:;" style="margin-right: 10px" @click="clearBuyCar">清空</a>
     </div>
-    <div style="width: 100%">
-      <div style="display: flex;justify-content: space-between;align-items: center;height: 35px" v-for="(orderDetail,index) in items" :key="index">
-        <span style="margin-left: 10px;width: 100px;word-break: keep-all;white-space: nowrap;text-overflow:ellipsis;overflow: hidden">{{orderDetail.name}}</span>
-        <el-input-number size="mini" style="width: 90px;" @change="calculateCost" v-model="orderDetail.num" :min="1"></el-input-number>
-        <span style="margin-right: 10px;color: crimson" v-if="orderDetail.discountPrice === 0">￥{{(orderDetail.originalPrice*orderDetail.num).toFixed(2)}}</span>
-        <span style="margin-right: 10px;color: crimson" v-else>￥{{(orderDetail.discountPrice*orderDetail.num).toFixed(2)}}</span>
+    <div style="width: 100%;background-color: white">
+      <div id="orderLine" onmouseover="this.className='over'" onmouseout="this.className='out'" style="height: 35px;border-top: #f8f8f8 1px solid" v-for="orderDetail in items" :key="orderDetail.id">
+        <el-row style="height:35px;display: flex;justify-content: center;align-items: center">
+          <el-col :span="11">
+            <span style="margin-left: 10px;width: 100px;word-break: keep-all;white-space: nowrap;text-overflow:ellipsis;overflow: hidden">{{orderDetail.title}}</span>
+          </el-col>
+          <el-col :span="8">
+            <el-input-number size="mini" style="width: 90px;" @change="removeIfZero(orderDetail)" v-model="orderDetail.qty" :min="0"></el-input-number>
+          </el-col>
+          <el-col :span="5">
+            <span style="margin-right: 10px;color: crimson" >￥{{(orderDetail.price*orderDetail.qty).toFixed(2)}}</span>
+          </el-col>
+        </el-row>
       </div>
     </div>
     <div style="width: 100%;height: 40px;display: flex;">
       <div style="width: 65%;display: flex;justify-content: space-between;background: black;align-items: center">
         <div style="width: 65%">
           <label class="icon-buyCar"></label>
-          <span style="color: white">￥{{items.cost}}</span>
+          <span style="color: white">￥{{totalCost}}</span>
         </div>
         <div style="margin-top: 10px;margin-left: 10px;width: 35%">
           <span style="color: gainsboro;font-size: 14px">配送费￥3</span>
@@ -38,23 +45,33 @@ import State from '../shoppingCartState'
 export default {
   data () {
     return {
-        items: State.data.cart
+        items: State.data.cart[this.$route.params.id]===undefined?State.data.cart[this.$route.params.id]=[]:State.data.cart[this.$route.params.id],
+        totalCost: 0
     }
   },
+    watch: {
+        items:{
+            handler(){
+                this.calculateCost()
+            },
+            deep:true
+        }
+    },
   methods: {
     clearBuyCar () {
-      // this.$store.commit('resetBuyCar')
+        State.clear(this.$route.params.id)
     },
-    calculateCost () {
-      // let tmp = 0
-      // for (let index in this.$store.state.buyCar.orderDetails) {
-      //   if (this.$store.state.buyCar.orderDetails[index].discountPrice === 0) {
-      //     tmp += this.$store.state.buyCar.orderDetails[index].originalPrice * this.$store.state.buyCar.orderDetails[index].num
-      //   } else {
-      //     tmp += this.$store.state.buyCar.orderDetails[index].discountPrice * this.$store.state.buyCar.orderDetails[index].num
-      //   }
-      // }
-      // this.$store.state.buyCar.order.cost = tmp.toFixed(2)
+    removeIfZero (order) {
+        if (order.qty === 0){
+            State.remove(this.$route.params.id,order)
+        }
+    },
+    calculateCost(){
+        let tmp = 0
+        for (let index in this.items){
+            tmp += this.items[index].price*this.items[index].qty
+        }
+        this.totalCost = tmp.toFixed(2)
     },
     toPay () {
       // this.$emit('toPay')
@@ -72,5 +89,14 @@ export default {
     vertical-align: middle;
     display: inline-block;
     margin-left: 10px;
+  }
+
+  #orderLine{
+  }
+  .over {
+    background-color: #f7f7f7;
+  }
+  .out {
+    background-color: white;
   }
 </style>

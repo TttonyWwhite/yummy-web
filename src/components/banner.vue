@@ -5,7 +5,7 @@
 			<el-col :span="3">&nbsp;</el-col>
 			<el-col :span="18">
 				<div class="brief">
-					<div style="width: 1000px;display: flex;justify-content: flex-start;align-items: center">
+					<div style="width: 1000px;display: flex;justify-content: flex-start;align-items: center;margin-left: 20px">
 						<img :src="shop.imgUrl" class="round_icon"/>
 						<div>
 							<h2 style="margin-left: 20px;margin-top: -10px">{{shop.shopName}}</h2>

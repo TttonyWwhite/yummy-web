@@ -3,24 +3,24 @@
         <el-header style="background-color: #1d7eb8">
             <Header :name="name"></Header>
         </el-header>
-        <el-main>
+        <el-main style="background-color:#f7f7f7">
             <Banner :shop="this.shop"></Banner>
-            <el-row style="height: 75%;margin-left: -20px;margin-right: -20px">
+            <el-row style="margin-left: -20px;margin-right: -20px">
                 <el-col :span="3">&nbsp;</el-col>
                 <el-col :span="16">
                     <div style="display: flex;flex-direction: row;flex-wrap: wrap">
-                         <el-card style="width: 400px;height: 100px;margin-top: 10px;margin-left: 10px" v-for="product in products" :key="product.id">
+                         <el-card style="width: 400px;height: 100px;margin-top: 15px;margin-left: 20px;border: 1px #dfdfdf solid" body-style="padding:0" v-for="product in products" :key="product.id">
                             <div style="display: flex;flex-direction: row">
-                                <div style="width: 100px;margin-left: -20px;margin-top: -20px">
+                                <div style="width: 100px">
                                     <img style="width: 100px;height: 100px" :src="product.image"/>
                                 </div>
-                                <div style="height:100px;width: 280px;margin-left: 10px;margin-right: -20px;margin-top: -20px">
+                                <div style="height:100px;width: 300px;margin-left: 10px">
                                     <div style="height: 50%">
                                         <p style="font-size: 20px">{{product.title}}</p>
                                     </div>
                                     <div style="height: 50%;display: flex;justify-content: space-between;align-items: center">
                                         <span style="color: dodgerblue">￥{{product.price}}</span>
-                                        <el-button size="mini" @click="addProduct(product)" style="">加入购物车</el-button>
+                                        <el-button size="mini" type="primary" @click="addProduct(product)" style="margin-right: 20px">加入购物车</el-button>
                                     </div>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                     </div>
                 </el-col>
                 <el-col :span="5">
-                    <shopping-cart style="position: fixed;bottom: 0"></shopping-cart>
+                    <shopping-cart style="position: fixed;bottom: 0;right: 15px;box-shadow:-10px 0 10px -10px gray "></shopping-cart>
                 </el-col>
             </el-row>
         </el-main>
@@ -80,6 +80,7 @@
         },
         methods: {
             addProduct(product){
+                product['sid'] = this.$route.params.id
                 State.add(product)
             }
         }
