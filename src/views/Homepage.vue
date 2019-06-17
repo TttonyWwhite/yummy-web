@@ -31,6 +31,10 @@
                               :imgUrl="card.imgUrl" :restaurantId="card.restaurantId"></Card>
                     </el-col>
                 </el-row>
+
+                <div style="text-align: center">
+                    <el-button @click="moreShops" style="margin-top: 10px;">more</el-button>
+                </div>
             </div>
         </el-main>
     </el-container>
@@ -39,6 +43,7 @@
 <script>
     import Header from '../components/Header'
     import Card from '../components/restaurantCard'
+
     export default {
         name: 'homepage',
         data() {
@@ -68,9 +73,8 @@
             localStorage.setItem("ID", this.$route.params.id)
             //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
             this.defaultPosition()
-            this.axios.get('http://localhost:8080/getAllShops').then(response => {
-                this.shopList = response.data.data
-            })
+
+            //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
         },
         computed: {
             showShopList() {
@@ -79,11 +83,30 @@
         },
         methods: {
             changeShop(type){
-                //todo
+                let param = new URLSearchParams()
+                param.append("type", type);
+                this.axios.post('http://localhost:8080/getShopsByType', param).then(response => {
+                    this.shopList = response.data.data
+                })
             },
             searchShop(){
-              //todo  this.searchKey
+                let param = new URLSearchParams()
+                param.append("keyword", this.searchKey)
+                this.axios.post("http://localhost:8080/searchShop", param).then(response => {
+                    this.shopList = response.data.data
+                })
             },
+
+            initShops() {
+                let param = new URLSearchParams()
+                param.append("lng", this.center.lng)
+                param.append("lat", this.center.lat)
+
+                this.axios.post('http://localhost:8080/getShopsByPosition', param).then(response => {
+                    this.shopList = response.data.data
+                })
+            },
+
             defaultPosition () {
                 let self = this
                 AMap.plugin(['AMap.CitySearch',],function () {
@@ -95,11 +118,15 @@
                                 self.city = result.city
                                 self.center.lng = (result.bounds.northeast.lng + result.bounds.southwest.lng) / 2
                                 self.center.lat = (result.bounds.northeast.lat + result.bounds.southwest.lat) / 2
-                                self.searchShop()
+                                self.initShops()
                             }
                         }
                     })
                 })
+            },
+
+            moreShops() {
+                this.perpage += 16
             }
         }
     }
