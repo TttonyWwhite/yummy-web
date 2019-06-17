@@ -28,7 +28,7 @@
                 <el-row class="shops_view" :gutter="0">
                     <el-col :sm="12" :md="6" v-for="(card, index) in showShopList" :key="card.id" >
                         <Card :shopName="card.shopName" :rate="card.rate" :deliveryCost="card.deliveryCost"
-                              :imgUrl="card.imgUrl" :restaurantId="card.restaurantId"></Card>
+                              :imgUrl="card.imgUrl" :restaurantId="card.restaurantId" :deliveryTime="card.deliveryTime"></Card>
                     </el-col>
                 </el-row>
 

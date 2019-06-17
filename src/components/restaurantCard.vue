@@ -43,7 +43,7 @@
             },
             deliveryTime: {
                 type: Number,
-                default: 30
+                default: 0
             }
         },
         data() {
