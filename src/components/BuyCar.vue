@@ -70,7 +70,7 @@
                 </el-col>
                 <el-col :span="11">&nbsp;</el-col>
                 <el-col :span="5">
-                  <span>-￥{{totalCost-(totalCost*discount).toFixed(2)}}</span>
+                  <span>-￥{{discountValue}}</span>
                 </el-col>
               </el-row>
             </div>
@@ -91,6 +91,15 @@
           <div style="width: 100%">
             <div style="width: 100%;margin-top: -30px">
               <h3>收货地址</h3>
+              <el-select v-model="address_value" placeholder="请选择收货地址">
+                <el-option
+                   v-for="item in options"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
+
+                </el-option>
+              </el-select>
             </div>
             <div style="width: 100%;height: 46px;border-top: gainsboro 2px solid;margin-top: 10px;border-bottom: gainsboro 2px solid;display: flex;align-items: center">
               <span>{{address}}</span>
@@ -101,7 +110,8 @@
               <h3>可选优惠</h3>
             </div>
             <div style="margin-top: 10px">
-              <span>无可用优惠</span>
+              <span v-if="discountInfo !== ''">{{discountInfo}}</span>
+              <span v-else>无可用优惠</span>
             </div>
           </div>
           <el-button @click="confirmBuy" style="position: absolute;bottom: 20px;right: 20px" type="danger">确认下单</el-button>
@@ -114,6 +124,11 @@
 <script>
 import _ from 'lodash'
 import State from '../shoppingCartState'
+
+function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 export default {
   data () {
     return {
@@ -122,7 +137,10 @@ export default {
         dialogVisible: false,
         discount: 1,
         deliveryCost:0,//todo 配送费
-        address:''
+        address: '',
+        discountInfo: '',
+        address_value: '',
+        options: [], // 用于存放可选地址列表
         //todo 获得默认地址，就是首页上那一个
     }
   },
@@ -134,8 +152,47 @@ export default {
             deep:true
         }
     },
+    computed: {
+      discountValue: function() {
+        let num = this.totalCost - (this.totalCost * this.discount)
+        return num.toFixed(2)
+      }
+    },
     created(){
       this.calculateCost()
+    },
+    mounted() {
+      let param = new URLSearchParams()
+      param.append("memberId", localStorage.getItem("MEMBER_ID"))
+      this.axios.post('http://localhost:8080/getAddress', param).then(response => {
+        for (var i = 0;i < response.data.data.length;i++) {
+          let temp = {value: response.data.data[i].addressId, label: response.data.data[i].address}
+          this.options.push(temp)
+        }
+      })
+
+      // 从后台获取用户等级信息，显示折扣
+      this.axios.post('http://localhost:8080/getMemberLevel', param).then(response => {
+        var memberLevel = response.data.data
+        switch (memberLevel) {
+          case 1:
+            this.discount = 1;
+            break;
+          case 2:
+            this.discount = 0.95;
+            this.discountInfo = '2级会员享受95折优惠';
+            break;
+          case 3:
+            this.discount = 0.9;
+            this.discountInfo = '3级会员享受9折优惠';
+            break;
+          case 4:
+            this.discount = 0.85;
+            this.discountInfo = '4级会员享受85折优惠';
+            break;
+        }
+      })
+
     },
   methods: {
     clearBuyCar () {
@@ -156,9 +213,29 @@ export default {
     toPay () {
         this.dialogVisible = true
     },
-      confirmBuy(){
-        //todo 下订单,优惠相关的你自己先写一写，我再改一改界面
+    confirmBuy(){
+      //todo 下订单,优惠相关的你自己先写一写，我再改一改界面
+      let data = {
+        items: this.items,
+        restaurantId: this.$route.params.id,
+        memberId: localStorage.getItem("ID"),
+        orderTime: new Date(),
+        expectTime: new Date(),
+        freight: this.deliveryCost,
+        addressId: this.address_value
       }
+
+      this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
+        if (response.data.code === 11124) {
+          this.$message('抱歉，超出配送距离')
+        } else {
+          this.$message('订单下达完成，请在15分钟内完成支付')
+          sleep(2000).then(() => {
+            this.$router.push({name: 'personalCenter', params: {id: localStorage.getItem("ID")}})
+          })
+        }
+      })
+    }
   }
 }
 </script>
