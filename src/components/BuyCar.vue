@@ -36,6 +36,78 @@
         <a href="javascript:;" @click="toPay" style="color: white">去结算</a>
       </div>
     </div>
+    <el-dialog title="订单信息" width="1000px" :modal="false" :visible.sync="dialogVisible">
+      <div style="width: 100%;display: flex;justify-content: space-between">
+        <div style="width: 38%">
+          <div style="width:100%;margin-top: -30px">
+            <h3>订单详情</h3>
+          </div>
+          <div style="width:100%;border-top: gainsboro 2px solid;margin-top: 10px">
+            <el-table header-align="right" :data="items">
+              <el-table-column  label="商品" prop="title"></el-table-column>
+              <el-table-column  align="center" label="份数" prop="qty"></el-table-column>
+              <el-table-column  align="center" label="小计（元）">
+                <template slot-scope="scope">
+                  <span>{{(scope.row.price*scope.row.qty).toFixed(2)}}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <div style="width: 100%;height: 47px;display: flex;justify-content: space-between;align-items: center;border-bottom: #EBEEF5 1px solid">
+              <el-row style="width: 100%">
+                <el-col :span="8">
+                  <span style="margin-left: 10px">配送费</span>
+                </el-col>
+                <el-col :span="11">&nbsp;</el-col>
+                <el-col :span="5">
+                  <span>￥{{deliveryCost}}</span>
+                </el-col>
+              </el-row>
+            </div>
+            <div style="width: 100%;height: 47px;display: flex;justify-content: space-between;align-items: center;border-bottom: #EBEEF5 1px solid">
+              <el-row style="width: 100%">
+                <el-col :span="8">
+                  <span style="margin-left: 10px">优惠</span>
+                </el-col>
+                <el-col :span="11">&nbsp;</el-col>
+                <el-col :span="5">
+                  <span>-￥{{totalCost-(totalCost*discount).toFixed(2)}}</span>
+                </el-col>
+              </el-row>
+            </div>
+            <div style="width: 100%;height: 47px;display: flex;justify-content: space-between;align-items: center">
+              <el-row style="width: 100%">
+                <el-col :span="8">
+                  <span style="margin-left: 10px">总计</span>
+                </el-col>
+                <el-col :span="10">&nbsp;</el-col>
+                <el-col :span="6">
+                  <span style="color: crimson;font-weight: bold;font-size: large">￥{{(totalCost*discount).toFixed(2)}}</span>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
+        <div style="width: 59%">
+          <div style="width: 100%">
+            <div style="width: 100%;margin-top: -30px">
+              <h3>收货地址</h3>
+            </div>
+            <div style="width: 100%;height: 46px;border-top: gainsboro 2px solid;margin-top: 10px;border-bottom: gainsboro 2px solid;display: flex;align-items: center">
+              <span>{{address}}</span>
+            </div>
+          </div>
+          <div style="width: 100%">
+            <div style="width: 100%;margin-top: 10px">
+              <h3>可选优惠</h3>
+            </div>
+            <div style="margin-top: 10px">
+              <span>无可用优惠</span>
+            </div>
+          </div>
+          <el-button @click="confirmBuy" style="position: absolute;bottom: 20px;right: 20px" type="danger">确认下单</el-button>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -46,7 +118,12 @@ export default {
   data () {
     return {
         items: State.data.cart[this.$route.params.id]===undefined?State.data.cart[this.$route.params.id]=[]:State.data.cart[this.$route.params.id],
-        totalCost: 0
+        totalCost: 0,
+        dialogVisible: false,
+        discount: 1,
+        deliveryCost:0,//todo 配送费
+        address:''
+        //todo 获得默认地址，就是首页上那一个
     }
   },
     watch: {
@@ -56,6 +133,9 @@ export default {
             },
             deep:true
         }
+    },
+    created(){
+      this.calculateCost()
     },
   methods: {
     clearBuyCar () {
@@ -74,8 +154,11 @@ export default {
         this.totalCost = tmp.toFixed(2)
     },
     toPay () {
-      // this.$emit('toPay')
-    }
+        this.dialogVisible = true
+    },
+      confirmBuy(){
+        //todo 下订单,优惠相关的你自己先写一写，我再改一改界面
+      }
   }
 }
 </script>
