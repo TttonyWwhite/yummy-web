@@ -18,7 +18,7 @@ export default {
                 })
             }else {
             	this.inc(product)
-			}
+            }
 		} else {
 			this.data.cart[product.sid] = [{
                 id: product.id,

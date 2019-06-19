@@ -1,0 +1,49 @@
+<template>
+  <div style="margin-left: 20px;background-color: white;height: 100%">
+    <div style="margin-left: 20px;margin-right: 20px">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item style="font-size: 16px;margin-top: 10px"><h4>我的订单</h4></el-breadcrumb-item>
+      </el-breadcrumb>
+      <div style="margin-top: 10px;border-top: 2px solid #8a8a8a">
+        <el-table :data="orders">
+          <el-table-column label="订单编号" prop="orderId"></el-table-column>
+          <el-table-column label="下单时间" prop="orderTime"></el-table-column>
+          <el-table-column label="支付金额（元）">
+            <template slot-scope="scope">
+              {{scope.row.cost-scope.row.discount + scope.row.deliveryCost}}
+            </template>
+          </el-table-column>
+          <el-table-column label="状态" prop="orderStatus"></el-table-column>
+          <el-table-column label="详情/操作">
+            <template slot-scope="scope">
+              <el-button @click="toDetail(scope.row)">订单详情</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      orders: []
+    }
+  },
+  created () {
+      //todo getorders
+  },
+  methods: {
+    toDetail (order) {
+      // this.$router.push('/profile/order-detail?oid=' + order.orderId + '&sid=' + order.identifierCode)
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

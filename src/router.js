@@ -59,6 +59,14 @@ const router = new Router({
               path: 'order/:orderId',
               name: 'order',
               component: resolve => require(['./views/OrderDetail.vue'], resolve)
+            },
+            {
+                path:'order',
+                component: resolve => require(['./views/Order.vue'], resolve)
+            },
+            {
+                path:'address',
+                component: resolve => require(['./views/MemberAddress.vue'], resolve)
             }
         ]
       },

@@ -26,14 +26,14 @@
           <span style="color: white">￥{{totalCost}}</span>
         </div>
         <div style="margin-top: 10px;margin-left: 10px;width: 35%">
-          <span style="color: gainsboro;font-size: 14px">配送费￥3</span>
+          <span style="color: gainsboro;font-size: 14px">配送费￥{{deliveryCost}}</span>
         </div>
       </div>
       <div v-if="items.length === 0" style="width: 35%;background: gainsboro;display: flex;justify-content: center;align-items: center">
         <a>购物车是空的</a>
       </div>
       <div v-else style="width: 35%;background:cornflowerblue;display: flex;justify-content: center;align-items: center">
-        <a href="javascript:;" @click="toPay" style="color: white">去结算</a>
+        <a href="javascript:;" @click="toPay" style="color: white;text-decoration: none ">去结算</a>
       </div>
     </div>
     <el-dialog title="订单信息" width="1000px" :modal="false" :visible.sync="dialogVisible">
@@ -59,29 +59,29 @@
                 </el-col>
                 <el-col :span="11">&nbsp;</el-col>
                 <el-col :span="5">
-                  <span>￥{{deliveryCost}}</span>
+                  <span>{{deliveryCost}}</span>
                 </el-col>
               </el-row>
             </div>
             <div style="width: 100%;height: 47px;display: flex;justify-content: space-between;align-items: center;border-bottom: #EBEEF5 1px solid">
               <el-row style="width: 100%">
                 <el-col :span="8">
-                  <span style="margin-left: 10px">优惠</span>
+                  <span style="margin-left: 10px;color: dodgerblue">优惠</span>
                 </el-col>
                 <el-col :span="11">&nbsp;</el-col>
                 <el-col :span="5">
-                  <span>-￥{{discountValue}}</span>
+                  <span style="color: dodgerblue">{{discountValue}}</span>
                 </el-col>
               </el-row>
             </div>
             <div style="width: 100%;height: 47px;display: flex;justify-content: space-between;align-items: center">
               <el-row style="width: 100%">
                 <el-col :span="8">
-                  <span style="margin-left: 10px">总计</span>
+                  <span style="margin-left: 10px;color: crimson">总计</span>
                 </el-col>
                 <el-col :span="10">&nbsp;</el-col>
                 <el-col :span="6">
-                  <span style="color: crimson;font-weight: bold;font-size: large">￥{{(totalCost*discount).toFixed(2)}}</span>
+                  <span style="color: crimson;font-weight: bold;font-size: large">￥{{(totalCost-discountValue+deliveryCost).toFixed(2)}}</span>
                 </el-col>
               </el-row>
             </div>
@@ -91,15 +91,6 @@
           <div style="width: 100%">
             <div style="width: 100%;margin-top: -30px">
               <h3>收货地址</h3>
-              <el-select v-model="address_value" placeholder="请选择收货地址">
-                <el-option
-                   v-for="item in options"
-                   :key="item.value"
-                   :label="item.label"
-                   :value="item.value">
-
-                </el-option>
-              </el-select>
             </div>
             <div style="width: 100%;height: 46px;border-top: gainsboro 2px solid;margin-top: 10px;border-bottom: gainsboro 2px solid;display: flex;align-items: center">
               <span>{{address}}</span>
@@ -110,7 +101,7 @@
               <h3>可选优惠</h3>
             </div>
             <div style="margin-top: 10px">
-              <span v-if="discountInfo !== ''">{{discountInfo}}</span>
+              <el-checkbox v-if="discountInfo !== ''" v-model="useDiscount">{{discountInfo}}</el-checkbox>
               <span v-else>无可用优惠</span>
             </div>
           </div>
@@ -130,6 +121,9 @@ function sleep(time) {
 }
 
 export default {
+    props:{
+        deliveryCost:Number
+    },
   data () {
     return {
         items: State.data.cart[this.$route.params.id]===undefined?State.data.cart[this.$route.params.id]=[]:State.data.cart[this.$route.params.id],
@@ -140,6 +134,8 @@ export default {
         address: '',
         discountInfo: '',
         address_value: '',
+        useDiscount:false,
+        discountValue:0,
         options: [], // 用于存放可选地址列表
         //todo 获得默认地址，就是首页上那一个
     }
@@ -150,14 +146,22 @@ export default {
                 this.calculateCost()
             },
             deep:true
+        },
+        useDiscount(newValue){
+            if (newValue){
+                let num = this.totalCost - (this.totalCost * this.discount)
+                this.discountValue = num.toFixed(2)
+            } else {
+                this.discountValue = 0
+            }
         }
     },
-    computed: {
-      discountValue: function() {
-        let num = this.totalCost - (this.totalCost * this.discount)
-        return num.toFixed(2)
-      }
-    },
+    // computed: {
+    //   discountValue: function() {
+    //     let num = this.totalCost - (this.totalCost * this.discount)
+    //     return num.toFixed(2)
+    //   }
+    // },
     created(){
       this.calculateCost()
     },
@@ -192,7 +196,6 @@ export default {
             break;
         }
       })
-
     },
   methods: {
     clearBuyCar () {
@@ -224,7 +227,6 @@ export default {
         freight: this.deliveryCost,
         addressId: this.address_value
       }
-
       this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
         if (response.data.code === 11124) {
           this.$message('抱歉，超出配送距离')

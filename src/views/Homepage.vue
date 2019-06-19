@@ -9,7 +9,7 @@
                     <div style="width: 75%">
                         <span>当前位置：</span>
                         <span>{{position}}</span>
-                        <router-link to="/profile/address" style="color: cornflowerblue;font-size: 13px;margin-left: 5px">切换地址</router-link>
+                        <router-link to="/profile/address" style="color: cornflowerblue;font-size: 13px;margin-left: 5px;text-decoration: none">[切换地址]</router-link>
                     </div>
                     <div style="width: 25%">
                         <el-input placeholder="搜索商家..." v-model="searchKey" size="mini">
@@ -31,10 +31,7 @@
                               :imgUrl="card.imgUrl" :restaurantId="card.restaurantId" :deliveryTime="card.deliveryTime"></Card>
                     </el-col>
                 </el-row>
-
-                <div style="text-align: center">
-                    <el-button @click="moreShops" style="margin-top: 10px;">more</el-button>
-                </div>
+                <el-button @click="moreShops" style="width: 100%;border: 0">点击加载更多商家...</el-button>
             </div>
         </el-main>
     </el-container>
@@ -72,7 +69,12 @@
             this.name = localStorage.getItem('username')
             localStorage.setItem("ID", this.$route.params.id)
             //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
-            this.defaultPosition()
+            this.getUserAddress()
+            if (this.position === '') {
+                this.defaultPosition()
+            }else {
+                this.initShops()
+            }
         },
         computed: {
             showShopList() {
@@ -122,7 +124,10 @@
                     })
                 })
             },
+            //todo 获得用户的地址
+            getUserAddress(){
 
+            },
             moreShops() {
                 this.perpage += 16
             }

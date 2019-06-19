@@ -18,7 +18,6 @@
 			</el-col>
 			<el-col :span="3">&nbsp;</el-col>
 		</el-row>
-				<!--<span> 配送费 <br> ¥{{shop.deliveryCost}}</span>-->
 	</div>
 </template>
 
@@ -31,9 +30,6 @@
         props: ['shop'],
 		data() {
 			return {
-				// shopName: '王婆油炸',
-				// rate: 4,
-				// deliveryCost: 3
 			}
 		}
 	}
