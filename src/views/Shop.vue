@@ -31,6 +31,8 @@
                     <shopping-cart :deliveryCost="deliveryCost" style="position: fixed;bottom: 0;right: 15px;box-shadow:-10px 0 10px -10px gray "></shopping-cart>
                 </el-col>
             </el-row>
+
+
         </el-main>
     </el-container>
 </template>

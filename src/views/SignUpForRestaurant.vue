@@ -68,11 +68,12 @@
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
+
+
     
     </el-col>
     <el-col :span="6"></el-col>
     </el-row>
-
     </div>
 </template>
 
@@ -196,7 +197,8 @@ import mapDrag from '../components/mapDrag'
             }).catch(err => {
                 console.log(err)
             })
-        }
+        },
+
     },
 
     mounted() {
