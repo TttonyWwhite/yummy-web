@@ -214,7 +214,6 @@ export default {
         this.dialogVisible = true
     },
     confirmBuy(){
-      //todo 下订单,优惠相关的你自己先写一写，我再改一改界面
       let data = {
         items: this.items,
         restaurantId: this.$route.params.id,

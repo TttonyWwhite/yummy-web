@@ -35,6 +35,7 @@
                 <div style="text-align: center">
                     <el-button @click="moreShops" style="margin-top: 10px;">more</el-button>
                 </div>
+
             </div>
         </el-main>
     </el-container>
@@ -43,7 +44,6 @@
 <script>
     import Header from '../components/Header'
     import Card from '../components/restaurantCard'
-
     export default {
         name: 'homepage',
         data() {
@@ -61,19 +61,26 @@
                 center:{
                     lng: '',
                     lat: ''
-                }
+                },
+                isTop: true
             }
         },
         components: {
             Header,
-            Card
+            Card,
         },
         mounted() {
+
             this.name = localStorage.getItem('username')
             localStorage.setItem("ID", this.$route.params.id)
             //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
             this.defaultPosition()
+
+            this.$nextTick(() => {
+                this.$root.$el.addEventListener('scroll', this.onScroll)
+            })
         },
+
         computed: {
             showShopList() {
                 return this.shopList.slice((this.currentPage - 1) * this.perpage, this.currentPage * this.perpage);
@@ -125,7 +132,12 @@
 
             moreShops() {
                 this.perpage += 16
+            },
+
+            backTop() {
+
             }
+
         }
     }
 </script>

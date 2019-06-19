@@ -11,7 +11,7 @@
     "amap": "^1.0.7",
     "axios": "^0.18.0",
     "echarts": "^4.1.0",
-    "element-ui": "^2.4.11",
+    "element-ui": "^2.9.1",
     "lodash": "^4.17.11",
     "underscore": "^1.9.1",
     "v-charts": "^1.19.0",

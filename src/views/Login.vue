@@ -16,6 +16,7 @@
                         <el-button type="primary" class="submit_btn" @click="login">登陆</el-button>
                     </el-form-item>
                 </el-form>
+
                 <p class="sign_text" @click="signup">没有账号，立即注册</p>
                 <p class="restaurant_login" @click="rsignin">餐厅登陆</p>
             </section>
@@ -76,7 +77,9 @@
 <style lang="less" scoped>
     @import '../style/mixin';
     .login_page{
-        background: #324057;
+        height: 100%;
+        width: 100%;
+        background: url("../assets/background.png") no-repeat;
     }
 
     .sign_text{
@@ -113,7 +116,8 @@
         padding: 25px;
         border-radius: 5px;
         text-align: center;
-        background-color: #fff;
+        //background-color: #fff;
+        background-color:rgba(255, 255, 255, 0.7);
         .submit_btn{
             width: 100%;
             font-size: 16px;
