@@ -64,7 +64,6 @@
 			this.axios.post('http://localhost:8080/getBalance', param).then(response => {
 				this.balance = response.data.data
 			})
-
 			this.axios.post('http://localhost:8080/getLevel', param).then(response => {
 				this.level = response.data.data
 			})

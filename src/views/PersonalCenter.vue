@@ -5,14 +5,14 @@
 				<el-row style="height: 100%">
 					<el-col :span="6" style="height: 100%">
 						<div style="display: flex;justify-content: center;align-items: center;height: 100%">
-							<span>欢迎，name</span>
+                            欢迎，<span style="color: dodgerblue">{{memberName}}</span>
 						</div>
 					</el-col>
 					<el-col :span="6">
 						<div style="display: flex;flex-direction: column;align-items: center;margin-top: 40px;border-left: 2px gainsboro solid">
 							<h3>会员等级</h3>
 							<div style="margin-top: 20px;display: flex;justify-content: center;align-items: baseline">
-								<span style="font-size:32px;font-weight: bold;color: dodgerblue">{{1}}</span><span style="color: dodgerblue">级</span>
+								<span style="font-size:32px;font-weight: bold;color: dodgerblue">{{this.level}}</span><span style="color: dodgerblue">级</span>
 							</div>
 						</div>
 					</el-col>
@@ -29,9 +29,9 @@
 							<h3>账户余额</h3>
 							<div style="display: flex;justify-content: center;align-items: flex-end">
 								<div style="margin-top: 20px;display: flex;justify-content: center;align-items: baseline">
-									<span style="font-size: 32px;font-weight: bold;color: coral">{{10.11}}</span><span style="color: coral">元</span>
+									<span style="font-size: 32px;font-weight: bold;color: coral">{{this.balance}}</span><span style="color: coral">元</span>
 								</div>
-								<el-button type="primary" style="margin-bottom: 5px;margin-left: 5px" size="mini">充值</el-button>
+								<el-button type="primary" style="margin-bottom: 5px;margin-left: 5px" size="mini" @click="charge">充值</el-button>
 							</div>
 						</div>
 					</el-col>
@@ -43,39 +43,69 @@
 				<el-breadcrumb style="margin-top: 10px">
 					<el-breadcrumb-item style="font-size: 16px;"><h4>最近订单</h4></el-breadcrumb-item>
 				</el-breadcrumb>
-				<a href="javascript:;" style="font-size: 16px;height: 16px;color: dodgerblue;margin-top: 10px;text-decoration: none">查看更多记录</a>
+				<router-link to="order" style="text-decoration: none;margin-top: 10px;height: 16px">
+					<a href="javascript:;" style="font-size: 16px;color: dodgerblue;text-decoration: none">查看更多订单</a>
+				</router-link>
 			</div>
 			<div style="margin-left: 20px;margin-right: 20px;border-top: 3px gainsboro solid;margin-top: 10px">
 				<el-row v-for="(item, index) in order" :key="item.orderId">
 					<OrderBanner :order="item" @orderPayed="onPayed" @orderRefund="onRefund" @orderConfirmed="onConfirm"></OrderBanner>
 				</el-row>
-				<div v-if="order.length === 0" style="width: 100%;display: flex;justify-content: center;align-items: center;height: 200px">
-					<span style="font-size: 24px">暂无订单数据</span>
+				<div v-if="order.length === 0" style="width: 100%;display: flex;justify-content: center;align-items: center;height: 360px">
+					<span style="font-size: 30px">暂无订单数据</span>
 				</div>
 			</div>
 			<!--需要一个表格,用于展示最近订单中的前几条 -->
 		</div>
+        <el-dialog title="充值中心" width="400px" :visible.sync="dialogVisible">
+            <div style="width: 100%">
+                <div style="width: 100%;margin-top: -30px">
+                    <span>请输入充值金额</span>
+                </div>
+                <div style="width: 100px">
+                    <el-input size="medium" style="width: 360px;margin-top: 20px" v-model="value"></el-input>
+                </div>
+                <div style="width: 100%;display: flex;justify-content: flex-end">
+                    <el-button style="margin-top: 20px" @click="confirmCharge">确认充值</el-button>
+                </div>
+            </div>
+        </el-dialog>
 	</div>
 </template>
 
 
 <script>
-	import InfoSummary from '../components/InfoSummary'
 	import OrderBanner from '../components/orderBanner'
 
 	export default {
 		name: 'personalCenter',
 		components: {
-			InfoSummary,
 			OrderBanner
 		},
 		data() {
 			return {
+                memberName: localStorage.getItem("username"),
 				order: [],
-				activeName: 'first'
+				activeName: 'first',
+                balance:0,
+                level:1,
+                dialogVisible:false,
+                value:0
 			}
 		},
-
+        created(){
+		    console.log(this.$route.params.id)
+		    // todo debug
+            // let param = new URLSearchParams()
+            // param.append('memberId', this.$route.params.id)
+            // this.axios.post('http://localhost:8080/getBalance', param).then(response => {
+             //    this.balance = response.data.data
+             //    console.log(response.data.data)
+            // })
+            // this.axios.post('http://localhost:8080/getLevel', param).then(response => {
+            //     this.level = response.data.data
+            // })
+        },
 		activated() {
 			let param = new URLSearchParams()
 			param.append("memberId", this.$route.params.id)
@@ -83,11 +113,15 @@
 				this.order = response.data.data
 				this.order.reverse()
 			})
-
 		},
-
-
 		methods: {
+            confirmCharge(){
+                //todo
+            },
+            charge(){
+                this.value = 0
+                this.dialogVisible = true
+            },
 			onPayed(val) {
 				for (let i = 0;i < this.order.length;i++) {
 					if (this.order[i].orderId === val) {

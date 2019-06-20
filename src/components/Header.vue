@@ -15,24 +15,21 @@
                             <span>我的订单</span>
                         </template>
                     </el-menu-item>
-                    <el-menu-item index="3">消息中心</el-menu-item>
                 </el-menu>
             </div>
         </el-col>
         <el-col :span="4">
-            <!--<el-menu :default-active="this.$router.path" router class="el-menu-demo" mode="horizontal" background-color="#0d78da" text-color="#ffffff">-->
-            <!--<el-submenu index="1">-->
-            <!--<template slot="title"> {{ name }} </template>-->
-            <!--<el-menu-item  :index="targetIndex">个人中心</el-menu-item>-->
-            <!--</el-submenu>-->
-            <!--</el-menu>-->
             <el-dropdown placement="bottom" v-if="isLogin" style="margin-top: 20px;float: right" @command="handleCommand">
               <span style="color: white;font-size: larger">
                 {{name}}<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item style="font-size: small"><label class="icon-user"></label>个人中心</el-dropdown-item>
-                    <el-dropdown-item style="font-size: small"><label class="icon-place"></label>我的地址</el-dropdown-item>
+                    <router-link :to="{path:'/member/'+ this.$route.params.id +'/personalCenter'}" style="text-decoration: none">
+                        <el-dropdown-item style="font-size: small"><label class="icon-user"></label>个人中心</el-dropdown-item>
+                    </router-link>
+                    <router-link :to="{path:'/member/'+ this.$route.params.id +'/address'}" style="text-decoration: none">
+                        <el-dropdown-item style="font-size: small"><label class="icon-place"></label>我的地址</el-dropdown-item>
+                    </router-link>
                     <el-dropdown-item divided style="font-size: small" command="logout"><label class="icon-logout"></label>退出登录</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>

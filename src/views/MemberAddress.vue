@@ -13,17 +13,17 @@
                 v-for="(info,index) in addressInfo"
                 :key="index" style="margin-top: 20px">
           <div>
-            <span>{{name}}&nbsp;&nbsp;{{sex}}</span>
+            <span>{{info.contactName}}</span>
             <span v-show="defaultAddress === info.id" style="margin-left: 30px;color: cornflowerblue">默认地址</span>
             <el-button size="mini" @click="deleteAddress(index)" style="border: 0;color: cornflowerblue;font-size: 14px;float: right">删除</el-button>
             <el-button @click="openChangeAddressDialog(index)" size="mini" style="border: 0;color: cornflowerblue;font-size: 14px;float: right">修改</el-button>
             <el-button v-show="defaultAddress !== info.id" @click="setDefaultAddress(index)" size="mini" style="border: 0;color: cornflowerblue;font-size: 14px;float: right">设为默认地址</el-button>
           </div>
           <div style="margin-top: 10px">
-            <span>{{info.position}}{{info.detail}}</span>
+            <span>{{info.address}}</span>
           </div>
           <div style="margin-top: 3px">
-            <span>{{phoneNumber}}</span>
+            <span>{{info.phoneNumber}}</span>
           </div>
         </el-card>
         <h1 v-show="addressInfo.length === 0" style="display: flex;justify-content: center;margin-top: 20px">暂无地址</h1>
@@ -46,8 +46,11 @@
             <el-form-item label="位置" label-width="70px" style="">
               <el-input readonly id="address" size="medium" style="" v-model="address"></el-input>
             </el-form-item>
-            <el-form-item label="详细地址" label-width="70px" style="margin-top: -15px">
-              <el-input size="medium" v-model="detail" placeholder="门牌、单元号等"></el-input>
+            <el-form-item label="联系人" label-width="70px" style="margin-top: -15px">
+              <el-input size="medium" v-model="contactName"></el-input>
+            </el-form-item>
+            <el-form-item label="联系电话" label-width="70px" style="margin-top: -15px">
+              <el-input size="medium" v-model="phoneNumber"></el-input>
             </el-form-item>
           </el-form>
           <el-button v-show="title === '新增地址'" style="position: relative;float: right;margin-top: -15px" size="medium" @click="addAddress">添加地址</el-button>
@@ -67,7 +70,6 @@ export default {
     let self = this
     return {
       amapManager,
-      phoneNumber: '',
       name: '',
       sex: '',
       markers: [],
@@ -75,13 +77,19 @@ export default {
       title: '',
       city: '',
       dialogVisible: false,
-      addressInfo: [],
+      addressInfo: [
+          {
+              addressId: 1,
+              contactName:'孙铭辉',
+              phoneNumber: '12121313122',
+              address:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+          }
+      ],
       searchOption: {
         city: '',
         citylimit: false
       },
       zoom: 10,
-      address: '',
       events: {
         init (o) {
         },
@@ -107,12 +115,14 @@ export default {
           })
         }
       },
+      address: '',
       lng: 0,
       lat: 0,
-      detail: '',
+      contactName:'',
+      phoneNumber:'',
       index: 0,
       initMapCenter: [],
-      defaultAddress: ''
+      defaultAddress: ''// todo 获得用户的默认地址id
     }
   },
   created () {
@@ -131,7 +141,6 @@ export default {
     openNewAddressDialog () {
       this.zoom = 10
       this.title = '新增地址'
-      this.detail = ''
       this.address = ''
       this.markers = []
       this.mapCenter = [this.initMapCenter[0], this.initMapCenter[1]]
@@ -140,8 +149,7 @@ export default {
     openChangeAddressDialog (index) {
       this.title = '修改地址'
       this.zoom = 18
-      this.detail = this.addressInfo[index].detail
-      this.address = this.addressInfo[index].position
+      this.address = this.addressInfo[index].address
       this.mapCenter = [this.addressInfo[index].lng, this.addressInfo[index].lat]
       this.markers = []
       this.markers.push([this.addressInfo[index].lng, this.addressInfo[index].lat])
@@ -167,29 +175,44 @@ export default {
       }
     },
     addAddress () {
-      if (!this.address || !this.detail) {
+      if (!this.address || !this.contactName || !this.phoneNumber) {
         this.$confirm('请完善地址！')
       } else {
-
+          this.axios.post('http://localhost:8080/addAddress', {
+              memberId: this.$route.params.id,
+              address: this.address,
+              contactName: this.contactName,
+              phoneNumber: this.phoneNumber,
+              lng: this.lng,
+              lat: this.lat
+          })
+              .then(response => {
+                  this.dialogVisible = false
+                  this.addressInfo.push({
+                      address:this.address,
+                      contactName:this.contactName,
+                      phoneNumber:this.phoneNumber
+                  })
+          })
       }
     },
     changeAddress () {
-      if (!this.address || !this.detail) {
+      if (!this.address || !this.contactName || !this.phoneNumber) {
         this.$confirm('请完善地址！')
       } else {
-
+        // todo
       }
     },
     deleteAddress (index) {
       this.$confirm('确认删除？')
         .then(() => {
-
+            //todo
         })
         .catch(() => {
         })
     },
     setDefaultAddress (index) {
-
+        //todo
     }
   }
 }
@@ -197,7 +220,7 @@ export default {
 
 <style scoped>
   .amap-demo {
-    height: 350px;
+    height: 300px;
   }
   .search-box {
     position: absolute;

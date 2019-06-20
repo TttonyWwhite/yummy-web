@@ -9,7 +9,7 @@
                     <div style="width: 75%">
                         <span>当前位置：</span>
                         <span>{{position}}</span>
-                        <router-link to="/profile/address" style="color: cornflowerblue;font-size: 13px;margin-left: 5px;text-decoration: none">[切换地址]</router-link>
+                        <router-link :to="{path:'/member/'+ this.$route.params.id +'/address'}" style="color: cornflowerblue;font-size: 13px;margin-left: 5px;text-decoration: none">[切换地址]</router-link>
                     </div>
                     <div style="width: 25%">
                         <el-input placeholder="搜索商家..." v-model="searchKey" size="mini">

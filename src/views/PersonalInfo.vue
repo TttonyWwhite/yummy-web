@@ -10,7 +10,7 @@
                     <el-menu
                             default-active="personalCenter"
                             style="width: 100%;border-right: white;height:100%"
-                            router="true"
+                            :router="true"
                             @open="handleOpen"
                             @close="handleClose">
                         <el-menu-item index="personalCenter">
@@ -21,8 +21,12 @@
                             <label class="icon-order"></label>
                             <span slot="title" style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的订单</span>
                         </el-menu-item>
-                        <el-menu-item index="address">
+                        <el-menu-item index="settings">
                             <label class="icon-info"></label>
+                            <span style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的信息</span>
+                        </el-menu-item>
+                        <el-menu-item index="address">
+                            <label class="icon-place2"></label>
                             <span style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的地址</span>
                         </el-menu-item>
                     </el-menu>
@@ -35,25 +39,6 @@
                 <el-col :span="3">
                 </el-col>
 			</el-row>
-			<!--<el-aside width="200px">-->
-				<!--<el-menu :default-active="$route.path" class="el-menu-vertical-demo" unique-opened router>-->
-					<!--<template v-for="item in items">-->
-						<!--<template v-if="item.subs">-->
-							<!--<el-submenu :index="item.index" :key="item.orderId">-->
-								<!--<template slot="title">-->
-									<!--<i :class="item.icon"></i> {{ item.title }}-->
-								<!--</template>-->
-								<!--<el-menu-item v-for="(subItem, i) in item.subs" :key="i" :index="subItem.index"> {{ subItem.title }} </el-menu-item>-->
-							<!--</el-submenu>-->
-						<!--</template>-->
-						<!--<template v-else>-->
-							<!--<el-menu-item :index="item.index" :key="item.orderId">-->
-								<!--<i :class="item.icon"></i> {{ item.title }}-->
-							<!--</el-menu-item>-->
-						<!--</template>-->
-					<!--</template>-->
-				<!--</el-menu>-->
-			<!--</el-aside>-->
 		</el-main>
 	</el-container>
 
@@ -71,27 +56,7 @@
 				username: '',
 				form: {
 					name: ''
-				},
-				order: {
-					image: '',
-					orderId: '',
-					price: 0,
-					state: '',
-					time: '',
-					title: ''
-				},
-				items: [
-					{
-						icon: 'el-icon-menu',
-						index: 'personalCenter',
-						title: '用户信息'
-					},
-					{
-						icon: 'el-icon-menu',
-						index: 'settings',
-						title: '账户设定'
-					}
-				]
+				}
 			}
 		},
 		mounted() {
@@ -126,8 +91,8 @@
         vertical-align: middle;
         display: inline-block;
     }
-    .icon-property {
-        background: url('../assets/images/money.svg') no-repeat;
+    .icon-place2 {
+        background: url('../assets/images/place-dark.svg') no-repeat;
         background-size: cover;
         height: 26px;
         width: 26px;
