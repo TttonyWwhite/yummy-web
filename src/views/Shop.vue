@@ -49,6 +49,8 @@
         created() {
             //要从url中得到当前的餐厅id
             //要从服务器拿到店铺的信息
+
+            this.deliveryCost = parseInt(localStorage.getItem("deliveryCost"))
             let id = this.$route.params.id
             let param = new URLSearchParams()
             param.append("restaurantId", id)
@@ -73,7 +75,7 @@
                 products: [],
                 shop: {},
                 name: localStorage.getItem('username'),
-                deliveryCost:3 //todo 获得配送费
+                deliveryCost: null
             }
         },
         methods: {

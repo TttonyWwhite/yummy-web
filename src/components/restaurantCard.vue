@@ -54,6 +54,7 @@
         methods: {
             onClick() {
                 // console.log(this.restaurant_id)
+                localStorage.setItem("deliveryCost", this.deliveryCost)
                 this.$router.push({name: 'shop', params: {id: this.restaurant_id}})
             }
         },

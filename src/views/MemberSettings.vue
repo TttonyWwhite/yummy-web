@@ -112,13 +112,21 @@
             change () {
                 this.unchangeable = false
             },
-            // todo
             cancel () {
                 // this.info = JSON.parse(JSON.stringify(this.$store.state.login.information))
                 this.unchangeable = true
             },
             save(){
-
+                let member = {
+                    memberId: this.$route.params.id,
+                    memberName: this.info.username,
+                    phoneNumber: this.info.phoneNumber,
+                    email: this.info.email
+                }
+                this.axios.post('http://localhost:8080/modifyInfo', member).then(response => {
+                    this.$message('修改成功')
+                    this.unchangeable = true
+                })
             },
             onInfoChange(val) {
                 for(var i = 0;i < this.address.length;i++) {
@@ -175,7 +183,6 @@
             let param = new URLSearchParams()
             param.append("memberId", localStorage.getItem('ID'))
             this.axios.post('http://localhost:8080/getMemberInfo', param).then(response => {
-                console.log(response)
                 this.info.username = response.data.data.memberName
                 this.info.phoneNumber = response.data.data.phoneNumber
                 this.info.email = response.data.data.email
