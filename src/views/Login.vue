@@ -51,7 +51,6 @@
                         this.$message("用户已注销")
                     } else {
                         localStorage.setItem("username", this.loginForm.name)
-                        //todo 这个地方需要将用户id放到url中，传到下一个页面
                         //会得到一个token
                         localStorage.setItem("JWT_TOKEN", response.data.data.token)
                         localStorage.setItem("ID", response.data.data.member.memberId)

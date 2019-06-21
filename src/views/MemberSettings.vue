@@ -84,7 +84,11 @@
         },
         data() {
             return {
-                info:{},
+                info:{
+                    username:'',
+                    phoneNumber: '',
+                    email: ''
+                },
                 unchangeable:true,
                 activeName: 'first',
                 activeName1: 'first',
@@ -171,12 +175,10 @@
             let param = new URLSearchParams()
             param.append("memberId", localStorage.getItem('ID'))
             this.axios.post('http://localhost:8080/getMemberInfo', param).then(response => {
-
-                this.memberInfo = response.data.data
-                this.address = response.data.data.addresses
-                //加一个空的地址，为了最后显示一个add卡片
-
-                this.address.push(this.emptyAddress)
+                console.log(response)
+                this.info.username = response.data.data.memberName
+                this.info.phoneNumber = response.data.data.phoneNumber
+                this.info.email = response.data.data.email
             })
         }
     }

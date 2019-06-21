@@ -7,13 +7,9 @@
       <div style="margin-top: 10px;border-top: 2px solid #8a8a8a">
         <el-table :data="orders">
           <el-table-column label="订单编号" prop="orderId"></el-table-column>
-          <el-table-column label="下单时间" prop="orderTime"></el-table-column>
-          <el-table-column label="支付金额（元）">
-            <template slot-scope="scope">
-              {{scope.row.cost-scope.row.discount + scope.row.deliveryCost}}
-            </template>
-          </el-table-column>
-          <el-table-column label="状态" prop="orderStatus"></el-table-column>
+          <el-table-column label="下单时间" prop="time"></el-table-column>
+          <el-table-column label="支付金额（元）" prop="price"></el-table-column>
+          <el-table-column label="状态" prop="state"></el-table-column>
           <el-table-column label="详情/操作">
             <template slot-scope="scope">
               <el-button @click="toDetail(scope.row)">订单详情</el-button>
@@ -34,7 +30,13 @@ export default {
     }
   },
   created () {
-      //todo getorders
+    let param = new URLSearchParams()
+    param.append("memberId", this.$route.params.id)
+    this.axios.post('http://localhost:8080/getOrders', param).then(response => {
+      console.log(response)
+      this.orders = response.data.data
+      this.orders.reverse()
+    })
   },
   methods: {
     toDetail (order) {

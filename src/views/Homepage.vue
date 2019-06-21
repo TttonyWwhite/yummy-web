@@ -68,11 +68,11 @@
         mounted() {
             this.name = localStorage.getItem('username')
             localStorage.setItem("ID", this.$route.params.id)
-            //从后台拉取店铺数据 todo 如果用户设置了当前地址，则用当前地址，否则使用IP所在城市
+            //从后台拉取店铺数据
             this.getUserAddress()
             if (this.position === '') {
                 this.defaultPosition()
-            }else {
+            } else {
                 this.initShops()
             }
         },
@@ -124,9 +124,16 @@
                     })
                 })
             },
-            //todo 获得用户的地址
             getUserAddress(){
-
+                let param = new URLSearchParams()
+                param.append("memberId", this.$route.params.id)
+                this.axios.post("http://localhost:8080/getDefaultAddress", param).then(response => {
+                    if (response.data.data != '' && response.data.data != undefined && response.data.data != null) {
+                        this.position = response.data.data.address;
+                        this.center.lng = response.data.data.lng;
+                        this.center.lat = response.data.data.lat;
+                    }
+                })
             },
             moreShops() {
                 this.perpage += 16

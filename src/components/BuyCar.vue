@@ -130,14 +130,12 @@ export default {
         totalCost: 0,
         dialogVisible: false,
         discount: 1,
-        deliveryCost:0,//todo 配送费
         address: '',
         discountInfo: '',
         address_value: '',
         useDiscount:false,
         discountValue:0,
         options: [], // 用于存放可选地址列表
-        //todo 获得默认地址，就是首页上那一个
     }
   },
     watch: {
@@ -156,23 +154,17 @@ export default {
             }
         }
     },
-    // computed: {
-    //   discountValue: function() {
-    //     let num = this.totalCost - (this.totalCost * this.discount)
-    //     return num.toFixed(2)
-    //   }
-    // },
+
     created(){
       this.calculateCost()
     },
     mounted() {
       let param = new URLSearchParams()
       param.append("memberId", localStorage.getItem("MEMBER_ID"))
-      this.axios.post('http://localhost:8080/getAddress', param).then(response => {
-        for (var i = 0;i < response.data.data.length;i++) {
-          let temp = {value: response.data.data[i].addressId, label: response.data.data[i].address}
-          this.options.push(temp)
-        }
+
+      this.axios.post('http://localhost:8080/getDefaultAddress', param).then(response => {
+          this.address = response.data.data.address;
+          this.address_value = response.data.data.addressId;
       })
 
       // 从后台获取用户等级信息，显示折扣

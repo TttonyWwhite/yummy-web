@@ -32,9 +32,9 @@
                     </el-menu>
                 </el-col>
                 <el-col :span="15" style="height: 100% ">
-                    <!--<keep-alive>-->
+                    <keep-alive>
                         <router-view/>
-                    <!--</keep-alive>-->
+                    </keep-alive>
                 </el-col>
                 <el-col :span="3">
                 </el-col>
