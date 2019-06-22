@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-left: 20px;background-color: white;height: 100%">
+  <div style="margin-left: 20px;background-color: white;min-height: 100%">
     <div style="margin-right: 20px;margin-left: 20px">
       <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: flex-start">
         <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -77,14 +77,7 @@ export default {
       title: '',
       city: '',
       dialogVisible: false,
-      addressInfo: [
-          {
-              addressId: 1,
-              contactName:'孙铭辉',
-              phoneNumber: '12121313122',
-              address:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-          }
-      ],
+      addressInfo: [],
       searchOption: {
         city: '',
         citylimit: false

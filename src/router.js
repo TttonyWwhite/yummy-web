@@ -53,19 +53,22 @@ const router = new Router({
             },
             {
               path: 'settings',
+                name:'settings',
               component: resolve => require(['./views/MemberSettings.vue'], resolve)
             },
             {
               path: 'order/:orderId',
-              name: 'order',
+              name: 'orderDetail',
               component: resolve => require(['./views/OrderDetail.vue'], resolve)
             },
             {
                 path:'order',
-                component: resolve => require(['./views/Order.vue'], resolve)
+                name:'allOrder',
+                component: resolve => require(['./views/Order.vue'], resolve),
             },
             {
                 path:'address',
+                name:'address',
                 component: resolve => require(['./views/MemberAddress.vue'], resolve)
             }
         ]

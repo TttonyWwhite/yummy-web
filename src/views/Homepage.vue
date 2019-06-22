@@ -70,11 +70,6 @@
             localStorage.setItem("ID", this.$route.params.id)
             //从后台拉取店铺数据
             this.getUserAddress()
-            if (this.position === '') {
-                this.defaultPosition()
-            } else {
-                this.initShops()
-            }
         },
         computed: {
             showShopList() {
@@ -128,10 +123,13 @@
                 let param = new URLSearchParams()
                 param.append("memberId", this.$route.params.id)
                 this.axios.post("http://localhost:8080/getDefaultAddress", param).then(response => {
-                    if (response.data.data != '' && response.data.data != undefined && response.data.data != null) {
+                    if (response.data.data !== '' && response.data.data !== undefined && response.data.data != null) {
                         this.position = response.data.data.address;
                         this.center.lng = response.data.data.lng;
                         this.center.lat = response.data.data.lat;
+                        this.initShops()
+                    }else {
+                        this.defaultPosition()
                     }
                 })
             },

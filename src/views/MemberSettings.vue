@@ -29,45 +29,6 @@
             </div>
         </div>
     </div>
-    <!--<div>-->
-        <!--<el-tabs v-model="activeName">-->
-            <!--<el-tab-pane label="个人资料" name="first"></el-tab-pane>-->
-        <!--</el-tabs>-->
-        <!--<el-form ref="form" :model="memberInfo" label-width="80px">-->
-            <!--<el-form-item label="用户名:">-->
-                <!--<el-input v-model="memberInfo.memberName" :disabled="this.nameChange" style="width:200px;float:left;"></el-input>-->
-            <!--</el-form-item>-->
-            <!--<el-form-item label="注册电话:">-->
-                <!--<el-input v-model="memberInfo.phoneNumber" :disabled="this.phoneNumberChange" style="width:200px;float:left;"></el-input>-->
-            <!--</el-form-item>-->
-
-
-        <!--</el-form>-->
-
-        <!--<el-row>-->
-            <!--<el-col :span="12">-->
-                <!--<div class="btns">-->
-                    <!--<el-button type="primary" @click="changeInfo">修改</el-button>-->
-                    <!--<el-button type="primary" @click="submitChange">提交</el-button>-->
-                <!--</div>-->
-            <!--</el-col>-->
-            <!--<el-col :span="12">-->
-                <!--<div class="writeoff_btn">-->
-                    <!--<el-button type="danger" @click="alertVisible = true">注销</el-button>-->
-                <!--</div>-->
-            <!--</el-col>-->
-        <!--</el-row>-->
-        <!--<el-dialog-->
-                <!--title="提示"-->
-                <!--:visible.sync="alertVisible"-->
-                <!--width="30%">-->
-            <!--<div class="writeoff_alert">-->
-                <!--<h2>您确定要注销账号吗？</h2>-->
-                <!--<el-button type="danger" @click="writeOff">确定</el-button>-->
-            <!--</div>-->
-        <!--</el-dialog>-->
-
-    <!--</div>-->
 </template>
 
 <script>

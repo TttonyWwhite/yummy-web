@@ -1,6 +1,6 @@
 <template>
     <div style="margin-left: 20px;height: 100%;width: 100%">
-        <div style="height: 160px;width: 100%;background-color: white">
+        <div style="height: 25%;width: 100%;background-color: white">
             <div style="height:100%;">
                 <el-row style="height: 100%">
                     <el-col :span="6" style="height: 100%">
@@ -42,17 +42,17 @@
                 </el-row>
             </div>
         </div>
-        <div style="margin-top: 20px;background-color: white;height: 442px">
-            <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: flex-start;margin-left: 20px;margin-right: 20px">
+        <div style="background-color: white;height: 70%;position: relative;top: 5%">
+            <div style=";display: flex;flex-direction: row;justify-content: space-between;align-items: flex-start;margin-left: 20px;margin-right: 20px">
                 <el-breadcrumb style="margin-top: 10px">
                     <el-breadcrumb-item style="font-size: 16px;"><h4>最近订单</h4></el-breadcrumb-item>
                 </el-breadcrumb>
-                <router-link to="order" style="text-decoration: none;margin-top: 10px;height: 16px">
+                <router-link :to="{name:'allOrder'}" style="text-decoration: none;margin-top: 10px;height: 16px">
                     <a href="javascript:;" style="font-size: 16px;color: dodgerblue;text-decoration: none">查看更多订单</a>
                 </router-link>
             </div>
             <div style="margin-left: 20px;margin-right: 20px;border-top: 3px gainsboro solid;margin-top: 10px">
-                <el-row v-for="(item, index) in order" :key="item.orderId">
+                <el-row v-for="(item, index) in order" :key="index">
                     <OrderBanner :order="item" @orderPayed="onPayed" @orderRefund="onRefund" @orderConfirmed="onConfirm"></OrderBanner>
                 </el-row>
                 <div v-if="order.length === 0" style="width: 100%;display: flex;justify-content: center;align-items: center;height: 360px">
@@ -88,6 +88,7 @@
         },
         data() {
             return {
+                memberId:localStorage.getItem("ID"),
                 memberName: localStorage.getItem("username"),
                 order: [],
                 activeName: 'first',
@@ -107,15 +108,15 @@
             this.axios.post('http://localhost:8080/getLevel', param).then(response => {
                 this.level = response.data.data
             })
+            this.axios.post('http://localhost:8080/getOrders', param).then(response => {
+                this.order = response.data.data
+                this.order.reverse()
+                this.order.splice(3)
+            })
         },
         activated() {
             let param = new URLSearchParams()
             param.append("memberId", this.$route.params.id)
-            this.axios.post('http://localhost:8080/getOrders', param).then(response => {
-                console.log(response)
-                this.order = response.data.data
-                this.order.reverse()
-            })
         },
         methods: {
             confirmCharge(){
@@ -131,29 +132,6 @@
             charge(){
                 this.value = 0
                 this.dialogVisible = true
-            },
-            onPayed(val) {
-                for (let i = 0;i < this.order.length;i++) {
-                    if (this.order[i].orderId === val) {
-                        this.order[i].state = "订单已提交"
-                        this.$refs.child1.handlePay(this.order[i].price)
-                    }
-                }
-            },
-            onRefund(val) {
-                for (let i = 0;i < this.order.length;i++) {
-                    if (this.order[i].orderId === val) {
-                        this.order[i].state = "已退款"
-                        this.$refs.child1.handleRefund(this.order[i].price)
-                    }
-                }
-            },
-            onConfirm(val) {
-                for (let i = 0;i < this.order.length;i++) {
-                    if (this.order[i].orderId === val) {
-                        this.order[i].state = "已送达"
-                    }
-                }
             }
         }
     }

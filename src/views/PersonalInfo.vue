@@ -8,33 +8,33 @@
 				<el-col :span="3">&nbsp;</el-col>
                 <el-col :span="3" style="height: 100%">
                     <el-menu
-                            default-active="personalCenter"
+                            :default-active="$route.name"
                             style="width: 100%;border-right: white;height:100%"
                             :router="true"
                             @open="handleOpen"
                             @close="handleClose">
-                        <el-menu-item index="personalCenter">
-                            <label class="icon-space"></label>
-                            <span slot="title" style="font-size: 18px;font-weight: bold;">&nbsp;&nbsp;个人中心</span>
-                        </el-menu-item>
-                        <el-menu-item index="order">
-                            <label class="icon-order"></label>
-                            <span slot="title" style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的订单</span>
-                        </el-menu-item>
-                        <el-menu-item index="settings">
-                            <label class="icon-info"></label>
-                            <span style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的信息</span>
-                        </el-menu-item>
-                        <el-menu-item index="address">
-                            <label class="icon-place2"></label>
-                            <span style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的地址</span>
-                        </el-menu-item>
+                            <el-menu-item :route="{name: 'personalCenter', params: {id: memberId}}" index="personalCenter">
+                                <label class="icon-space"></label>
+                                <span slot="title" style="font-size: 18px;font-weight: bold;">&nbsp;&nbsp;个人中心</span>
+                            </el-menu-item>
+                            <el-menu-item :route="{name: 'allOrder', params: {id: memberId}}" index="allOrder">
+                                <label class="icon-order"></label>
+                                <span slot="title" style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的订单</span>
+                            </el-menu-item>
+                            <el-menu-item :route="{name: 'settings', params: {id: memberId}}" index="settings">
+                                <label class="icon-info"></label>
+                                <span style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的信息</span>
+                            </el-menu-item>
+                            <el-menu-item :route="{name: 'address', params: {id: memberId}}" index="address">
+                                <label class="icon-place2"></label>
+                                <span style="font-size: 18px;font-weight: bold">&nbsp;&nbsp;我的地址</span>
+                            </el-menu-item>
                     </el-menu>
                 </el-col>
                 <el-col :span="15" style="height: 100% ">
-                    <keep-alive>
+                    <!--<keep-alive>-->
                         <router-view/>
-                    </keep-alive>
+                    <!--</keep-alive>-->
                 </el-col>
                 <el-col :span="3">
                 </el-col>
@@ -53,6 +53,7 @@
 		},
 		data() {
 			return {
+			    memberId:localStorage.getItem("ID"),
 				username: '',
 				form: {
 					name: ''

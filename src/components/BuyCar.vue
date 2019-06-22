@@ -154,7 +154,6 @@ export default {
             }
         }
     },
-
     created(){
       this.calculateCost()
     },
@@ -169,7 +168,7 @@ export default {
 
       // 从后台获取用户等级信息，显示折扣
       this.axios.post('http://localhost:8080/getMemberLevel', param).then(response => {
-        var memberLevel = response.data.data
+        let memberLevel = response.data.data
         switch (memberLevel) {
           case 1:
             this.discount = 1;
@@ -222,10 +221,11 @@ export default {
         if (response.data.code === 11124) {
           this.$message('抱歉，超出配送距离')
         } else {
-          this.$message('订单下达完成，请在15分钟内完成支付')
-          sleep(2000).then(() => {
-            this.$router.push({name: 'personalCenter', params: {id: localStorage.getItem("ID")}})
-          })
+          this.$confirm('订单下达完成，请在15分钟内完成支付')
+              .then(() => {
+                  this.clearBuyCar()
+                  this.$router.push({name: 'personalCenter', params: {id: localStorage.getItem("ID")}})
+              })
         }
       })
     }

@@ -5,12 +5,12 @@
             <div style="display: flex; align-items: center;height: 60px">
                 <label style="color: white;font-size: xx-large">YUMMY!</label>
                 <el-menu :default-active="$route.name" :router="true" class="el-menu-demo" mode="horizontal" background-color="#1d7eb8" text-color="#ffffff">
-                    <el-menu-item :route="{name: 'homepage', params: {id: this.$route.params.id}}" index="homepage">
+                    <el-menu-item :route="{name: 'homepage', params: {id: memberId}}" index="homepage">
                         <template slot="title">
                             <span>首页</span>
                         </template>
                     </el-menu-item>
-                    <el-menu-item :route="{name: 'personalCenter', params: {id: this.$route.params.id}}" index="personalCenter">
+                    <el-menu-item :route="{name: 'allOrder', params: {id: memberId}}" index="personalCenter">
                         <template slot="title">
                             <span>我的订单</span>
                         </template>
@@ -24,10 +24,10 @@
                 {{name}}<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
                 <el-dropdown-menu slot="dropdown">
-                    <router-link :to="{path:'/member/'+ this.$route.params.id +'/personalCenter'}" style="text-decoration: none">
+                    <router-link :to="{path:'/member/'+ memberId +'/personalCenter'}" style="text-decoration: none">
                         <el-dropdown-item style="font-size: small"><label class="icon-user"></label>个人中心</el-dropdown-item>
                     </router-link>
-                    <router-link :to="{path:'/member/'+ this.$route.params.id +'/address'}" style="text-decoration: none">
+                    <router-link :to="{path:'/member/'+ memberId +'/address'}" style="text-decoration: none">
                         <el-dropdown-item style="font-size: small"><label class="icon-place"></label>我的地址</el-dropdown-item>
                     </router-link>
                     <el-dropdown-item divided style="font-size: small" command="logout"><label class="icon-logout"></label>退出登录</el-dropdown-item>
@@ -49,7 +49,8 @@
         data() {
             return {
                 activeIndex: '1',
-                isLogin:true
+                isLogin:true,
+                memberId:localStorage.getItem("ID")
             }
         },
         computed: {
