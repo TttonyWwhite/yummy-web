@@ -217,6 +217,8 @@ export default {
         freight: this.deliveryCost,
         addressId: this.address_value
       }
+
+      console.log(data)
       this.axios.post("http://localhost:8080/orderFoods", data).then(response => {
         if (response.data.code === 11124) {
           this.$message('抱歉，超出配送距离')

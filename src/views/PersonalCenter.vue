@@ -53,7 +53,7 @@
             </div>
             <div style="margin-left: 20px;margin-right: 20px;border-top: 3px gainsboro solid;margin-top: 10px">
                 <el-row v-for="(item, index) in order" :key="index">
-                    <OrderBanner :order="item" @orderPayed="onPayed" @orderRefund="onRefund" @orderConfirmed="onConfirm"></OrderBanner>
+                    <OrderBanner :order="item" ></OrderBanner>
                 </el-row>
                 <div v-if="order.length === 0" style="width: 100%;display: flex;justify-content: center;align-items: center;height: 360px">
                     <span style="font-size: 30px">暂无订单数据</span>

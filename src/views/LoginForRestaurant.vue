@@ -57,7 +57,9 @@
 <style lang="less" scoped>
     @import '../style/mixin';
     .login_page{
-        background: #324057;
+        height: 100%;
+        width: 100%;
+        background: url("../assets/background.png") no-repeat;
     }
 
     .sign_text{
